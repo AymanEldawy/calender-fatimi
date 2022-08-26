@@ -1,0 +1,219 @@
+html,
+body {
+  direction: rtl;
+}
+#calenderFatimiForward {
+  max-height: 80vh;
+  overflow: auto;
+}
+kbd {
+  color: #fff;
+  padding: 0.25rem;
+  font-size: 1.25rem;
+}
+kbd:first-of-type {
+  background: #222;
+}
+kbd:last-of-type {
+  background: #888;
+  color: #fff;
+}
+
+/* Prayer time page */
+.head {
+  box-shadow: 0 1px 4px #22222259;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.25rem;
+}
+.head h2 {
+  position: relative;
+  padding-right: 50px;
+}
+.head h2 img {
+  max-width: 62px;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  mix-blend-mode: multiply;
+}
+
+.display button {
+  border: 1px solid #ccc;
+}
+.display button.active {
+  background: #2196f3;
+  color: #ffffff;
+  border-color: #03a9f4;
+}
+
+/* prayer-content */
+.prayer-content .prayer-list,
+.prayer-content .prayer-list-month,
+.prayer-content .prayer-single {
+  display: none;
+}
+.prayer-content.open-list .prayer-list {
+  display: block;
+}
+.prayer-content.open-single .prayer-single {
+  display: block;
+}
+.prayer-content.open-month .prayer-list-month {
+  display: block;
+}
+
+/* Table */
+.thead-style {
+  background: #2196f3;
+  color: #ffffff;
+}
+.table tr.active {
+  background: #ffeb3b;
+  box-shadow: 0 1px 2px #555;
+}
+
+/* Prayer single */
+.prayer-single h3 {
+  margin: 0;
+}
+.prayer-single p {
+}
+
+/* Prayer grid */
+.prayer-grid-item {
+  background: #e9e8e8;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+}
+.prayer-controls {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f6f6f6;
+  box-shadow: 0 1px 4px #22222259;
+  padding: 0.25rem;
+  margin: 1rem 0;
+  border-radius: 0.25rem;
+}
+
+/* Calender page */
+
+.calender-page-display,
+.calender-page-controls {
+  box-shadow: 0 1px 4px #2225;
+  padding: 0.5rem;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+.calender-page-display p {
+  margin: 0;
+}
+
+.calender-page-display span {
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 0.25rem;
+  color: #888;
+  transition: background-color 0.2s ease-out;
+  background-color: #f2f2f2;
+}
+
+.calender-page-display button {
+  background: #f2f2f2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc2;
+}
+.calender-page-display #btnAddEvent {
+  margin-right: auto;
+  background: #00b7ff;
+  color: #fff;
+}
+.month {
+  text-align: center;
+}
+.row.mb-2 {
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+#listOfMonth,
+.change-by-year input {
+  width: 90px;
+}
+
+.calender-list-grid-head,
+.calender-list-grid-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+
+.calender-list .calender-list-grid-head {
+  margin-bottom: 1rem;
+}
+
+.calender-list .calender-list-grid-head span {
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  color: #555;
+}
+.calender-list .calender-list-grid-head span.active {
+  font-weight: bold;
+  color: #333;
+}
+.calender-list .calender-list-grid-body span {
+  min-height: 70px;
+  position: relative;
+  /* background: #f7f6f6; */
+  border: 1px solid #504f4f36;
+  /* border-radius: 0.25rem; */
+
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calender-list .calender-list-grid-body span.active {
+  background-color: #00b7ff;
+  color: #fff;
+}
+.calender-list-grid-body span i {
+  position: absolute;
+  top: 0;
+  font-size: 0.8rem;
+  color: #673ab7;
+}
+
+.events-list {
+  background: #fff;
+  box-shadow: 0 3px 10px #00000038;
+  margin-top: 10px;
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+.events-item {
+  border: 1px solid #ccc;
+  padding: 0.25rem .5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+.events-item p {
+  margin-bottom: 0.25rem;
+}
+span.events-item-circle {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ccc;
+}
