@@ -75,7 +75,7 @@ async function getPrayTimeByDate(date = new Date()) {
   return prayerTime;
 }
 let events = storeEvents.fetchEvents();
-export const century = {
+const century = {
   1: "ه",
   2: "ب",
   3: "ز",
@@ -289,14 +289,14 @@ export const century = {
   210: "ا",
 };
 // Every 30 years
-export const leapYears = [
+const leapYears = [
   2, 5, 8, 10, 13, 16, 19, 21, 24, 27, 29, 32, 35, 38, 40, 43, 46, 49, 51, 54,
   57, 59, 62, 65, 68, 70, 73, 76, 79, 81, 84, 87, 89, 92, 95, 98, 100, 103, 106,
   109, 111, 114, 117, 119, 122, 125, 128, 130, 133, 136, 139, 141, 144, 147,
   149, 152, 155, 158, 160, 163, 166, 169, 171, 174, 177, 179, 182, 185, 188,
   190, 193, 196, 199, 201, 204, 207, 209,
 ];
-export const daysFormat = {
+const daysFormat = {
   ا: { day: "الاحد", count: 0 },
   ب: { day: "الأثنين", count: 1 },
   ج: { day: "الثلاثاء", count: 2 },
@@ -305,11 +305,11 @@ export const daysFormat = {
   و: { day: "الجمعة", count: 5 },
   ز: { day: "السبت", count: 6 },
 };
-export const a2e = (s) => s.replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
-export const oddMonth = 30;
-export const evenMonth = 29;
+const a2e = (s) => s.replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+const oddMonth = 30;
+const evenMonth = 29;
 
-export const months = {
+const months = {
   1: "محرم",
   2: "صفر",
   3: "ربيع الاول",
@@ -324,7 +324,7 @@ export const months = {
   12: "ذو الحجة",
 };
 
-export let theCurrentDate = {
+let theCurrentDate = {
   gregorianDate: new Date(),
   currentHijriDate: new Date().toLocaleDateString("ar-SA"),
   getCurrentDateHijri() {
@@ -341,7 +341,7 @@ export let theCurrentDate = {
 };
 
 // Get the century for year
-export function getCentury(year) {
+function getCentury(year) {
   switch (true) {
     case year < 31:
       return "القرن الاول";
@@ -367,7 +367,7 @@ export function getCentury(year) {
   }
 }
 // CountOfMonthDays
-export function countDayOfMoth(month, yearNumber) {
+function countDayOfMoth(month, yearNumber) {
   if (month % 2 == 0) {
     if (month == 12 && leapYears.includes(yearNumber))
       return 30; // Year Is Leap
@@ -375,7 +375,7 @@ export function countDayOfMoth(month, yearNumber) {
   } else return 30; // odd months
 }
 
-export function countOfMonthDays(monthCount, yearNumber) {
+function countOfMonthDays(monthCount, yearNumber) {
   let result = 0;
   for (let i = 1; i <= monthCount; i++) {
     if (i % 2 == 0) {
@@ -385,7 +385,7 @@ export function countOfMonthDays(monthCount, yearNumber) {
   }
   return result;
 }
-export function displayListOfMonths() {
+function displayListOfMonths() {
   let listOfMonth = document.getElementById("listOfMonth");
   listOfMonth.innerHTML = "";
   for (const month of Object.keys(months)) {
@@ -593,7 +593,7 @@ function goNext() {
   displayCalenderGrid(theNewDate);
   theCurrentDate.gregorianDate = new Date(theNewDate);
 }
-export function returnHijriConfiguration(date) {
+function returnHijriConfiguration(date) {
   let dateHijri = new Date(date).toLocaleDateString("ar-SA");
   return {
     hijriMonth: parseInt(a2e(dateHijri.split("/")[1])),
