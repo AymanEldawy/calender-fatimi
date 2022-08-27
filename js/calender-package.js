@@ -519,7 +519,8 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 window.addEventListener("click", (e) => {
   if (e.target.matches("span[data-event] .icon-add")) {
-    document.getElementById("datePicker").value = e.target.dataset.event;
+    console.log(e.target.parentElement.dataset)
+    document.getElementById("datePicker").value = e.target.parentElement.dataset.current_date;
     document.querySelector(".modal-events").classList.remove("close");
   }
 
