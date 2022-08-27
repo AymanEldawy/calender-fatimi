@@ -1,3 +1,5 @@
+// import { storageLocation } from './main.js';
+// console.log(storageLocation)
 // Let storage
 let storeEvents = {
   fetchEvents() {
@@ -7,9 +9,73 @@ let storeEvents = {
   saveEvents(events) {
     localStorage.setItem("events", JSON.stringify(events));
   },
+  fetchLocation: () => {
+    let location = localStorage.getItem("TM_location");
+    return JSON.parse(location)
+      ? JSON.parse(location)
+      : {
+          lat: "17.5065",
+          long: "44.1316",
+          country: "SA",
+          city: "Najran",
+        };
+  },
+  saveLocation: (location) => {
+    localStorage.setItem("TM_location", JSON.stringify(location));
+  },
 };
+const PrayerTimeDefault = {
+  month: 0, //current month
+  year: 0, //current year
+  latitude: "17.5065",
+  longitude: "44.1316",
+};
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+  }
+}
+async function showPosition(position) {
+  let currentLocation = {
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude,
+  };
+  storeEvents.saveLocation(currentLocation);
+}
+let LOCATION = storeEvents.fetchLocation();
+function showError() {
+  if (LOCATION && LOCATION.lat) {
+    PrayerTimeDefault.latitude = LOCATION.latitude
+    PrayerTimeDefault.latitude =  LOCATION.longitude
+  } 
+}
+
+// Fetch Prayer Time
+async function getPrayTimeByMonth(month, year) {
+  let prayerTime = await fetch(
+    `http://api.aladhan.com/v1/hijriCalendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=2&month=${month}&year=${year}`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      return data
+    });
+  return prayerTime;
+}
+async function getPrayTimeByDate(date = new Date()) {
+  let prayerTime = await fetch(
+    `https://api.aladhan.com/v1/timings/${date}?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=2`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      return data
+    });
+  return prayerTime;
+}
 let events = storeEvents.fetchEvents();
-const century = {
+export const century = {
   1: "ه",
   2: "ب",
   3: "ز",
@@ -223,14 +289,14 @@ const century = {
   210: "ا",
 };
 // Every 30 years
-const leapYears = [
+export const leapYears = [
   2, 5, 8, 10, 13, 16, 19, 21, 24, 27, 29, 32, 35, 38, 40, 43, 46, 49, 51, 54,
   57, 59, 62, 65, 68, 70, 73, 76, 79, 81, 84, 87, 89, 92, 95, 98, 100, 103, 106,
   109, 111, 114, 117, 119, 122, 125, 128, 130, 133, 136, 139, 141, 144, 147,
   149, 152, 155, 158, 160, 163, 166, 169, 171, 174, 177, 179, 182, 185, 188,
   190, 193, 196, 199, 201, 204, 207, 209,
 ];
-const daysFormat = {
+export const daysFormat = {
   ا: { day: "الاحد", count: 0 },
   ب: { day: "الأثنين", count: 1 },
   ج: { day: "الثلاثاء", count: 2 },
@@ -239,11 +305,11 @@ const daysFormat = {
   و: { day: "الجمعة", count: 5 },
   ز: { day: "السبت", count: 6 },
 };
-const a2e = (s) => s.replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
-const oddMonth = 30;
-const evenMonth = 29;
+export const a2e = (s) => s.replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+export const oddMonth = 30;
+export const evenMonth = 29;
 
-const months = {
+export const months = {
   1: "محرم",
   2: "صفر",
   3: "ربيع الاول",
@@ -258,7 +324,7 @@ const months = {
   12: "ذو الحجة",
 };
 
-let theCurrentDate = {
+export let theCurrentDate = {
   gregorianDate: new Date(),
   currentHijriDate: new Date().toLocaleDateString("ar-SA"),
   getCurrentDateHijri() {
@@ -275,7 +341,7 @@ let theCurrentDate = {
 };
 
 // Get the century for year
-function getCentury(year) {
+export function getCentury(year) {
   switch (true) {
     case year < 31:
       return "القرن الاول";
@@ -301,7 +367,7 @@ function getCentury(year) {
   }
 }
 // CountOfMonthDays
-function countDayOfMoth(month, yearNumber) {
+export function countDayOfMoth(month, yearNumber) {
   if (month % 2 == 0) {
     if (month == 12 && leapYears.includes(yearNumber))
       return 30; // Year Is Leap
@@ -309,7 +375,7 @@ function countDayOfMoth(month, yearNumber) {
   } else return 30; // odd months
 }
 
-function countOfMonthDays(monthCount, yearNumber) {
+export function countOfMonthDays(monthCount, yearNumber) {
   let result = 0;
   for (let i = 1; i <= monthCount; i++) {
     if (i % 2 == 0) {
@@ -319,7 +385,7 @@ function countOfMonthDays(monthCount, yearNumber) {
   }
   return result;
 }
-function displayListOfMonths() {
+export function displayListOfMonths() {
   let listOfMonth = document.getElementById("listOfMonth");
   listOfMonth.innerHTML = "";
   for (const month of Object.keys(months)) {
@@ -337,97 +403,119 @@ function displayCalenderGrid(date = new Date()) {
   let currentYearHijri = theCurrentDate.getCurrentYearHijri();
   let currentMonthHijri = theCurrentDate.getCurrentMonthHijri();
   let currentDayNumHijri = theCurrentDate.getCurrentDateHijri();
-  console.log(currentYearHijri, currentMonthHijri, currentDayNumHijri);
   let firstDayNumOfMonth =
     (countOfMonthDays(HIJRI_CONFIGURATION.hijriMonth - 1, yearNumber) +
       parseInt(firstDayOfYear.count)) %
     7; // calculate the first weekDay of month
   // Display information about date
-  document.getElementById("theDate").textContent = `${
-    months[HIJRI_CONFIGURATION.hijriMonth]
-  } ${HIJRI_CONFIGURATION.hijriYear}`;
+  if (document.getElementById("theDate")) {
+    document.getElementById("theDate").textContent = `${
+      months[HIJRI_CONFIGURATION.hijriMonth]
+    } ${HIJRI_CONFIGURATION.hijriYear}`;
+  }
   // Loop of month days
-  let dyesGrid = document.querySelector(".calender-list-grid-body");
-  dyesGrid.innerHTML = "";
-  for (let i = 1; i <= firstDayNumOfMonth; i++) {
-    dyesGrid.innerHTML += `<span class="empty"></span>`;
-  }
-  for (
-    let i = 1;
-    i <= countDayOfMoth(HIJRI_CONFIGURATION.hijriMonth, yearNumber);
-    i++
-  ) {
-    let gregorianDate = new Date(date);
-    let setGregorianDate = gregorianDate.setDate(
-      gregorianDate.getDate() +
-        i -
-        countDayOfMoth(HIJRI_CONFIGURATION.hijriMonth, yearNumber)
-    );
-    let __date__day = `${HIJRI_CONFIGURATION.hijriYear}-${HIJRI_CONFIGURATION.hijriMonth}-${i}`;
-    let hasEvent = checkIfDateHasEvents(
-      `${HIJRI_CONFIGURATION.hijriYear}-${HIJRI_CONFIGURATION.hijriMonth}-${i}`
-    );
-    let GregorianDateIncrement = new Date(setGregorianDate);
-    if (
-      theCurrentDate.getCurrentDateHijri() === i &&
-      HIJRI_CONFIGURATION.hijriMonth == currentMonthHijri
-    )
-      dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" class="active">${i} <em> ${GregorianDateIncrement.getDate()} </em>  </span>`;
-    else {
-      if (
-        HIJRI_CONFIGURATION.hijriYear >= currentYearHijri &&
-        HIJRI_CONFIGURATION.hijriMonth == currentMonthHijri &&
-        i > currentDayNumHijri
-      ) {
-        dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" data-event="${__date__day}>${i} <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
-      } else if (
-        HIJRI_CONFIGURATION.hijriYear >= currentYearHijri &&
-        HIJRI_CONFIGURATION.hijriMonth > currentMonthHijri
-      ) {
-        dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" data-event="${__date__day}">${i}  <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
-      } else
-        dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" >${i} <em> ${GregorianDateIncrement.getDate()} </em></span>`;
+  if (document.querySelector(".calender-list-grid-body")) {
+    let dyesGrid = document.querySelector(".calender-list-grid-body");
+    dyesGrid.innerHTML = "";
+    for (let i = 1; i <= firstDayNumOfMonth; i++) {
+      dyesGrid.innerHTML += `<span class="empty"></span>`;
     }
-  }
-  for (
-    let i = 1;
-    i <=
-    35 -
-      (firstDayNumOfMonth +
-        countDayOfMoth(HIJRI_CONFIGURATION.hijriMonth, yearNumber));
-    i++
-  ) {
-    dyesGrid.innerHTML += `<span class="empty"></span>`;
+    for (
+      let i = 1;
+      i <= countDayOfMoth(HIJRI_CONFIGURATION.hijriMonth, yearNumber);
+      i++
+    ) {
+      let gregorianDate = new Date(date);
+      let setGregorianDate = gregorianDate.setDate(
+        gregorianDate.getDate() +
+          i -
+          countDayOfMoth(HIJRI_CONFIGURATION.hijriMonth, yearNumber)
+      );
+      let __date__day = `${HIJRI_CONFIGURATION.hijriYear}-${HIJRI_CONFIGURATION.hijriMonth}-${i}`;
+      let hasEvent = checkIfDateHasEvents(
+        `${HIJRI_CONFIGURATION.hijriYear}-${HIJRI_CONFIGURATION.hijriMonth}-${i}`
+      );
+      let GregorianDateIncrement = new Date(setGregorianDate);
+      if (
+        theCurrentDate.getCurrentDateHijri() === i &&
+        HIJRI_CONFIGURATION.hijriMonth == currentMonthHijri
+      )
+        dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" class="active">${i} <em> ${GregorianDateIncrement.getDate()} </em>  </span>`;
+      else {
+        if (
+          HIJRI_CONFIGURATION.hijriYear >= currentYearHijri &&
+          HIJRI_CONFIGURATION.hijriMonth == currentMonthHijri &&
+          i > currentDayNumHijri
+        ) {
+          dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" data-event="${__date__day}>${i} <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
+        } else if (
+          HIJRI_CONFIGURATION.hijriYear >= currentYearHijri &&
+          HIJRI_CONFIGURATION.hijriMonth > currentMonthHijri
+        ) {
+          dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" data-event="${__date__day}">${i}  <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
+        } else
+          dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" >${i} <em> ${GregorianDateIncrement.getDate()} </em></span>`;
+      }
+    }
+    for (
+      let i = 1;
+      i <=
+      35 -
+        (firstDayNumOfMonth +
+          countDayOfMoth(HIJRI_CONFIGURATION.hijriMonth, yearNumber));
+      i++
+    ) {
+      dyesGrid.innerHTML += `<span class="empty"></span>`;
+    }
   }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  displayCalenderGrid(); // display calender
-  displayListOfMonths(); // display checkbox list of months
-  document
-    .getElementById("btnChangeByYear")
-    .addEventListener("click", enterYear); // change by years
-  document.getElementById("today").addEventListener("click", __today); // Back to today
-  // invoke go next and go prev
-  document.getElementById("goNext").addEventListener("click", goNext);
-  document.getElementById("goPrev").addEventListener("click", goPrev);
-  document
-    .getElementById("listOfMonth")
-    .addEventListener("change", (e) => changeMonth(e));
+  if(document.querySelector('.display button')) {
+    getLocation()
+    displayPryerTime();
+    prayerTimingDay()
+    document.querySelectorAll('.display button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.display button').forEach(_ => _.classList.remove('active') )
+        showControl(btn.dataset.open)
+        btn.classList.add('active')
+      })
+      
+    })
+  }
+  // autoLocation.addEventListener("click", getLocation);
 
-  // Events Actions
-  // document.getElementById('selectedDatePicker').addEventListener('focus', openCalender)
-  document.getElementById("btnAddEvent").addEventListener("click", () => {
-    document.querySelector(".modal-events").classList.remove("close");
-  });
-  document
-    .getElementById("eventTitle")
-    .addEventListener("blur", (e) => checkInputTitle(e.target));
-  document
-    .getElementById("eventTitle")
-    .addEventListener("keyup", (e) => checkInputTitle(e.target));
-  document.getElementById("btnSubmitEvent").addEventListener("click", addEvent);
-  // Add Event
+  // displayListOfMonths(); // display checkbox list of months
+  if (document.querySelector(".calender-page")) {
+    displayCalenderGrid(); // display calender
+    document
+      .getElementById("btnChangeByYear")
+      .addEventListener("click", enterYear); // change by years
+    document.getElementById("today").addEventListener("click", __today); // Back to today
+    // invoke go next and go prev
+    document.getElementById("goNext").addEventListener("click", goNext);
+    document.getElementById("goPrev").addEventListener("click", goPrev);
+    document
+      .getElementById("listOfMonth")
+      .addEventListener("change", (e) => changeMonth(e));
+
+    // Events Actions
+    // document.getElementById('selectedDatePicker').addEventListener('focus', openCalender)
+    document.getElementById("btnAddEvent").addEventListener("click", () => {
+      document.querySelector(".modal-events").classList.remove("close");
+    });
+    document
+      .getElementById("eventTitle")
+      .addEventListener("blur", (e) => checkInputTitle(e.target));
+    document
+      .getElementById("eventTitle")
+      .addEventListener("keyup", (e) => checkInputTitle(e.target));
+    document
+      .getElementById("btnSubmitEvent")
+      .addEventListener("click", addEvent);
+    // Add Event
+  }
 });
 window.addEventListener("click", (e) => {
   if (e.target.matches("span[data-event] .icon-add")) {
@@ -436,10 +524,12 @@ window.addEventListener("click", (e) => {
   }
 
   if (e.target.matches(".calender-list-grid-body span")) {
-    if(e.target.dataset.has_event) {
+    if (e.target.dataset.has_event) {
       displayEvents(e.target.dataset.current_date);
     } else {
-      document.querySelector(".events").innerHTML = `<p class="m-0 text-danger">لا يوجد مناسبات لهذا اليوم</p>`;
+      document.querySelector(
+        ".events"
+      ).innerHTML = `<p class="m-0 text-danger">لا يوجد مناسبات لهذا اليوم</p>`;
     }
     Array.from(
       document.querySelectorAll(".calender-list-grid-body span")
@@ -493,7 +583,6 @@ function goNext() {
   }
 
   let date = new Date(theCurrentDate.gregorianDate);
-  console.log(date.toLocaleDateString("en-US"));
   let theNewDate = date.setDate(
     date.getDate() +
       countDayOfMoth(
@@ -504,7 +593,7 @@ function goNext() {
   displayCalenderGrid(theNewDate);
   theCurrentDate.gregorianDate = new Date(theNewDate);
 }
-function returnHijriConfiguration(date) {
+export function returnHijriConfiguration(date) {
   let dateHijri = new Date(date).toLocaleDateString("ar-SA");
   return {
     hijriMonth: parseInt(a2e(dateHijri.split("/")[1])),
@@ -515,9 +604,8 @@ function returnHijriConfiguration(date) {
 
 function enterYear() {
   let year = document.getElementById("changeByYear");
-  let hijri = new HijriDate(+year.value, 01, 01);
+  let hijri = new HijriDate(+year.value, 1, 1);
   let gregorian = hijri.toGregorian();
-  console.log(gregorian, new Date(gregorian));
   displayCalenderGrid(gregorian);
   theCurrentDate.gregorianDate = gregorian;
 }
@@ -542,10 +630,6 @@ function __today() {
 function openCalender() {
   document.querySelector(".calender-picker").classList.remove("close-calender");
 }
-// function changeDatePicker (item) {
-//   document.querySelector('.calender-picker').classList.add('close-calender')
-//   document.getElementById('selectedDatePicker').value = item.dataset.event
-// }
 function checkInputTitle(inputTitle) {
   if (inputTitle.value == "") {
     inputTitle.classList.add("error");
@@ -573,7 +657,6 @@ function addEvent() {
   theDateEvent.value = "";
   color.value = "";
   title.value = "";
-  console.log(events);
   storeEvents.saveEvents(events);
 }
 function createEventItem(event) {
@@ -596,7 +679,6 @@ function createEventItem(event) {
 function displayEvents(theEventDate) {
   let containerEvent = document.querySelector(".events");
   containerEvent.innerHTML = "";
-  console.log(theEventDate);
   let listOfEvents = events.filter((event) => event.date == theEventDate);
   if (listOfEvents.length > 0) {
     listOfEvents.forEach((event) => {
@@ -608,6 +690,122 @@ function displayEvents(theEventDate) {
 }
 function checkIfDateHasEvents(theEventDate) {
   let listOfEvents = events.filter((event) => event.date == theEventDate);
-  console.log(listOfEvents, theEventDate);
   return listOfEvents.length > 0;
+}
+
+// PryerTime Page
+async function displayPryerTime(date = new Date()) {
+  let HIJRI_CONFIGURATION = returnHijriConfiguration(date);
+  const yearNumber = HIJRI_CONFIGURATION.hijriYear % 210;
+  let firstDayOfYear = daysFormat[century[yearNumber]];
+  let firstWeekDayOfYear = firstDayOfYear.day; // weekday not used
+  let currentYearHijri = theCurrentDate.getCurrentYearHijri();
+  let currentMonthHijri = theCurrentDate.getCurrentMonthHijri();
+  let currentDayNumHijri = theCurrentDate.getCurrentDateHijri();
+  let firstDayNumOfMonth =
+    (countOfMonthDays(HIJRI_CONFIGURATION.hijriMonth - 1, yearNumber) +
+      parseInt(firstDayOfYear.count)) %
+    7; // calculate the first weekDay of month
+
+  // Loop of month days
+  let timePrayerByMonth = await getPrayTimeByMonth(HIJRI_CONFIGURATION.hijriMonth, HIJRI_CONFIGURATION.hijriYear)
+  let dyesGrid = document.querySelector(".prayer-list-month tbody");
+  dyesGrid.innerHTML = "";
+  for (let i = 1; i <= firstDayNumOfMonth; i++) {
+    dyesGrid.innerHTML += `<span class="empty"></span>`;
+  }
+  for (
+    let i = 1;
+    i <= countDayOfMoth(HIJRI_CONFIGURATION.hijriMonth, yearNumber);
+    i++
+  ) {
+
+    let gregorianDate = new Date(date);
+    let setGregorianDate = gregorianDate.setDate(
+      gregorianDate.getDate() +
+        i -
+        countDayOfMoth(HIJRI_CONFIGURATION.hijriMonth, yearNumber)
+    );
+    let activeStyle = false;
+    let GregorianDateIncrement = new Date(setGregorianDate);
+    if (
+      theCurrentDate.getCurrentDateHijri() === i &&
+      HIJRI_CONFIGURATION.hijriMonth == currentMonthHijri
+    ) {
+      activeStyle = true;
+    }
+    let dayWeek = (parseInt(firstDayOfYear.count) + i - 1 ) % 7;
+    dyesGrid.innerHTML += `
+      <tr class="${activeStyle && "active"}">
+        <th scope="row">${daysFormat[Object.keys(daysFormat)[dayWeek]].day}</th>
+        <td>${i} ${HIJRI_CONFIGURATION.hijriMonth} ${
+      HIJRI_CONFIGURATION.hijriYear
+    }</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Fajr.replace("(EET)", "")}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Sunrise.replace("(EET)", "")}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Dhuhr.replace("(EET)", "")}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Asr.replace("(EET)", "")}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Maghrib.replace("(EET)", "")}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Isha.replace("(EET)", "")}</td>
+      </tr>
+      `;
+  }
+  for (
+    let i = 1;
+    i <=
+    35 -
+      (firstDayNumOfMonth +
+        countDayOfMoth(HIJRI_CONFIGURATION.hijriMonth, yearNumber));
+    i++
+  ) {
+    dyesGrid.innerHTML += `<span class="empty"></span>`;
+  }
+}
+
+function showControl (open) {
+  let prayerContainer = document.querySelector('.prayer-content');
+  if(open == 'open-month')
+    prayerContainer.className = "prayer-content open-month"
+  else if(open == 'open-list')
+    prayerContainer.className = "prayer-content open-list"
+  else 
+    prayerContainer.className = "prayer-content open-single"
+
+}
+async function prayerTimingDay () {
+  let prayerTime = await getPrayTimeByDate()
+  let timings = prayerTime.data.timings;
+  // let timingsList = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha' ]
+  let prayGrid = document.querySelector('.prayer-grid');
+  prayGrid.innerHTML = `
+  <div class="prayer-grid-item">
+      <span>الفجر</span>
+      <span>${timings.Fajr} </span>
+  </div>
+  <div class="prayer-grid-item">
+      <span>الشروق</span>
+      <span>${timings.Sunrise}</span>
+  </div>
+  <div class="prayer-grid-item">
+      <span>الظهر</span>
+      <span>${timings.Dhuhr}</span>
+  </div>
+  <div class="prayer-grid-item">
+      <span>العصر</span>
+      <span>${timings.Asr}</span>
+  </div>
+  <div class="prayer-grid-item">
+      <span>المغرب</span>
+      <span>${timings.Maghrib}</span>
+  </div>
+  <div class="prayer-grid-item">
+      <span>العشاء</span>
+      <span>${timings.Isha}</span>
+  </div>
+  `
+  // for(let pray of Object.keys(timings)){
+  //   if(timingsList.includes(pray)) {
+  //   }
+  // }
+  
 }

@@ -163,22 +163,25 @@ input[type="color"] {
 }
 
 /* Prayer single */
-.prayer-single h3 {
+.prayer-single h4 {
   margin: 0;
 }
 .prayer-single p {
 }
-
+.prayer-single #goPrev,
+.prayer-single #goNext {
+  padding: .75rem;
+}
 /* Prayer grid */
 .prayer-grid-item {
-  background: #e9e8e8;
-  font-size: 1.3rem;
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-  border-radius: 0.25rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
+  background: #efefef7a;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e1e1e1;
 }
 .prayer-controls {
   display: flex;
@@ -293,7 +296,7 @@ input[type="color"] {
   color: #fff;
   font-size: 2.2rem;
 }
-.calender-list .calender-list-grid-body span[data-event]:hover {
+.calender-list .calender-list-grid-body :hover {
   border-color: #e91e63  #673ab7 #3f51b5 #9c27b0;
 
   /* box-shadow: 0px 0px 0px 1px #2196f3 inset; */
