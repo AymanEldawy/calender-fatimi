@@ -1,5 +1,4 @@
 import * as Calender from "./calender-setup.js";
-console.log(Calender);
 // Let storage
 let storeEvents = {
   fetchEvents() {
@@ -17,7 +16,6 @@ function displayCalenderGrid(date = new Date()) {
   let HijriConfiguration = returnHijriConfiguration(date);
   const yearNumber = HijriConfiguration.hijriYear % 210;
   const theSmallCentury = Calender.getCentury(yearNumber);
-  console.log(yearNumber);
   let firstDayOfYear = Calender.daysFormat[Calender.century[yearNumber]];
   let firstWeekDayOfYear = firstDayOfYear.day; // weekday not used
   let currentYearHijri = Calender.theCurrentDate.getCurrentYearHijri();
@@ -91,16 +89,16 @@ function displayCalenderGrid(date = new Date()) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  Object.keys(Calender.months).forEach((month) => {
-    document.getElementById("listOfMonth").innerHTML += `
-      <option value="${month}">${Calender.months[month]}</option>
-    `;
-  });
   displayCalenderGrid(); // display calender
   document
     .getElementById("btnChangeByYear")
     .addEventListener("click", enterYear); // change by years
   if (document.querySelector(".calender-page")) {
+    Object.keys(Calender.months).forEach((month) => {
+      document.getElementById("listOfMonth").innerHTML += `
+      <option value="${month}">${Calender.months[month]}</option>
+    `;
+    });
     // Events Actions
     // document.getElementById('selectedDatePicker').addEventListener('focus', openCalender)
     document.getElementById("btnAddEvent").addEventListener("click", () => {
@@ -116,19 +114,18 @@ window.addEventListener("DOMContentLoaded", () => {
       .getElementById("btnSubmitEvent")
       .addEventListener("click", addEvent);
     // Add Event
+    document
+      .getElementById("listOfMonth")
+      .addEventListener("change", (e) => changeMonth(e));
   }
   document.getElementById("today").addEventListener("click", __today); // Back to today
   // invoke go next and go prev
   document.getElementById("goNext").addEventListener("click", goNext);
   document.getElementById("goPrev").addEventListener("click", goPrev);
-  document
-    .getElementById("listOfMonth")
-    .addEventListener("change", (e) => changeMonth(e));
 });
 
 window.addEventListener("click", (e) => {
   if (e.target.matches("span[data-event] .icon-add")) {
-    console.log(e.target.parentElement.dataset);
     document.getElementById("datePicker").value =
       e.target.parentElement.dataset.current_date;
     document.querySelector(".modal-events").classList.remove("close");
@@ -161,7 +158,7 @@ function goPrev() {
   );
   let date = new Date(Calender.theCurrentDate.gregorianDate);
   let theNewDate = date;
-  if (listOfControls.value == "year") {
+  if (listOfControls && listOfControls.value == "year") {
     HIJRI_CONFIGURATION.hijriYear -= 1;
     theNewDate = date.setDate(date.getDate() - 355);
   } else {
@@ -183,7 +180,7 @@ function goNext() {
   );
   let date = new Date(Calender.theCurrentDate.gregorianDate);
   let theNewDate = date;
-  if (listOfControls.value == "year") {
+  if (listOfControls &&  listOfControls.value == "year") {
     HIJRI_CONFIGURATION.hijriYear += 1;
     theNewDate = date.setDate(date.getDate() + 355);
   } else {
@@ -214,18 +211,13 @@ function returnHijriConfiguration(date) {
 }
 
 function enterYear() {
-  console.log("run...");
   let year = document.getElementById("changeByYear");
-  console.log(year.value);
   let hijri = new HijriDate(+year.value, 1, 1);
-  console.log(hijri);
   let gregorian = hijri.toGregorian();
   displayCalenderGrid(gregorian);
   Calender.theCurrentDate.gregorianDate = gregorian;
 }
 function changeMonth(e) {
-  // console.log(e)
-  console.log(e.target.value);
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
     Calender.theCurrentDate.gregorianDate
   );
