@@ -28,6 +28,11 @@
       </div>
       <div class="prayer-content open-single">
         <div class="prayer-list">
+          <div class="prayer-controls">
+            <button class="btn btn-primary" id="goNextMonth" data-next="month">الشهر التالي</button>
+            <p class="dateInsideList"></p>
+            <button class="btn btn-primary" id="goPrevMonth" data-prev="month">الشهر السابق</button>
+          </div>
           <table class="table">
             <thead class="thead-style">
               <tr>
@@ -43,13 +48,10 @@
             </thead>
             <tbody></tbody>
           </table>
-          <div class="prayer-controls">
-            <button class="btn btn-primary">الشهر التالي</button>
-            <button class="btn btn-primary" disabled>الشهر السابق</button>
-          </div>
+         
         </div>
         <div class="prayer-list-month">
-          <div id="listOfMonth"></div>
+          <p class="dateInsideList mb-3 display-6"></p>
           <table class="table">
             <thead class="thead-style">
               <tr>
@@ -68,19 +70,25 @@
         </div>
         <div class="prayer-single">
           <div class="d-flex align-items-center justify-content-between">
-            <span id="goPrev">
+            <span id="goPrev" data-prev="day">
               <i class="gg-chevron-right"></i>
             </span>
             <div class="mx-auto text-center">
-              <h4>الاحد 1 محرم 2022</h4>
-              <p>5 يونيو 2022</p>
+              <h4 id="dateDayHijri">الاحد 1 محرم 2022</h4>
+              <p class="m-0" id="dateDayGregorian">5 يونيو 2022</p>
+              <button
+                type="button"
+                class="btn text-primary p-0 mx-1 mb-1 hide"
+                id="today"
+              >
+                اليوم
+              </button>
             </div>
-            <span id="goNext">
+            <span id="goNext"  data-next="day">
               <i class="gg-chevron-right __left"></i>
             </span>
           </div>
-          <div class="prayer-grid">
-          </div>
+          <div class="prayer-grid"></div>
         </div>
       </div>
     </div>
@@ -89,7 +97,10 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://rawgit.com/abdennour/hijri-date/master/cdn/hijri-date-latest.js"
+      type="text/javascript"
+    ></script>
     <script src="js/prayer-time.js" type="module"></script>
-    <script src="js/calender-package.js" type="module"></script>
   </body>
 </html>

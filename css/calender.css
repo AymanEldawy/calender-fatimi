@@ -55,12 +55,14 @@ body {
   border-radius: 0.25rem;
   z-index: 2;
   font-size: 0.8rem;
-  max-width: 340px;
+  max-width: 360px;
   transition: opacity 0.2s ease-in-out;
   pointer-events: unset;
 }
-.modal-events.close,
-.calender-picker.close-calender {
+
+.calender-picker.close-calender, 
+.hide,
+.modal-events.close{
   pointer-events: none;
   opacity: 0;
 }
@@ -69,7 +71,9 @@ body {
 }
 .calender-picker .calender-page-controls p#theDate {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
 }
 .calender-picker .controls-by button {
   font-size: 0.8rem;
@@ -106,6 +110,21 @@ body {
 
 input[type="color"] {
   max-width: 90px;
+}
+.calender-picker span:hover ,
+.calender-picker span:not(.active) {
+  color: inherit !important;
+  background: inherit !important;
+  font-size: inherit !important;
+  border: 1px solid #504f4f36 !important;
+}
+.calender-picker span[data-event] .icon-add {
+  display: none !important;
+}
+.calender-picker .calender-list .calender-list-grid-body span.active{
+  background-color: #00b7ff;
+  color: #fff;
+  background-image:unset;
 }
 
 /* Prayer time page */
@@ -153,6 +172,13 @@ input[type="color"] {
 }
 
 /* Table */
+p.dateInsideList {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #2196f3;
+  font-weight: bold;
+  margin: 0;
+}
 .thead-style {
   background: #2196f3;
   color: #ffffff;
@@ -161,7 +187,9 @@ input[type="color"] {
   background: #ffeb3b;
   box-shadow: 0 1px 2px #555;
 }
-
+td {
+  white-space: nowrap;
+}
 /* Prayer single */
 .prayer-single h4 {
   margin: 0;
@@ -185,14 +213,12 @@ input[type="color"] {
 }
 .prayer-controls {
   display: flex;
-  justify-content: space-around;
-  margin-top: 1rem;
-  padding: 1rem;
+  justify-content: space-between;
   background: #f6f6f6;
-  box-shadow: 0 1px 4px #22222259;
-  padding: 0.25rem;
+  /* box-shadow: 0 1px 4px #22222259; */
   margin: 1rem 0;
   border-radius: 0.25rem;
+  align-items: center;
 }
 
 /* Calender page */
@@ -220,6 +246,10 @@ input[type="color"] {
   color: #888;
   transition: background-color 0.2s ease-out;
   background-color: #f2f2f2;
+}
+.prayer-single #goNext,
+.prayer-single #goPrev{
+  background-color: #dddddd;
 }
 
 .calender-page-display button {
@@ -294,7 +324,7 @@ input[type="color"] {
 .calender-list .calender-list-grid-body span[data-has_event="true"] {
   background-image: linear-gradient(45deg, #673ab7, #b02799, #3f51b5);
   color: #fff;
-  font-size: 2.2rem;
+  font-size: 1.2rem;
 }
 .calender-list .calender-list-grid-body :hover {
   border-color: #e91e63  #673ab7 #3f51b5 #9c27b0;
