@@ -29,6 +29,7 @@ function getLocation() {
     navigator.geolocation.getCurrentPosition(showPosition, showError);
   }
 }
+getLocation()
 async function showPosition(position) {
   let currentLocation = {
     latitude: position.coords.latitude,
