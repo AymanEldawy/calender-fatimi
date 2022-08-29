@@ -1,6 +1,6 @@
 import * as Calender from "./calender-setup.js";
 // Let storage
-let storeEvents = {
+export let storeEvents = {
   fetchEvents() {
     let events = JSON.parse(localStorage.getItem("events"));
     return events && events.length ? events : [];
@@ -257,6 +257,7 @@ function addEvent() {
     title: title.value,
     date: theDateEvent.value,
     color,
+    deletable: true,
   };
   // Check If Event date > the current date
 

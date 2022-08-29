@@ -265,25 +265,25 @@ export let theCurrentDate = {
 export function getCentury(year) {
   switch (true) {
     case year < 31:
-      return "القرن الاول";
+      return "الاول";
       break;
     case year > 30 && year < 61:
-      return "القرن الثاني";
+      return "الثاني";
       break;
     case year > 60 && year < 91:
-      return "القرن الثالث";
+      return "الثالث";
       break;
     case year > 90 && year < 121:
-      return "القرن الرابع";
+      return "الرابع";
       break;
     case year > 120 && year < 151:
-      return "القرن الخامس";
+      return "الخامس";
       break;
     case year > 150 && year < 181:
-      return "القرن السادس";
+      return "السادس";
       break;
     case year > 180 && year < 211:
-      return "القرن السابع";
+      return "السابع";
       break;
   }
 }
@@ -312,3 +312,23 @@ export function displayListOfMonths() {
     listOfMonth.innerHTML += `<option value="${month}">${months[month]}</option>`;
   }
 }
+
+export const countDownTime = (date, display) => {
+  let _ = document.getElementById(display)
+
+  let x = setInterval(function () {
+    let now = new Date().getTime();
+
+
+    if(days < 1) {
+      console.log('اليوم')
+    }
+    if (distance < 0) {
+      clearInterval(x);
+      _.innerHTML = `اليوم`;
+    } else {
+    }
+  }, 1000);
+  console.log(_)
+
+};
