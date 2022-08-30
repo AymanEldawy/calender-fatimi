@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      content="برمجة خاصه لموقع قبيلة آل زمانان لمعرفة برجك بطريقة حساب الجمل"
+      name="description"
+    />
+    <meta content="text/html; charset=windows-1256" http-equiv="Content-Type" />
+    <meta content="ar-sa" http-equiv="Content-Language" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
+      integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/icons.css" />
+    <link rel="stylesheet" href="css/globle.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link
+      href="//db.onlinewebfonts.com/c/2e6ae3642c879522873a28ede1eaac69?family=Helvetica+Neue+W23+for+SKY+Reg"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>موقع قبيلة آل زمانان</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-dark bg-primary">
+        <div class="container d-flex">
+          <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a
+          ><button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i class="gg-menu"></i>
+          </button>
+          <div class="collapse" id="collapsibleNavId">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="#knowTower"
+                  >اعرف برجك <span class="sr-only">(current)</span></a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="compare.html">مقارنة بين الابراج</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="smath.html">حساب الجمل</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="towers.html">اعرف برجك</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div id="knowTower" class="my-5">
+        <h2 class="text-center mb-3">أعرف برجك</h2>
+        <div class="row justify-content-center">
+          <form action="" class="mx-auto col-lg-8">
+            <div class="d-flex justify-content-center">
+              <div class="form-group mr-2">
+                <label for="name"> أدخل الاسم الاول </label>
+                <input
+                  type="text"
+                  id="inputName"
+                  class="form-control"
+                  placeholder="محمد"
+                />
+              </div>
+              <div class="form-group">
+                <label for="name"> أدخل اسم الام </label>
+                <input
+                  type="text"
+                  id="inputMother"
+                  class="form-control"
+                  placeholder="امنه"
+                />
+              </div>
+            </div>
+            <div class="d-flex mt-2 justify-content-center">
+              <button
+                type="button"
+                class="btn btn-md btn-primary mx-2"
+                onclick="calculate();"
+              >
+                برجي
+              </button>
+              <button id="reset" type="button" class="btn btn-md btn-danger">
+                حذف
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="roles my-5" id="showResult">
+      <!-- <div class="row">
+        <div class="col-lg-4">
+          <div class="role-box">
+            <h4 class="role-box-title text-lg-center">
+              <span> حساب الجمل </span>
+            </h4>
+            <p>
+              يكون في اعطاء كل حرف من الاحرف الهجائية العربية رقم يقابله وذلك
+              حسب جدول متوفر للجميع. يطلق ايضاً عليه اسم حساب الابجدية ومجموع
+              احرفه هي ثمانية وعشرين حرفاً. كل حرف اذا لديه رقم يمثله والارقام
+              تبدأ برقم 1 وتنتهي بالرقم 1000 وهي على التوالي :
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="role-box">
+            <h4 class="role-box-title text-lg-center">
+              <span> طريقة الحساب </span>
+            </h4>
+            <p>
+              أ=1 | ب=2 | ج=3 | د=4 | ه=5 | و=6 | ز=7 | ح=8 | ط=9 | ي=10 | ك=20
+              | ل=30 | م=40 | ن=50 | س=60 | ع=70 | ف=80 | ص=90 | ق=100 | ر=200 |
+              ش=300 | ت=400 | ث=500 | خ=600 | ذ=700 | ض=800 | ظ=900 |غ=1000
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="role-box">
+            <h4 class="role-box-title text-lg-center">
+              <span> معرفة البرج بواسطة حساب الجمل </span>
+            </h4>
+            <p>
+              تقوم هذه الحاسبة بتلقي اسمك واسم والدتك ومن ثم تحويل كل الاحرف في
+              إسميكما الى أرقام وفق جدول حساب الجمل ومن ثم جمعهما معاً . بعد
+              الجمع يقسم الناتج على 12 ويتم التعاطي مع الباقي. قيمة الباقي تحدد
+              البرج الطالع الذي تنتمي اليه.
+            </p>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <div class="visitors" id="visitors"></div>
+    <footer>
+      <div class="container text-center bg-light p-1">
+        <p class="m-0">
+          جميع الحقوق محفوظة @ 2021
+          <a class="text-info text-bold" href="/">موقع قبيلة آل زمانان</a>
+        </p>
+      </div>
+    </footer>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script
+    src="https://rawgit.com/abdennour/hijri-date/master/cdn/hijri-date-latest.js"
+    type="text/javascript"
+  ></script>
+    <script src="js/global.js" type="module"></script>
+    <script src="js/visitors.bundle.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

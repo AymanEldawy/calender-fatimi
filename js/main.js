@@ -1,805 +1,654 @@
-import {
-  countries,
-  cities,
-  getCitiesByCountryCode,
-} from "country-city-location";
-import { weeks, daysInfo } from "./weeks.js";
+// عناصر الابراج
+let __fire = ["الحمل", "الاسد", "القوس"];
+let __stone = ["الثور", "العذراء", "الجدي"];
+let __wind = ["الجوزاء", "الميزان", "الدلو"];
+let __water = ["السرطان", "العقرب", "الحوت"];
 
-let SunCalc = require("suncalc2");
+// نتائج الابراج
+// تم تكرار هذه الجملة لتجنب الاخطاء
+const resultCompare = [
+  "هذا النوع من الذبذبة يحدث عندما يتصادم برجان متشابهان (مثل الجوزاء الجوزاء). هناك عادة تفاهم وود مشترك",
+  "هذا النوع من الذبذبة يحدث عندما يتصادم برجان متشابهان (مثل الجوزاء الجوزاء). هناك عادة تفاهم وود مشترك",
+  "توجد هناك احتمالية لاستمرارية هذه العلاقة",
+  "هذه العلاقة مبنية على الصداقة والوفاء. يوجد بينهم ترابط قوي والزمالة طويلة الأمد",
+  "هذه العلاقة بحاجة الى بعض التضحية لتخطي الأزمات",
+  "وافق كامل!! هي علاقة مبنية على الاحترام الشديد، والتفاهم",
+  "وجد هناك إحساس بعدم الارتياح وسوء التواصل لهذه العلاقة. سيشعر أحد أفراد هذه العلاقة برغبة ملحة لإرضاء الطرف الآخر. علاقة غير متوازنة!",
+  "هذا البرج في الاتجاه المعاكس لبرجك في دائرة الأبراج. عندما العلاقة جميلة، فهي الأفضل. وعندما تكون سيئة، فهي الأسوأ.",
+  "هذا البرج في الاتجاه المعاكس لبرجك في دائرة الابراج . عندما العلاقة جميلة , فهي الافضل . و عندما تكون سيئة , فهي الاسوأ.",
+];
+//هنا نتائج المقارنة تقدر تضيف اعداد تاني و تكتب قدامها او تعدل علي القديم
 
-export let storageLocation = {
-  fetchLocation: () => {
-    let location = localStorage.getItem("TM_location");
-    return JSON.parse(location)
-      ? JSON.parse(location)
-      : {
-          lat: "17.5065",
-          long: "44.1316",
-          country: "SA",
-          city: "Najran",
-        };
+// هنا ملومات الابراج العدد يبدأ من 0
+// ملحوظة رقم 0 و رقم 12 متشابهآ لتجنب الاخطاء
+const towers = [
+  {
+    tower: "الحوت",
+    planet: "المشتري (جوبيتر) ",
+    item: "مائي",
+    stone: "الزبرجد الأزرق، حجر القمر",
+    features: "الإخلاص – الحساسية = الكآبة والروحانية",
+    quality: "متغير",
+    half: "سلبي",
+    chines: "الأرنب",
+    luck: " 12, 21, 39, 48, 57",
+    face: "السرطان، العقرب أو الحوت",
   },
-  saveLocation: (location) => {
-    localStorage.setItem("TM_location", JSON.stringify(location));
+  {
+    tower: "الحمل",
+    planet: "المريخ (مارس)",
+    item: "ناري",
+    stone: "الماس",
+    features: "الشجاعة – الحزم – النشاط = إلى الإندفاع والتهور.",
+    quality: "جوهري",
+    half: "أيجابي",
+    chines: "التنين",
+    luck: "1, 10 ,19, 28, 37, 46, 55",
+    face: " الأسد أو القوس",
   },
-  fetchTheme: () => {
-    let theme = localStorage.getItem("TM_theme");
-    return JSON.parse(theme) ? JSON.parse(theme) : "";
+  {
+    tower: "الثور",
+    planet: "هو الزهرة (فينوس) ",
+    item: "ترابي",
+    stone: "الكريم الزمرد",
+    features: "الصبر – الإحساس بالواقع = العناد والتردد.",
+    quality: "ثابت",
+    half: "سلبي",
+    chines: "الثعبان",
+    luck: "2, 11, 29, 29, 37, 56",
+    face: " العذراء أو الجدي",
   },
-  saveTheme: (theme) => {
-    localStorage.setItem("TM_theme", JSON.stringify(theme));
+  {
+    tower: "الجوزاء",
+    planet: "لكوكب هو عطارد",
+    item: "هوائي",
+    stone: "الكريم اللؤلؤ",
+    features:
+      "المقدرة على التكيف – النشاط الذهني الحاد – الحاسة السادسة = الانغماس في الملذات!",
+    quality: "متغير",
+    half: "أيجابي",
+    chines: "الحصان",
+    luck: "3, 12, 21, 30, 48, 47",
+    face: " الميزان، الدلو أو الجوزاء",
   },
-};
-
-let days = [
-  "الاحد",
-  "الاتنين",
-  "الثلاثاء",
-  "الاربعاء",
-  "الخميس",
-  "الجمعة",
-  "السبت",
+  {
+    tower: "السرطان",
+    planet: "القمر",
+    item: "مائي",
+    stone: "الياقوت",
+    features: "فكر متفتح – حساسية عاطفية وشفافية = إلتصاق بكل ما هو بيتوتي",
+    quality: "جوهري",
+    half: "سلبي",
+    chines: "العنزة",
+    luck: "4, 13, 22, 31, 40, 48, 57",
+    face: "العقرب أو الحوت",
+  },
+  {
+    tower: "الاسد",
+    planet: "الشمس",
+    item: "ناري",
+    stone: "الزبرجد",
+    features: "النبل – الحزم – النشاط = الغرور والأنانية",
+    quality: "ثابت",
+    half: "أيجابي",
+    chines: "القرد",
+    luck: "5, 14, 13, 32, 41, 50",
+    face: "برج القوس أو الحمل",
+  },
+  {
+    tower: "السنبلة (العذراء)",
+    planet: "عطارد (ميركورى) ",
+    item: "ترابي",
+    stone: "الياقوت الازرق",
+    features: "الرعاية – الإحساس بالواقع = النقد",
+    quality: "متغير",
+    half: "سلبي",
+    chines: "الديك",
+    luck: "6, 15, 24, 33, 42, 51",
+    face: "الجدي، الثور أو العذراء",
+  },
+  {
+    tower: "الميزان",
+    planet: "الزهرة (فينوس) ",
+    item: "هوائي",
+    stone: "العقيق السفير",
+    features: "العدالة – الرُقي = المطالبة بالحقوق",
+    quality: "جوهري",
+    half: "أيجابي",
+    chines: "الكلب",
+    luck: "7, 16, 25, 34, 43, 52",
+    face: "الدلو، الجوزاء أو الميزان",
+  },
+  {
+    tower: "العقرب",
+    planet: "المريخ (مارس)  ",
+    item: "مائي",
+    stone: "التوباز, الأوبال",
+    features: "قوة الإرادة – الشفافية = الغيرة وحُب التملك",
+    quality: "ثابت",
+    half: "سلبي",
+    chines: "الخنزير",
+    luck: "8, 17, 26, 35, 44, 53",
+    face: "الحوت أو السرطان",
+  },
+  {
+    tower: "القوس",
+    planet: "المشتري (جوبيتر)",
+    item: "ناري",
+    stone: "الفيروز، التوباز",
+    features: "النظام – الحزم والنشاط = التهور!",
+    quality: "متغير",
+    half: "أيجابي",
+    chines: "الجرذ",
+    luck: " 9, 18, 27, 36, 45, 54",
+    face: "الحمل أو الأسد",
+  },
+  {
+    tower: "الجدي",
+    planet: " زحل (ساتورن)",
+    item: "ترابي",
+    stone: "العقيق الأحمر اليماني",
+    features: "التأمل – العناد والتشبت بالرأي = التشاؤم",
+    quality: "جوفري",
+    half: "سلبي",
+    chines: "الثور",
+    luck: "10, 28, 37, 46, 55",
+    face: "الثور أو العذراء",
+  },
+  {
+    tower: "الدلو",
+    planet: " زحل (ساتورن)",
+    item: "هوائي",
+    stone: "الأرجوان، الفيروز",
+    features: "التجديد – الفراسة الفطرية = التردد",
+    quality: "ثابت",
+    half: "أيجابي",
+    chines: "النمر",
+    luck: " 11, 29, 38, 47, 56",
+    face: "الجوزاء، الميزان أو الدلو",
+  },
+  {
+    tower: "الحوت",
+    planet: "المشتري (جوبيتر) ",
+    item: "مائي",
+    stone: "الزبرجد الأزرق، حجر القمر",
+    features: "الإخلاص – الحساسية = الكآبة والروحانية",
+    quality: "متغير",
+    half: "سلبي",
+    chines: "الأرنب",
+    luck: " 12, 21, 39, 48, 57",
+    face: "السرطان، العقرب أو الحوت",
+  },
 ];
 
-let latAndLong = {
-  lat: "17.5065",
-  long: "44.1316",
-  day: "today",
-  dayDate: new Date()
-    .toLocaleDateString("en-UK")
-    .replace(/\//g, "-")
-    .split("-")
-    .reverse()
-    .join("-"),
-};
-
-function closePlanetMessage() {
-  document.getElementById("planetMessage").innerHTML = "";
-  document.body.classList.remove("no-scroll");
-}
-
-function openPlanetMessage(planet) {
-  document.body.classList.add("no-scroll");
-  document.getElementById("planetMessage").innerHTML = `
-  <div class="envelope ${planet.status}">
-      <div class="content">
-        <div class="envelope-content">
-        ${planet.msg}
+if (document.getElementById("knowTower")) {
+  function templateResult(info) {
+    console.log(info);
+    if (info.name) {
+      document.getElementById("showResult").innerHTML = `
+    <div class="result-template mx-auto pt-3" style="max-width:600px; border-top:1px solid #ccc">
+      <div class="result-head align-items-center justify-content-around d-flex mb-3">
+        <div class="text-center">
+          <span class="d-block">اسمك</span>
+          <h3 class="bg-primary px-2 rounded-sm mt-1 text-white">${info.name}</h3>
+        </div>
+        <div class="text-center">
+          <span class="d-block">اسم الام</span>
+          <h3 class="bg-primary px-2 rounded-sm mt-1 text-white">${info.mother}</h3>
         </div>
       </div>
+      <div class="result-body">
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-secondary">النتيجة</li>
+          <li class="list-group-item align-items-center d-flex">
+            <span> حساب الجمل</span>
+            <span class="badge badge-dark badge-pill ">${info.num}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>الباقي من القسمة</span>
+            <span class="badge badge-dark badge-pill ">${info.mod}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>برجك</span>
+            <span class="badge badge-dark badge-pill ">${info.tower}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>الكوكب</span>
+            <span class="badge badge-dark badge-pill ">${info.planet}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>العنصر</span>
+            <span class="badge badge-dark badge-pill ">${info.item}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>الحجر الكريم</span>
+            <span class="badge badge-dark badge-pill ">${info.stone}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>الصفات والخصائص الفلكية</span>
+            <span class="badge badge-dark badge-pill ">${info.features}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>الجودة</span>
+            <span class="badge badge-dark badge-pill ">${info.quality}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>القطبية</span>
+            <span class="badge badge-dark badge-pill ">${info.half}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>يقابله في الأبراج الصينية</span>
+            <span class="badge badge-dark badge-pill ">${info.chines}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>أرقام الحظ</span>
+            <span class="badge badge-dark badge-pill ">${info.luck}</span>
+          </li>
+          <li class="list-group-item align-items-center d-flex ">
+            <span>مولود هذا البرج أكثر توافقا مع</span>
+            <span class="badge badge-dark badge-pill ">${info.face}</span>
+          </li>
+        </ul>
+      </div>
     </div>
-  `;
-}
-
-// Main Variables
-let backToDate = document.getElementById("backToDate");
-let displayDate = document.getElementById("displayDate");
-let displayDateHigry = document.getElementById("displayDateHigry");
-
-function resetDateHigry(theDate = new Date()) {
-  let date = new Date(theDate);
-  let changeHijriDate = document.getElementById("changeHijriDate");
-  let { action, countofdays } = changeHijriDate.dataset;
-  let dateAfterReset = date.setDate(date.getDate());
-  if (action === "ناقص") {
-    dateAfterReset = date.setDate(date.getDate() - parseInt(countofdays));
-  } else if (action === "زيادة") {
-    dateAfterReset = date.setDate(date.getDate() + parseInt(countofdays));
+  </div>`;
+    }
   }
-  return new Date(dateAfterReset).toLocaleDateString("ar-SA");
-}
 
-function changeCountry(countryCode = "SA") {
-  let citiesSelected = getCitiesByCountryCode(countryCode);
-  document.getElementById("city").innerHTML = "";
-  citiesSelected.forEach((city) => {
-    document.getElementById(
-      "city"
-    ).innerHTML += `<option value="${city.lat}-${city.lng}-${city.name}">${city.name}</option>`;
-  });
-}
+  function calculate() {
+    let _name = document.getElementById("inputName").value;
+    let _mother = document.getElementById("inputMother").value;
+    let towerInformation = {};
+    if (_name && _mother) {
+      let name = _name + " " + _mother;
+      let arr1 = [
+        "ا",
+        "ب",
+        "ت",
+        "ث",
+        "ج",
+        "ح",
+        "خ",
+        "د",
+        "ر",
+        "ز",
+        "ذ",
+        "س",
+        "ش",
+        "ص",
+        "ض",
+        "ط",
+        "ظ",
+        "ع",
+        "غ",
+        "ف",
+        "ق",
+        "ك",
+        "ل",
+        "م",
+        "ن",
+        "ه",
+        "و",
+        "ي",
+        "ة",
+        "ى",
+        "ء",
+        "أ",
+        "آ",
+      ];
+      let arr2 = [
+        1,
+        2,
+        400,
+        500,
+        3,
+        8,
+        600,
+        4,
+        200,
+        7,
+        700,
+        60,
+        300,
+        90,
+        800,
+        9,
+        900,
+        70,
+        1000,
+        80,
+        100,
+        20,
+        30,
+        40,
+        50,
+        5,
+        6,
+        10,
+        400,
+        1,
+        1,
+        1,
+        1,
+      ];
+      let str = name;
+      let msg = "";
+      let num1 = 0;
+      let mod1 = 0;
+      let flag = 0;
+      let n = str.length;
+      let str1 = "";
 
-function displayCountry() {
-  document.getElementById("country").innerHTML = "";
-  countries.forEach((country) => {
-    document.getElementById(
-      "country"
-    ).innerHTML += `<option value="${country.Alpha2Code}">${country.Name}</option>`;
-  });
-  changeCountry(countries[0].Alpha2Code);
-}
-
-function setLocation() {
-  let country = document.getElementById("country").value;
-  let cityInfo = document.getElementById("city").value;
-  let cityLocation = cityInfo.split("-");
-  let lat = cityLocation[0];
-  let long = cityLocation[1];
-  let city = cityLocation[2];
-  let currentLocation = {
-    country,
-    city,
-    lat,
-    long,
-  };
-  storageLocation.saveLocation(currentLocation);
-  setTimeout(() => {
-    document.getElementById("overlayPopup").classList.remove("open");
-  }, 500);
-}
-function defaultLocation() {
-  let LOCATION = storageLocation.fetchLocation();
-  latAndLong.lat = LOCATION.lat;
-  latAndLong.long = LOCATION.long;
-  if (LOCATION && LOCATION.country) {
-    document.querySelectorAll("#country option").forEach((e) => {
-      if (LOCATION.country == e.value) {
-        e.setAttribute("selected", "selected");
-        changeCountry(LOCATION.country);
-        document.querySelectorAll("#city option").forEach((e) => {
-          if (LOCATION.city == e.value.split("-")[2]) {
-            e.setAttribute("selected", "selected");
-          }
-        });
+      for (let i = 0; i < n; i++) {
+        msg = str.charAt(i);
+        for (let x = 0; x < 33; x++) {
+          if (msg == arr1[x]) num1 = num1 + arr2[x];
+        }
       }
+      towerInformation.name = str.split(" ")[0];
+      towerInformation.mother = str.split(" ")[1];
+      towerInformation.num = num1;
+      towerInformation.mod = num1 % 12;
+      mad1 = num1 % 12;
+      templateResult(
+        Object.assign({}, towerInformation, towers[towerInformation.mod])
+      );
+    }
+  }
+
+  // window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById("reset").addEventListener("click", () => {
+    window.location.reload();
+  })
+}
+
+if (document.getElementById("compare")) {
+  document.querySelectorAll(".__left .col-4").forEach((item) => {
+    item.addEventListener("click", () => {
+      document
+        .querySelectorAll(".__left .col-4")
+        .forEach((subItem) => (subItem.classList = "col-4"));
+      item.classList.add("active");
     });
-  }
-}
-let theme = storageLocation.fetchTheme();
-window.addEventListener("click", (e) => {
-  if (
-    e.target.id == "planetMessage" ||
-    e.target.classList.contains(".envelope")
-  ) {
-    closePlanetMessage();
-  }
-  if (e.target.classList.contains("theme-color")) {
-    let siblings = [...e.target.parentElement.children];
-    siblings.forEach((sibling) => sibling.classList.remove("active"));
-    e.target.classList.add("active");
-    let bg = window
-      .getComputedStyle(e.target, null)
-      .getPropertyValue("background-color");
-    document.body.style.background = bg;
-    storageLocation.saveTheme({ bg, data: e.target.dataset.theme });
-  }
-});
-window.addEventListener("DOMContentLoaded", () => {
-  if (theme) {
-    document.body.style.background = theme.bg;
-    document
-      .querySelector(`[data-theme="${theme.data}"]`)
-      .classList.add("active");
-  }
-  document.getElementById("displayDay").addEventListener("click", (e) => {
-    let value = e.target.textContent;
-    let dayInfo = daysInfo[days.indexOf(value)];
-    let planetNight = weeks[days.indexOf(value) + "night"];
-    let planetLight = weeks[days.indexOf(value) + "light"];
-    let contentNight = "";
-    let contentLight = "";
-    for (let i = 0; i < planetNight.length; i++) {
-      contentNight += `
-      <div class="planet-content-box d-flex mb-3 rounded">
-        <span class="d-flex align-items-center mr-1 justify-content-center status-${planetNight[i].status} p-1">${planetNight[i].planet}</span>
-        <p>${planetNight[i].msg}</p>
-    </div>
-        `;
-    }
-    for (let i = 0; i < planetLight.length; i++) {
-      contentLight += `
-        <div class="planet-content-box  d-flex mb-3 rounded">
-            <span class="d-flex align-items-center mr-1 justify-content-center status-${planetLight[i].status} p-1">${planetLight[i].planet}</span>
-            <p>${planetLight[i].msg}</p>
-          </div>
-        `;
-    }
-    document.body.classList.add("no-scroll");
-    document.getElementById("planetMessage").innerHTML = `
-      <div class="popup envelope">
-        <div class="popup-content">
-        <div class="day-content">
-          <h2>${dayInfo.title1}</h2>
-          <p>${dayInfo.description1}</p>
-          <h2>${dayInfo.title2}</h2>
-          <p>${dayInfo.description2}</p>
-          <hr>
-        </div>
-        <div class="planet-content">
-          <h3><i class="gg-moon"></i> ساعات الليل</h3>
-          ${contentNight}
-          <h3><i class="gg-sun"></i> ساعات النهار</h3>
-          ${contentLight}
-        </div>
-        </div>
-      </div>
-  `;
   });
-  defaultLocation();
-  // change date next day or perv day
-  let nextDay = document.getElementById("nextDay");
-  let prevDay = document.getElementById("prevDay");
-  prevDay.addEventListener("click", () => {
-    let theNextDay = null;
-    let date = new Date();
-    if (latAndLong.day == "today") {
-      let tomorrow = date.setDate(date.getDate() - 1);
-      theNextDay = new Date(tomorrow)
-        .toLocaleDateString("en-UK")
-        .replace(/\//g, "-")
-        .split("-")
-        .reverse()
-        .join("-");
-    } else {
-      let theNewDate = new Date(latAndLong.day.toString());
-      let tomorrow = theNewDate.setDate(theNewDate.getDate() - 1);
-      theNextDay = new Date(tomorrow)
-        .toLocaleDateString("en-UK")
-        .replace(/\//g, "-")
-        .split("-")
-        .reverse()
-        .join("-");
-    }
-    loadDate(latAndLong.lat, latAndLong.long, theNextDay);
-    backToDate.classList.add("show");
-  });
-  nextDay.addEventListener("click", () => {
-    let theNextDay = null;
-    let date = new Date();
-    if (latAndLong.day == "today") {
-      let tomorrow = date.setDate(date.getDate() + 1);
-      theNextDay = new Date(tomorrow)
-        .toLocaleDateString("en-UK")
-        .replace(/\//g, "-")
-        .split("-")
-        .reverse()
-        .join("-");
-    } else {
-      let theNewDate = new Date(latAndLong.day.toString());
-      let tomorrow = theNewDate.setDate(theNewDate.getDate() + 1);
-      theNextDay = new Date(tomorrow)
-        .toLocaleDateString("en-UK")
-        .replace(/\//g, "-")
-        .split("-")
-        .reverse()
-        .join("-");
-    }
-
-    loadDate(latAndLong.lat, latAndLong.long, theNextDay);
-    backToDate.classList.add("show");
-  });
-  // Run default function if user not allow location
-  showError();
-  // Save location info in storage
-  let addLocation = document.getElementById("addLocation");
-  let autoLocation = document.getElementById("autoLocation");
-  let closeLocation = document.getElementById("closeLocation");
-  let chooseLocation = document.getElementById("chooseLocation");
-  let overlayPopup = document.getElementById("overlayPopup");
-  autoLocation.addEventListener("click", getLocation);
-  addLocation.addEventListener("click", setLocation);
-  chooseLocation.addEventListener("click", () => {
-    defaultLocation();
-    overlayPopup.classList.add("open");
-  });
-  closeLocation.addEventListener("click", () => {
-    overlayPopup.classList.remove("open");
-  });
-  setInterval(() => {
-    let date = new Date();
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
-    let ampm = hours >= 12 ? "م" : "ص";
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    hours = hours.toString().padStart(2, "0");
-    minutes = minutes.toString().padStart(2, "0");
-    seconds = seconds.toString().padStart(2, "0");
-    document.getElementById(
-      "timeWatch"
-    ).innerHTML = `${hours}:${minutes}:${seconds} ${ampm}`;
-  }, 1000);
-
-  displayCountry();
-  document.getElementById("country").addEventListener("change", (e) => {
-    changeCountry(e.target.value);
-  });
-  document.getElementById("city").addEventListener("change", (e) => {
-    if (e.target.value.indexOf("-") !== -1) {
-      let data = e.target.value.split("-");
-      latAndLong.lat = data[0];
-      latAndLong.long = data[1];
-      loadDate(latAndLong.lat, latAndLong.long, latAndLong.dayDate);
-    }
-  });
-  getSunriseTime();
-});
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition, showError);
-  }
-}
-async function showPosition(position) {
-  let currentLocation = {
-    lat: position.coords.latitude,
-    long: position.coords.longitude,
-  };
-  storageLocation.saveLocation(currentLocation);
-  loadDate(position.coords.latitude, position.coords.longitude);
-}
-function showError() {
-  let LOCATION = storageLocation.fetchLocation();
-  if (LOCATION && LOCATION.lat) {
-    loadDate(LOCATION.lat, LOCATION.long);
-  } else {
-    loadDate(latAndLong.lat, latAndLong.long, latAndLong.dayDate);
-  }
-}
-
-function createItemOfTable(start, end, planet) {
-  let tr = document.createElement("tr");
-  tr.innerHTML = `
-    <td scope="row">${start}</td>
-    <td><span class="status-${planet.status}"> ${planet.planet} </span></td>
-    <td>${end}</td>
-  `;
-
-  tr.addEventListener("click", (e) => {
-    openPlanetMessage(planet);
-  });
-
-  return tr;
-}
-
-function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
-  let theDate = selectedDate === "today" ? new Date() : new Date(selectedDate);
-  let sunCalc = SunCalc.getTimes(
-    /*Date*/ theDate,
-    /*Number*/ latitude,
-    /*Number*/ longitude
-  );
-  let sunriseStr =
-    sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
-  let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
-  let theDay =
-    selectedDate === "today"
-      ? new Date().getDay()
-      : new Date(selectedDate).getDay();
-  latAndLong.day = selectedDate;
-  displayDate.innerHTML = new Date(selectedDate).toLocaleDateString("ar-EG");
-  if (new Date().getHours() > 18) {
-    let date = new Date(selectedDate);
-    let theAcusalDate = date.setDate(date.getDate() - 1);
-    displayDate.innerHTML = new Date(theAcusalDate).toLocaleDateString("ar-EG");
-  } else {
-    displayDate.innerHTML = new Date(selectedDate).toLocaleDateString("ar-EG");
-  }
-  displayDateHigry.innerHTML = resetDateHigry(selectedDate);
-  let sunrise = sunriseStr.split(":");
-  let sunset = sunsetStr.split(":");
-  function changeTheme() {
-    let date = new Date();
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let _sunrise = sunrise.join("");
-    let _sunset = sunset.join("");
-    let timeCheckAmOrPm =
-      `${hours.toString().padStart(2, 0)}${minutes
-        .toString()
-        .padStart(2, 0)}` >= parseInt(_sunrise) &&
-      `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` <
-        parseInt(_sunset)
-        ? "am"
-        : "pm";
-    let thead = document.querySelector("thead");
-    if (timeCheckAmOrPm === "am") {
-      document.getElementById("displayDay").innerHTML = days[theDay];
-      document.body.classList.add("light");
-      thead.className = "thead-light";
-      document.getElementById("nav-lighten").classList.add("active");
+  document.querySelectorAll(".__right .col-4").forEach((item) => {
+    item.addEventListener("click", () => {
       document
-        .getElementById("nav-lighten-tab")
-        .classList.add("active", "show");
-      document.getElementById("nav-darken").classList.remove("active");
-      document
-        .getElementById("nav-darken-tab")
-        .classList.remove("active", "show");
-    } else {
-      document.getElementById("displayDay").innerHTML = days[theDay];
-      document.getElementById("nav-lighten").classList.remove("active");
-      document
-        .getElementById("nav-lighten-tab")
-        .classList.remove("active", "show");
-      document.getElementById("nav-darken").classList.add("active");
-      document.getElementById("nav-darken-tab").classList.add("active", "show");
-      thead.className = "thead-dark";
-      document.body.classList.add("dark");
-    }
-  }
-
-  changeTheme();
-
-  function endHoursFn(hours, minutes, nightOrLight, value) {
-    let amOrPm = "";
-    let endHours = parseInt(hours) + 1;
-    let endMinutes = parseInt(minutes);
-    endMinutes = endMinutes + value;
-    if (endMinutes < 0) {
-      endMinutes = 60 + endMinutes;
-      endHours = endHours - 1;
-    }
-    if (endMinutes >= 60) {
-      endHours = endHours + 1;
-      endMinutes = endMinutes - 60;
-    }
-    if (endHours < 0) {
-      endHours == 11;
-    }
-    if (endHours == 0) {
-      endHours == 12;
-    }
-    if (nightOrLight == "sunrise" && endHours > 11) {
-      amOrPm = "PM";
-    } else if (nightOrLight == "sunrise" && endHours <= 11) {
-      amOrPm = "AM";
-    }
-    if (nightOrLight == "sunset" && endHours > 11) {
-      amOrPm = "AM";
-    } else if (nightOrLight == "sunset" && endHours <= 11) {
-      amOrPm = "PM";
-    }
-    if (endHours > 12) {
-      endHours = endHours % 12;
-    }
-
-    return `${endHours.toString().padStart(2, 0)}:${endMinutes
-      .toString()
-      .padStart(2, 0)} ${amOrPm}`;
-  }
-
-  function resetTime(hours, minutes, nightOrLight) {
-    let amOrPm = "";
-    if (minutes < 0) {
-      minutes = 60 + minutes;
-      hours = hours - 1;
-    }
-    if (minutes >= 60) {
-      hours = hours + 1;
-      minutes = minutes - 60;
-    }
-    if (hours < 0) hours = 11;
-    if (hours == 0) {
-      hours = 12;
-    }
-    if (nightOrLight == "sunrise" && hours > 11) {
-      amOrPm = "PM";
-    } else if (nightOrLight == "sunrise" && hours <= 11) {
-      amOrPm = "AM";
-    }
-    if (nightOrLight == "sunset" && hours > 11) {
-      amOrPm = "AM";
-    } else if (nightOrLight == "sunset" && hours <= 11) {
-      amOrPm = "PM";
-    }
-    if (hours > 12) {
-      hours = hours % 12;
-    }
-
-    return `${hours.toString().padStart(2, 0)}:${minutes
-      .toString()
-      .padStart(2, 0)} ${amOrPm}`;
-  }
-  let tableDaylight = document.querySelector("#nav-lighten-tab tbody");
-  let tableNight = document.querySelector("#nav-darken-tab tbody");
-
-  tableDaylight.innerHTML = "";
-  let dayLen = `${parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])}:${
-    parseInt(sunsetStr.split(":")[1]) - parseInt(sunriseStr.split(":")[1])
-  }`.split(":");
-  let dayLenLight = parseInt(dayLen[0]) * 60 + parseInt(dayLen[1])
-  let dayLenNight = 1440 - dayLenLight;
-  let valuePlusLight = Math.floor(((dayLenLight / 12) * 1 ) - 60);
-  let valuePlusNight = Math.floor(((dayLenNight / 12) * 1 ) - 60);
-  // console.log(valuePlusLight, valuePlusNight)
-  // let _valuePlusLight = parseFloat(valuePlusLight).toFixed(2).split('.')[1];
-  // let _valuePlusNight = parseFloat(valuePlusNight).toFixed(2).split('.')[1];
-  // _valuePlusLight = parseInt(parseFloat(`.${_valuePlusLight}`) * 12)
-  // _valuePlusNight = parseInt(parseFloat(`.${_valuePlusNight}`) * 12)
-  // valuePlusLight = valuePlusLight > 0 ? valuePlusLight + _valuePlusLight : valuePlusLight - _valuePlusLight
-  // valuePlusNight = valuePlusNight > 0 ? valuePlusNight + _valuePlusNight : valuePlusNight - _valuePlusNight
- 
-  for (let i = 0; i < 12; i++) {
-    let theHours = parseInt(((dayLenLight / 12) * i) / 60);
-    let theMinutes = ((dayLenLight / 12) * i ) % 60;
-    let theMisSeconds = parseFloat(theMinutes).toFixed(2).split('.')[1];
-    // let theSeconds = (theMisSeconds * 12) / 60;
-    // console.log(theMisSeconds, theSeconds)
-    // theMinutes += parseInt(theSeconds) 
-    // theSeconds = theMisSeconds - (theSeconds * 60)
-    let hours = parseInt(sunrise[0]) + theHours;
-    let minutes = parseInt(sunrise[1]) + theMinutes;
-
-    let dev = parseInt(minutes / 60);
-    hours = hours +dev;
-    minutes = minutes - dev * 60;
-    let start = resetTime(parseInt(hours),  parseInt(minutes), "sunrise");
-    let end = endHoursFn(
-      parseInt(hours),
-      parseInt(minutes),
-      "sunrise",
-      parseInt(valuePlusLight)
-    );
-
-    tableDaylight.append(
-      createItemOfTable(start, end, weeks[`${theDay}light`][i])
-    );
-  }
-
-
-  let last = document.querySelector(
-    "#nav-lighten-tab tr:last-child td:last-child"
-  );
-  let lastTime = sunset;
-  if (lastTime[1] > 1 && lastTime[1] <= 59) lastTime[1] -= 1;
-  lastTime[0] = lastTime[0] % 12;
-  lastTime[0] =
-    parseInt(lastTime[0]) < 10 ? `0${parseInt(lastTime[0])}` : lastTime[0];
-  lastTime[1] =
-    parseInt(lastTime[1]) < 10 ? `0${parseInt(lastTime[1])}` : lastTime[1];
-  last.textContent = `${lastTime.join(":")} PM`;
-  tableNight.innerHTML = "";
-
-
-  
-  for (let i = 0; i < 12; i++) {
-    let theHours = parseInt(((dayLenNight / 12) * i) / 60);
-    let theMinutes = ((dayLenNight / 12) * i ) % 60;
-    // let theMisSeconds = parseFloat(theMinutes).toFixed(2).split('.')[1];
-    // let theSeconds = (theMisSeconds * 12) / 60
-    // theMinutes += parseInt(theSeconds) 
-    // theSeconds = theMisSeconds - (theSeconds * 60)
-    let hours = parseInt(sunset[0]) + theHours;
-    let minutes = parseInt(sunset[1]) + theMinutes;
-    let dev = parseInt(minutes / 60);
-    hours = hours + dev;
-    minutes = minutes - dev * 60;
-    let start = resetTime(parseInt(hours),  parseInt(minutes), "sunset");
-    let end = endHoursFn(
-      parseInt(hours),
-      parseInt(minutes),
-      "sunset",
-      parseInt(valuePlusNight)
-    );
-    tableNight.append(
-      createItemOfTable(start, end, weeks[`${theDay}night`][i])
-    );
-  }
-  let lastNight = document.querySelector(
-    "#nav-darken-tab tr:last-child td:last-child"
-  );
-
-
-
-  let lastNightTime = sunrise;
-  if (lastNightTime[1] > 1 && lastNightTime[1] <= 59) lastNightTime[1] -= 1;
-  lastNightTime[0] = lastNightTime[0] % 12;
-  lastNightTime[0] =
-    parseInt(lastNightTime[0]) < 10
-      ? `0${parseInt(lastNightTime[0])}`
-      : lastNightTime[0];
-  lastNightTime[1] =
-    parseInt(lastNightTime[1]) < 10
-      ? `0${parseInt(lastNightTime[1])}`
-      : lastNightTime[1];
-  lastNight.textContent = `${lastNightTime.join(":")} AM`;
-  let date = new Date();
-
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let _sunrise = sunriseStr.split(":").join("");
-  let _sunset = sunsetStr.split(":").join("");
-
-  let start =
-    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >=
-      parseInt(_sunrise) &&
-    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` <
-      parseInt(_sunset)
-      ? Array.from(document.querySelectorAll("#nav-lighten-tab td:first-child"))
-      : Array.from(document.querySelectorAll("#nav-darken-tab td:first-child"));
-  let end =
-    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >=
-      parseInt(_sunrise) &&
-    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` <
-      parseInt(_sunset)
-      ? Array.from(document.querySelectorAll("#nav-lighten-tab td:last-child"))
-      : Array.from(document.querySelectorAll("#nav-darken-tab td:last-child"));
-  hours = hours === 0 ? 12 : hours;
-  hours = hours !== 12 ? hours % 12 : hours;
-  hours = hours < 10 ? `0${hours}` : hours;
-  let __theDayDate =
-    selectedDate === "today"
-      ? new Date()
-          .toLocaleDateString("en-UK")
-          .replace(/\//g, "-")
-          .split("-")
-          .reverse()
-          .join("-")
-      : new Date(selectedDate)
-          .toLocaleDateString("en-UK")
-          .replace(/\//g, "-")
-          .split("-")
-          .reverse()
-          .join("-");
-  let elActive = null;
-  function reActiveElement() {
-    if (__theDayDate === latAndLong.dayDate) {
-      for (let i = 0; i < start.length; i++) {
-        let timeCheckBig = start[i].textContent.split(":").join("");
-        let timeCheckLess = end[i].textContent.split(":").join("");
-        let minutes = date.getMinutes();
-        minutes = minutes < 10 ? `0${minutes}` : minutes;
-        let amOrPm = date.getHours() > 11 ? "PM" : "AM";
-        let check = start[i].textContent.indexOf(amOrPm) !== -1;
-        let isBig = parseInt(timeCheckBig) < parseInt(`${hours}${minutes}`);
-        let isLess = parseInt(timeCheckLess) >= parseInt(`${hours}${minutes}`);
-        let MatchPmOrAm = start[i].textContent.match(/AM|PM/);
-        if (
-          end[i].textContent.indexOf(MatchPmOrAm[0]) === -1 &&
-          parseInt(start[i].textContent.split(":").join("")) <=
-            `${hours}${minutes}`
-        ) {
-          check = true;
-        }
-        if (
-          start[i].textContent.split(":")[0] <= hours &&
-          start[i].textContent.split(":")[0] >=
-            end[i].textContent.split(":")[0] &&
-          parseInt(start[i].textContent.split(":").join("")) <=
-            `${hours}${minutes}`
-        ) {
-          isBig = parseInt(timeCheckBig) < parseInt(`${hours}3${minutes}`);
-          isLess =
-            parseInt(timeCheckLess.replace("01", "13")) >=
-            parseInt(`${hours}${minutes}`);
-            if(start[i].textContent.indexOf(amOrPm) !== -1 || end[i].textContent.indexOf(amOrPm) !== -1)
-              check = true;
-
-        }
-        if (
-          start[i].textContent.indexOf("12") !== -1 &&
-          parseInt(end[i].textContent.split(":")[0]) === 1
-        ) {
-          isBig = parseInt(timeCheckBig) < parseInt(`${hours}3${minutes}`);
-        }
-        if (check && isBig && isLess) {
-          start[i].parentElement.classList.add("active");
-          elActive = start[i].parentElement;
-          break;
-        }
-      }
-      if (elActive) {
-        document
-          .querySelector("tr.active td:nth-child(2)")
-          .append(createElement());
-        let selectedMinuteStart = document.querySelector(
-          "tr.active td:nth-child(1)"
-        );
-        let selectedMinuteEnd = document.querySelector(
-          "tr.active td:nth-child(3)"
-        );
-        let minuteStart = selectedMinuteStart.textContent.split(":");
-        let minuteEnd = selectedMinuteEnd.textContent.split(":");
-        let hours = date.getHours();
-        hours = hours !== 12 ? hours % 12 : hours;
-        hours = hours < 1 ? 12 : hours;
-        hours = hours < 10 ? `0${hours}` : hours;
-        if (parseInt(minuteEnd[0]) === 1 && hours === 12) minuteEnd[0] = 13;
-        if (parseInt(minuteEnd[0]) == parseInt(minuteStart[0])) {
-          let time =
-            parseInt(minuteEnd[0] + minuteEnd[1]) -
-            parseInt(minuteStart[0] + minuteStart[1]) -
-            date.getMinutes();
-          startTimer(time * 60, document.querySelector("#tableTime"));
-        } else {
-          if (minuteEnd[0] == hours) {
-            let time =
-              parseInt(minuteEnd[0] + minuteEnd[1]) -
-              parseInt(
-                `${hours}${date.getMinutes().toString().padStart(2, 0)}`
-              );
-            startTimer(time * 60, document.querySelector("#tableTime"));
-          } else {
-            let time =
-              (parseInt(minuteEnd[0]) - hours) * 60 +
-              (parseInt(minuteEnd[1]) - date.getMinutes());
-            startTimer(time * 60, document.querySelector("#tableTime"));
-          }
-        }
-      }
-    }
-  }
-  reActiveElement();
-  function startTimer(duration, display) {
-    let timer = duration - new Date().getSeconds(),
-      minutes,
-      seconds;
-    setInterval(function () {
-      minutes = parseInt(timer / 60, 10);
-      seconds = parseInt(timer % 60, 10);
-
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      display.innerHTML = `
-        <div class="d-flex flex-column">
-          <span>${seconds}</span>
-        </div>
-        <span class="dot">:</span>
-        <div class="d-flex flex-column">
-          <span>${minutes}</span>
-        </div>
-      `;
-
-      if (--timer < 0) {
-        timer = duration;
-        if (document.getElementById("tableTime"))
-          document.getElementById("tableTime").remove();
-        setTimeout(() => {
-          window.location.reload();
-        }, 66000);
-      }
-    }, 1000);
-  }
-  document.getElementById("dateChecker").addEventListener("change", (e) => {
-    document.getElementById("displayDay").textContent = new Date(
-      e.target.value
-    ).toLocaleDateString("ar-EG", { weekday: "long" });
-    backToDate.classList.add("show");
-    loadDate(latAndLong.lat, latAndLong.long, e.target.value);
+        .querySelectorAll(".__right .col-4")
+        .forEach((subItem) => (subItem.classList = "col-4"));
+      item.classList.add("active");
+    });
   });
-  backToDate.onclick = function (e) {
-    document.getElementById("displayDay").textContent =
-      new Date().toLocaleDateString("ar-EG", { weekday: "long" });
-    e.target.classList.remove("show");
-    loadDate(latAndLong.lat, latAndLong.long, latAndLong.dayDate);
-  };
-  let theDayDate = new Date(selectedDate)
-    .toLocaleDateString("en-UK")
-    .replace(/\//g, "-")
-    .split("-")
-    .reverse()
-    .join("");
-  if (theDayDate == latAndLong.dayDate) {
-    backToDate.classList.remove("show");
+
+  Object.keys(resultCompare).length;
+  //
+  function displayTower(info) {
+    return `
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-secondary">${info.tower}</li>
+          <li class="list-group-item align-items-center justify-content-between d-flex ">
+            <span>الكوكب</span>
+            <span class="ml-auto">${info.planet}</span>
+          </li>
+          <li class="list-group-item align-items-center justify-content-between d-flex ">
+            <span>العنصر</span>
+            <span class="ml-auto">${info.item}</span>
+          </li>
+          <li class="list-group-item align-items-center justify-content-between d-flex ">
+            <span>الحجر الكريم</span>
+            <span class="ml-auto">${info.stone}</span>
+          </li>
+          <li class="list-group-item align-items-center justify-content-between d-flex ">
+            <span>الصفات والخصائص الفلكية</span>
+            <span class="ml-auto">${info.features}</span>
+          </li>
+          <li class="list-group-item align-items-center justify-content-between d-flex ">
+            <span>الجودة</span>
+            <span class="ml-auto">${info.quality}</span>
+          </li>
+          <li class="list-group-item align-items-center justify-content-between d-flex ">
+            <span>القطبية</span>
+            <span class="ml-auto">${info.half}</span>
+          </li>
+          <li class="list-group-item align-items-center justify-content-between d-flex ">
+            <span>يقابله في الأبراج الصينية</span>
+            <span class="ml-auto">${info.chines}</span>
+          </li>
+          <li class="list-group-item align-items-center justify-content-between d-flex ">
+            <span>أرقام الحظ</span>
+            <span class="ml-auto">${info.luck}</span>
+          </li>
+          <li class="list-group-item align-items-center justify-content-between d-flex ">
+            <span>مولود هذا البرج أكثر توافقا مع</span>
+            <span class="ml-auto">${info.face}</span>
+          </li>
+        </ul>`;
   }
-}
+  function openModalResult() {
+    let checkRight = document.querySelectorAll(".__right .active");
+    let checkLeft = document.querySelectorAll(".__left .active");
+    if (checkLeft.length && checkRight.length) {
+      document.querySelector(".msg-empty").style.display = "none";
+      document.querySelector(".modal").classList.add("show");
+      let __left = document.querySelectorAll(".__left .active")[0].dataset
+        .towerid;
+      let __right = document.querySelectorAll(".__right .active")[0].dataset
+        .towerid;
+      let _left = document.querySelectorAll(".__left .active")[0].dataset.tower;
+      let _right = document.querySelectorAll(".__right .active")[0].dataset
+        .tower;
+      document.querySelector(".tower-right").innerHTML = displayTower(
+        towers[__right]
+      );
+      document.querySelector(".tower-left").innerHTML = displayTower(
+        towers[__left]
+      );
+      // let resultCom =
+      // console.log(resultCom)
+      // resultCom == undefined ? resultCompare[2] : resultCom
+      document.querySelector(".modal .result").innerHTML =
+        resultCompare[checkVal(_left, _right)];
+      document.querySelector(".result.bg-success").style.display = "block";
+    } else {
+      document.querySelector(".result.bg-success").style.display = "none";
+      document.querySelector(".msg-empty").style.display = "block";
+    }
+  }
+  document
+    .getElementById("openModal")
+    .addEventListener("click", () => openModalResult());
 
-function createElement(el = "div") {
-  let element = document.createElement(el);
-  element.id = "tableTime";
-  return element;
-}
+  function checkVal(__left, __right) {
+    if (__left == __right) {
+      return 1;
+    }
 
-function getSunriseTime() {
-  let sunCalc = SunCalc.getTimes(new Date(), latAndLong.lat, latAndLong.long);
-  let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
-  let sunset = sunsetStr.split(":").join("");
-  let date = new Date();
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  if (
-    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >
-    parseInt(sunset)
-  ) {
-    let tomorrow = date.setDate(date.getDate() + 1);
-    latAndLong.dayDate = new Date(tomorrow)
-      .toLocaleDateString("en-UK")
-      .replace(/\//g, "-")
-      .split("-")
-      .reverse()
-      .join("-");
-    loadDate(latAndLong.lat, latAndLong.long, latAndLong.dayDate);
-    displayDate.innerHTML = new Date().toLocaleDateString("ar-EG");
+    if (
+      (__left == "الحوت" && __right == "الدلو") ||
+      (__left == "الدلو" && __right == "الحوت") ||
+      (__left == "الجدي" && __right == "الدلو") ||
+      (__left == "الدلو" && __right == "الجدي") ||
+      (__left == "الجدي" && __right == "القوس") ||
+      (__left == "القوس" && __right == "الجدي") ||
+      (__left == "العقرب" && __right == "القوس") ||
+      (__left == "القوس" && __right == "العقرب") ||
+      (__left == "العقرب" && __right == "الميزان") ||
+      (__left == "الميزان" && __right == "العقرب") ||
+      (__left == "العذراء" && __right == "الميزان") ||
+      (__left == "الميزان" && __right == "العذراء") ||
+      (__left == "العذراء" && __right == "الاسد") ||
+      (__left == "الاسد" && __right == "العذراء") ||
+      (__left == "السرطان" && __right == "الاسد") ||
+      (__left == "الاسد" && __right == "السرطان") ||
+      (__left == "السرطان" && __right == "الجوزاء") ||
+      (__left == "الجوزاء" && __right == "السرطان") ||
+      (__left == "الثور" && __right == "الجوزاء") ||
+      (__left == "الجوزاء" && __right == "الثور") ||
+      (__left == "الثور" && __right == "الحمل") ||
+      (__left == "الحمل" && __right == "الثور") ||
+      (__left == "الحوت" && __right == "الحمل") ||
+      (__left == "الحمل" && __right == "الحوت")
+    ) {
+      return 2;
+    }
+    if (
+      (__left == "الجدي" && __right == "الحوت") ||
+      (__left == "الحوت" && __right == "الجدي") ||
+      (__left == "الدلو" && __right == "القوس") ||
+      (__left == "القوس" && __right == "الدلو") ||
+      (__left == "العقرب" && __right == "الجدي") ||
+      (__left == "الجدي" && __right == "العقرب") ||
+      (__left == "القوس" && __right == "الميزان") ||
+      (__left == "الميزان" && __right == "القوس") ||
+      (__left == "العذراء" && __right == "العقرب") ||
+      (__left == "العقرب" && __right == "العذراء") ||
+      (__left == "الميزان" && __right == "الاسد") ||
+      (__left == "الاسد" && __right == "الميزان") ||
+      (__left == "السرطان" && __right == "العذراء") ||
+      (__left == "العذراء" && __right == "السرطان") ||
+      (__left == "الاسد" && __right == "الجوزاء") ||
+      (__left == "الجوزاء" && __right == "الاسد") ||
+      (__left == "الثور" && __right == "الحوت") ||
+      (__left == "الحوت" && __right == "الثور") ||
+      (__left == "الثور" && __right == "السرطان") ||
+      (__left == "السرطان" && __right == "الثور") ||
+      (__left == "الدلو" && __right == "الحمل") ||
+      (__left == "الحمل" && __right == "الدلو") ||
+      (__left == "الجوزاء" && __right == "الحمل") ||
+      (__left == "الحمل" && __right == "الجوزاء")
+    ) {
+      return 3;
+    }
+    if (
+      (__left == "الحوت" && __right == "القوس") ||
+      (__left == "القوس" && __right == "الحوت") ||
+      (__left == "العقرب" && __right == "الدلو") ||
+      (__left == "الدلو" && __right == "العقرب") ||
+      (__left == "الجدي" && __right == "الميزان") ||
+      (__left == "الميزان" && __right == "الجدي") ||
+      (__left == "العذراء" && __right == "القوس") ||
+      (__left == "القوس" && __right == "العذراء") ||
+      (__left == "العقرب" && __right == "الاسد") ||
+      (__left == "الاسد" && __right == "العقرب") ||
+      (__left == "السرطان" && __right == "الميزان") ||
+      (__left == "الميزان" && __right == "السرطان") ||
+      (__left == "الحوت" && __right == "الجوزاء") ||
+      (__left == "الجوزاء" && __right == "الحوت") ||
+      (__left == "العذراء" && __right == "الجوزاء") ||
+      (__left == "الجوزاء" && __right == "العذراء") ||
+      (__left == "الثور" && __right == "الدلو") ||
+      (__left == "الدلو" && __right == "الثور") ||
+      (__left == "الثور" && __right == "الاسد") ||
+      (__left == "الاسد" && __right == "الثور") ||
+      (__left == "الجدي" && __right == "الحمل") ||
+      (__left == "الحمل" && __right == "الجدي") ||
+      (__left == "السرطان" && __right == "الحمل") ||
+      (__left == "الحمل" && __right == "السرطان")
+    ) {
+      return 4;
+    }
+    if (
+      (__left == "الحوت" && __right == "الميزان") ||
+      (__left == "الميزان" && __right == "الحوت") ||
+      (__left == "العذراء" && __right == "الدلو") ||
+      (__left == "الدلو" && __right == "العذراء") ||
+      (__left == "الحوت" && __right == "الاسد") ||
+      (__left == "الاسد" && __right == "الحوت") ||
+      (__left == "الجدي" && __right == "الاسد") ||
+      (__left == "الاسد" && __right == "الجدي") ||
+      (__left == "السرطان" && __right == "الدلو") ||
+      (__left == "الدلو" && __right == "السرطان") ||
+      (__left == "السرطان" && __right == "القوس") ||
+      (__left == "القوس" && __right == "السرطان") ||
+      (__left == "الجدي" && __right == "الجوزاء") ||
+      (__left == "الجوزاء" && __right == "الجدي") ||
+      (__left == "العقرب" && __right == "الجوزاء") ||
+      (__left == "الجوزاء" && __right == "العقرب") ||
+      (__left == "الثور" && __right == "القوس") ||
+      (__left == "القوس" && __right == "الثور") ||
+      (__left == "الثور" && __right == "الميزان") ||
+      (__left == "الميزان" && __right == "الثور") ||
+      (__left == "العقرب" && __right == "الحمل") ||
+      (__left == "الحمل" && __right == "العقرب") ||
+      (__left == "العذراء" && __right == "الحمل") ||
+      (__left == "الحمل" && __right == "العذراء")
+    ) {
+      return 6;
+    }
+
+    if (
+      (__left == "الحمل" && __right == "الميزان") ||
+      (__left == "الميزان" && __right == "الحمل") ||
+      (__left == "الجوزاء" && __right == "القوس") ||
+      (__left == "القوس" && __right == "الجوزاء") ||
+      (__left == "السرطان" && __right == "الجدي") ||
+      (__left == "الجدي" && __right == "السرطان") ||
+      (__left == "الاسد" && __right == "الدلو") ||
+      (__left == "الدلو" && __right == "الاسد") ||
+      (__left == "العقرب" && __right == "الثور") ||
+      (__left == "الثور" && __right == "العقرب") ||
+      (__left == "العذراء" && __right == "الحوت") ||
+      (__left == "الحوت" && __right == "العذراء")
+    ) {
+      return 7;
+    }
+
+    if (
+      __water.includes(__left) &&
+      __water.includes(__right) &&
+      __right != __left
+    ) {
+      return 5;
+    }
+    if (
+      __water.includes(__right) &&
+      __water.includes(__left) &&
+      __right != __left
+    ) {
+      return 5;
+    }
+    if (
+      __stone.includes(__left) &&
+      __stone.includes(__right) &&
+      __right != __left
+    ) {
+      return 5;
+    }
+    if (
+      __stone.includes(__right) &&
+      __stone.includes(__left) &&
+      __right != __left
+    ) {
+      return 5;
+    }
+    if (
+      __fire.includes(__left) &&
+      __fire.includes(__right) &&
+      __right != __left
+    ) {
+      return 5;
+    }
+    if (
+      __fire.includes(__right) &&
+      __fire.includes(__left) &&
+      __right != __left
+    ) {
+      return 5;
+    }
+
+    if (
+      __wind.includes(__left) &&
+      __wind.includes(__right) &&
+      __right != __left
+    ) {
+      return 5;
+    }
+    if (
+      __wind.includes(__right) &&
+      __wind.includes(__left) &&
+      __right != __left
+    ) {
+      return 5;
+    }
   }
 }

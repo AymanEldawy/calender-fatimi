@@ -4,17 +4,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <title>مواقيت الصلاة</title>
+    <title>Calender</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css"
       integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="css/globle.css" />
     <link rel="stylesheet" href="css/icons.css" />
-    <link rel="stylesheet" href="css/calender.css" />
+    <link rel="stylesheet" href="css/globle.css" />
+    <link rel="stylesheet" href="css/home-page.css" />
   </head>
   <body>
     <header>
@@ -53,33 +52,23 @@
         </div>
       </nav>
     </header>
-    <div class="container">
-        <h2 class="text-center prayer-title">
-          <img src="istockphoto-953738536-612x612.jpg" alt="" /> مواقيت الصلاة
-        </h2>
-      <div class="prayer-content open-single">
-        <div class="prayer-list">
-          <div class="prayer-controls">
-            <button class="btn btn-primary" id="goNextMonth" data-next="month">الشهر التالي</button>
-            <p class="dateInsideList"></p>
-            <button class="btn btn-primary" id="goPrevMonth" data-prev="month">الشهر السابق</button>
+    <div class="homepage">
+      <div class="container">
+        <div class="page-info text-center">
+          <p id="date"></p>
+          <p id="bigCentury"></p>
+          <p id="smallCentury"></p>
+          <p id="yearLeap"></p>
+        </div>
+        <div class="prayer-single">
+          <div class="prayer-grid"></div>
+        </div>
+        <div class="event">
+          <span>مناسبة ما</span>
+          <div class="timer">
+            باقي من الوقت
+            <span class="timer-style"> 25 يوم</span>
           </div>
-          <table class="table">
-            <thead class="thead-style">
-              <tr>
-                <th scope="col">اليوم</th>
-                <th scope="col">التاريخ</th>
-                <th scope="col">الفجر</th>
-                <th scope="col">الشروق</th>
-                <th scope="col">الظهر</th>
-                <th scope="col">العصر</th>
-                <th scope="col">المغرب</th>
-                <th scope="col">العشاء</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-         
         </div>
       </div>
     </div>
@@ -107,6 +96,6 @@
     ></script>
     <script src="js/global.js" type="module"></script>
     <script src="js/visitors.bundle.js"></script>
-    <script src="js/prayer-time.js" type="module"></script>
+    <script src="js/home-page.js" type="module"></script>
   </body>
 </html>

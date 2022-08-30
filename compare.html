@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="برمجة خاصه لموقع قبيلة آل زمانان لمعرفة برجك بطريقة حساب الجمل" name="description">
+  <meta content="text/html; charset=windows-1256" http-equiv="Content-Type">
+  <meta content="ar-sa" http-equiv="Content-Language">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
+    integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/icons.css" />
+  <link rel="stylesheet" href="css/globle.css" />
+    <link rel="stylesheet" href="css/index.css">
+    <link href="//db.onlinewebfonts.com/c/2e6ae3642c879522873a28ede1eaac69?family=Helvetica+Neue+W23+for+SKY+Reg"
+    rel="stylesheet" type="text/css" />
+  <title>موقع قبيلة آل زمانان</title>
+</head>
+
+<body>
+  <title>اعرف نجمك بحساب الجمل</title>
+  <header>
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container d-flex"> <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a><button
+          class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"><i class="gg-menu"></i>
+        </button>
+        <div class="collapse" id="collapsibleNavId">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item"> <a class="nav-link" href="index.html">اعرف برجك <span
+                  class="sr-only">(current)</span></a> </li>
+            <li class="nav-item active"> <a class="nav-link" href="#">مقارنة بين الابراج</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="smath.html">حساب الجمل</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="towers.html">اعرف برجك</a> </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">نتائج المقارنة</h5> <button type="button" class="close"
+            data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body">
+          <div class="msg-empty text-danger">لا يوجد نتائج يرجي الاختيار بين الابراج للمقارنة</div>
+          <div class="d-flex">
+            <div class="tower-right"> </div>
+            <div class="tower-left"> </div>
+          </div>
+          <div class="result bg-success text-white text-center p-3 mt-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="compare my-5 container" id="compare">
+    <h3 class="text-center mb-3">قارن بين الابراج</h3>
+    <div class="row">
+      <div class="col">
+        <div class="row __right">
+          <div data-tower="الحمل" data-towerid="1" class="col-4 active">الحمل</div>
+          <div data-tower="الثور" data-towerid="2" class="col-4">الثور</div>
+          <div data-tower="الجوزاء" data-towerid="3" class="col-4">الجوزاء</div>
+          <div data-tower="السرطان" data-towerid="4" class="col-4">السرطان</div>
+          <div data-tower="الاسد" data-towerid="5" class="col-4">الاسد</div>
+          <div data-tower="العذراء" data-towerid="6" class="col-4">العذراء</div>
+          <div data-tower="الميزان" data-towerid="7" class="col-4">الميزان</div>
+          <div data-tower="العقرب" data-towerid="8" class="col-4">العقرب</div>
+          <div data-tower="القوس" data-towerid="9" class="col-4">القوس</div>
+          <div data-tower="الجدي" data-towerid="10" class="col-4">الجدي</div>
+          <div data-tower="الدلو" data-towerid="11" class="col-4">الدلو </div>
+          <div data-tower="الحوت" data-towerid="12" class="col-4">الحوت</div>
+      </div>
+      </div>
+      
+      <div class="seperat bg-light" style="width:1px;"></div>
+       
+      <div class="col">
+        <div class="row __left">
+          <div data-tower="الحمل" data-towerid="1" class="col-4 active">الحمل</div>
+          <div data-tower="الثور" data-towerid="2" class="col-4">الثور</div>
+          <div data-tower="الجوزاء" data-towerid="3" class="col-4">الجوزاء</div>
+          <div data-tower="السرطان" data-towerid="4" class="col-4">السرطان</div>
+          <div data-tower="الاسد" data-towerid="5" class="col-4">الاسد</div>
+          <div data-tower="العذراء" data-towerid="6" class="col-4">العذراء</div>
+          <div data-tower="الميزان" data-towerid="7" class="col-4">الميزان</div>
+          <div data-tower="العقرب" data-towerid="8" class="col-4">العقرب</div>
+          <div data-tower="القوس" data-towerid="9" class="col-4">القوس</div>
+          <div data-tower="الجدي" data-towerid="10" class="col-4">الجدي</div>
+          <div data-tower="الدلو" data-towerid="11" class="col-4">الدلو </div>
+          <div data-tower="الحوت" data-towerid="12" class="col-4">الحوت</div>
+        </div>
+      </div>
+       
+    </div>
+    <button class="btn btn-danger mx-auto mt-3 d-block" id="openModal" data-toggle="modal"
+      data-target="#exampleModalCenter" style="width:120px">مقارنة</button>
+  </div>
+  </div>
+  <div class="visitors" id="visitors"></div>
+  <footer>
+    <div class="container text-center bg-light p-1">
+      <p class="m-0">جميع الحقوق محفوظة @ 2021 <a class="text-info text-bold" href="/">موقع قبيلة آل زمانان</a> </p>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    <script
+    src="https://rawgit.com/abdennour/hijri-date/master/cdn/hijri-date-latest.js"
+    type="text/javascript"
+  ></script>
+  <script src="js/global.js" type="module"></script>
+  <script src="js/visitors.bundle.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

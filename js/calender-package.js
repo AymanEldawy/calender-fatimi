@@ -1,4 +1,5 @@
 import * as Calender from "./calender-setup.js";
+import { calculateDate, globalEvents } from "./global.js";
 // Let storage
 export let storeEvents = {
   fetchEvents() {
@@ -10,6 +11,18 @@ export let storeEvents = {
   },
 };
 let events = storeEvents.fetchEvents();
+const eventsExists = events.filter((event) => event.deletable === false);
+if (eventsExists.length < 1) {
+  globalEvents.forEach((event) => {
+    events.push({
+      title: event.title,
+      date: event.date,
+      deletable: event.deletable,
+      color: "#0d6efd",
+    });
+  });
+  storeEvents.saveEvents(events);
+}
 
 function displayCalenderGrid(date = new Date()) {
   // check events by this day
@@ -50,29 +63,29 @@ function displayCalenderGrid(date = new Date()) {
         i
       );
       let gregorian = _hijri.toGregorian();
-      let hasEvent = checkIfDateHasEvents(
-        `${HijriConfiguration.hijriYear}-${HijriConfiguration.hijriMonth}-${i}`
-      );
       let GregorianDateIncrement = new Date(gregorian);
+      let hasEvent = checkIfDateHasEvents(GregorianDateIncrement);
       if (
         Calender.theCurrentDate.getCurrentDateHijri() === i &&
         HijriConfiguration.hijriMonth == currentMonthHijri
-      )
-        dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" class="active">${i} <em> ${GregorianDateIncrement.getDate()} </em>  </span>`;
+      ) {
+        if(hasEvent) displayEvents(GregorianDateIncrement)
+        dyesGrid.innerHTML += `<span data-current_date="${GregorianDateIncrement}" data-has_event="${hasEvent}" class="active">${i} <em> ${GregorianDateIncrement.getDate()} </em>  </span>`;
+      }
       else {
         if (
           HijriConfiguration.hijriYear >= currentYearHijri &&
           HijriConfiguration.hijriMonth == currentMonthHijri &&
           i > currentDayNumHijri
         ) {
-          dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" data-event="${__date__day}"> ${i} <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
+          dyesGrid.innerHTML += `<span data-current_date="${GregorianDateIncrement}" data-has_event="${hasEvent}" data-event="${GregorianDateIncrement}"> ${i} <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
         } else if (
           HijriConfiguration.hijriYear >= currentYearHijri &&
           HijriConfiguration.hijriMonth > currentMonthHijri
         ) {
-          dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" data-event="${__date__day}"> ${i}  <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
+          dyesGrid.innerHTML += `<span data-current_date="${GregorianDateIncrement}" data-has_event="${hasEvent}" data-event="${GregorianDateIncrement}"> ${i}  <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
         } else
-          dyesGrid.innerHTML += `<span data-current_date="${__date__day}" data-has_event="${hasEvent}" >${i} <em> ${GregorianDateIncrement.getDate()} </em></span>`;
+          dyesGrid.innerHTML += `<span data-current_date="${GregorianDateIncrement}" data-has_event="${hasEvent}" >${i} <em> ${GregorianDateIncrement.getDate()} </em></span>`;
       }
     }
     for (
@@ -100,10 +113,6 @@ window.addEventListener("DOMContentLoaded", () => {
     `;
     });
     // Events Actions
-    // document.getElementById('selectedDatePicker').addEventListener('focus', openCalender)
-    document.getElementById("btnAddEvent").addEventListener("click", () => {
-      document.querySelector(".modal-events").classList.remove("close");
-    });
     document
       .getElementById("eventTitle")
       .addEventListener("blur", (e) => checkInputTitle(e.target));
@@ -125,6 +134,10 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("click", (e) => {
+  if (e.target.matches("#closeEventsBox .gg-close")) {
+    document.querySelector(".events").innerHTML = ''
+  }
+
   if (e.target.matches("span[data-event] .icon-add")) {
     document.getElementById("datePicker").value =
       e.target.parentElement.dataset.current_date;
@@ -134,10 +147,6 @@ window.addEventListener("click", (e) => {
   if (e.target.matches(".calender-list-grid-body span")) {
     if (e.target.dataset.has_event) {
       displayEvents(e.target.dataset.current_date);
-    } else {
-      document.querySelector(
-        ".events"
-      ).innerHTML = `<p class="m-0 text-danger">لا يوجد مناسبات لهذا اليوم</p>`;
     }
     Array.from(
       document.querySelectorAll(".calender-list-grid-body span")
@@ -180,7 +189,7 @@ function goNext() {
   );
   let date = new Date(Calender.theCurrentDate.gregorianDate);
   let theNewDate = date;
-  if (listOfControls &&  listOfControls.value == "year") {
+  if (listOfControls && listOfControls.value == "year") {
     HIJRI_CONFIGURATION.hijriYear += 1;
     theNewDate = date.setDate(date.getDate() + 355);
   } else {
@@ -269,18 +278,24 @@ function addEvent() {
   title.value = "";
 }
 function createEventItem(event) {
+  let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  let hijri = new Date(event.date).toHijri();
   let div = document.createElement("div");
   div.className = "events-item";
-  div.style.borderColor = event.color;
+  div.style.background = event.color;
   div.innerHTML = `
-  <p class="text-success events-item-title">${event.title}</p>
-  <div
-    class="d-flex align-items-center justify-content-between"
-  >
-    <p class="events-item-date">${event.date}</p>
-    <span>باقي من الايام 23 يوم</span>
-    <span class="events-item-circle" style="background:${event.color}"></span>
-  </div>
+  <h4>${event.title}</h4>
+  <p class="d-flex align-items justify-content-between">
+    <span>${new Date(event.date).toLocaleDateString("ar-SA", {
+      weekday: "long",
+    })} ${hijri._date} ${Calender.months[hijri._month]} ${hijri._year}</span>
+    <span>${gregorian}</span>
+    </p>
+  ${calculateDate(event.date)}
   `;
   return div;
 }
@@ -288,16 +303,23 @@ function createEventItem(event) {
 function displayEvents(theEventDate) {
   let containerEvent = document.querySelector(".events");
   containerEvent.innerHTML = "";
-  let listOfEvents = events.filter((event) => event.date == theEventDate);
+  let listOfEvents = events.filter((event) => Date.parse(event.date) == Date.parse(theEventDate));
+  console.log(theEventDate, listOfEvents)
+
   if (listOfEvents.length > 0) {
     listOfEvents.forEach((event) => {
       containerEvent.append(createEventItem(event));
     });
   } else {
-    containerEvent.innerHTML = `<p class="m-0 text-danger">لا يوجد مناسبات لهذا اليوم</p>`;
+    document.querySelector(
+      ".events"
+    ).innerHTML = `
+      <p class="m-0 text-danger">لا يوجد مناسبات لهذا اليوم <span id="closeEventsBox"><i class="gg-close"></i></span></p>
+    `;
   }
 }
 function checkIfDateHasEvents(theEventDate) {
-  let listOfEvents = events.filter((event) => event.date == theEventDate);
+  let listOfEvents = events.filter((event) => Date.parse(event.date) == Date.parse(theEventDate));
+  console.log(`hs`,listOfEvents)
   return listOfEvents.length > 0;
 }

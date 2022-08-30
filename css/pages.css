@@ -1,0 +1,190 @@
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: #51c3f8;
+
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Themes */
+.themes {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  margin-top: 1rem;
+  justify-content: center;
+}
+.themes li {
+  width: 30px;
+  height: 30px;
+  background-color: #000;
+}
+.themes li[data-theme="dark"] {
+  background-color: #111;
+}
+.themes li[data-theme="light"] {
+  background-color: #fff;
+}
+.themes li[data-theme="red"] {
+  background-color: #f44336;
+}
+.themes li[data-theme="green"] {
+  background-color: #4caf50;
+}
+.themes li[data-theme="blue"] {
+  background-color: #03a9f4;
+}
+.themes li[data-theme="yellow"] {
+  background-color: #ff9800;
+}
+/* 
+لاضافة لون جديد انسخ واحدة من  
+themes li[data-theme="اسم المود"] {
+  background-color: اللون;
+}
+*/
+
+.themes li.active {
+  border: 1px solid #000;
+  cursor: not-allowed;
+}
+/* Popup */
+div#planetMessage:not(:empty) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  right: 0;
+  z-index: 99;
+  padding: 2rem;
+}
+.envelope {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 9999;
+  top: 50%;
+  left: 50%;
+  width: fit-content;
+  padding: 3rem;
+  border-radius: 0.5rem;
+  transform: translate(-50%, -50%);
+}
+.envelope *:not(.popup-content) {
+  pointer-events: none;
+}
+.popup {
+  background-color: #03a9f4;
+  padding: 1rem;
+  max-width: 650px;
+  width: 80%;
+  height: 80vh;
+}
+.popup-content {
+  max-height: 100%;
+  overflow: auto;
+  background-color: #222;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+.envelope .content {
+  position: relative;
+  max-width: 500px;
+  box-shadow: 0px 0px 5px #ffffff inset;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border-width: thin;
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 1.8;
+}
+.content:after,
+.content:before {
+  content: "";
+  position: absolute;
+  top: -5%;
+  left: 0;
+  width: 100%;
+  height: 110%;
+  background-color: inherit;
+  transform: skewX(10deg);
+  border: inherit;
+  border-radius: inherit;
+}
+.content::after {
+  transform: skewX(-10deg);
+  top: -5%;
+  width: 100%;
+  height: 110%;
+  background-color: inherit;
+  border-radius: 1rem;
+  border: inherit;
+  z-index: 1;
+  box-shadow: 2px 3px 2px 1px #00000059;
+}
+.envelope-content {
+  position: relative;
+  padding: 20px;
+  z-index: 2;
+}
+
+.envelope.ex .content {
+  background-color: #8bc34a;
+}
+
+.envelope.good .content {
+  background-color: #2196f3;
+}
+.envelope.bad .content {
+  background-color: #f44336;
+}
+.envelope.normal .content {
+  background-color: #787777;
+}
+
+.day-content {
+  color: #eee;
+}
+
+.planet-content {
+  color: #fff;
+}
+.planet-content h3 {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.planet-content h3:first-of-type {
+  color: #03a9f4;
+  background-color: #000;
+}
+.planet-content h3:last-of-type {
+  color: #373736;
+  background-color: #f1e899;
+}
+
+.planet-content-box {
+  border: 1px solid #555;
+}
+.planet-content-box span {
+  min-width: 70px;
+}

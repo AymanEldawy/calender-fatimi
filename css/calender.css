@@ -60,12 +60,6 @@ body {
   pointer-events: unset;
 }
 
-.calender-picker.close-calender, 
-.hide,
-.modal-events.close{
-  pointer-events: none;
-  opacity: 0;
-}
 .calender-picker .calender-page-controls {
   margin: 0;
 }
@@ -128,21 +122,15 @@ input[type="color"] {
 }
 
 /* Prayer time page */
-.head {
+.prayer-title {
   box-shadow: 0 1px 4px #22222259;
-  padding: 1rem;
   margin: 1rem 0;
   border-radius: 0.25rem;
-}
-.head h2 {
   position: relative;
   padding-right: 50px;
 }
-.head h2 img {
+.prayer-title img {
   max-width: 62px;
-  position: absolute;
-  right: -10px;
-  top: -10px;
   mix-blend-mode: multiply;
 }
 
@@ -156,21 +144,6 @@ input[type="color"] {
 }
 
 /* prayer-content */
-.prayer-content .prayer-list,
-.prayer-content .prayer-list-month,
-.prayer-content .prayer-single {
-  display: none;
-}
-.prayer-content.open-list .prayer-list {
-  display: block;
-}
-.prayer-content.open-single .prayer-single {
-  display: block;
-}
-.prayer-content.open-month .prayer-list-month {
-  display: block;
-}
-
 /* Table */
 p.dateInsideList {
   text-align: center;
@@ -191,26 +164,7 @@ td {
   white-space: nowrap;
 }
 /* Prayer single */
-.prayer-single h4 {
-  margin: 0;
-}
-.prayer-single p {
-}
-.prayer-single #goPrev,
-.prayer-single #goNext {
-  padding: .75rem;
-}
-/* Prayer grid */
-.prayer-grid-item {
-  background: #efefef7a;
-    font-size: 1.3rem;
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-    border-radius: 0.25rem;
-    margin-bottom: 1rem;
-    border: 1px solid #e1e1e1;
-}
+
 .prayer-controls {
   display: flex;
   justify-content: space-between;
@@ -276,7 +230,13 @@ td {
 .change-by-year input {
   width: 90px;
 }
-
+.calender-body {
+  display: flex;
+    gap: 1rem;
+}
+.calender-list {
+  flex: 1
+}
 .calender-list-grid-head,
 .calender-list-grid-body {
   display: grid;
@@ -366,22 +326,21 @@ td {
   box-shadow: 0 3px 10px #00000038;
   padding: 1rem;
   border-radius: 0.25rem;
-  margin-bottom: 2rem;
+  width: 400px;
 }
 .events-list{
   padding:0
 }
-.col-lg-8 {
-  padding-right: 0;
-}
 @media (max-width: 991px) {
-  .col-lg-4,
-  .col-lg-8 {
-    padding: 0;
+  .calender-body{
+    flex-wrap: wrap
   }
   .events {
-    margin-top: 2rem;
+    width: 100%;
   }
+}
+.events:empty {
+  display: none;
 }
 
 .events-item {
@@ -402,4 +361,14 @@ span.events-item-circle {
   height: 20px;
   border-radius: 50%;
   background: #ccc;
+}
+
+
+.events p.text-danger {
+  white-space: pre;
+  display: flex;
+  justify-content: space-between;
+  background: #f052;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
 }

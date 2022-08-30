@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
+      integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/globle.css" />
+    <link rel="stylesheet" href="css/pages.css" />
+    <title>موقع قبيلة آل زمانان</title>
+  </head>
+  <body>
+    <!-- تغيير التاريخ الهجري -->
+    <!-- 
+    في data-action
+    لو هتنقص اكتب كلمة ناقص
+    لو هتزود اكتب كلمة زيادة
+
+    data-countofdays="عدد الايام"
+  -->
+    <input
+      type="hidden"
+      id="changeHijriDate"
+      data-action="زيادة"
+      data-countofdays="1"
+    />
+    <!-- تغيير التاريخ الهجري -->
+    <header>
+      <nav class="navbar navbar-dark bg-primary">
+        <div class="container d-flex">
+          <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a
+          ><button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i class="gg-menu"></i>
+          </button>
+          <div class="collapse" id="collapsibleNavId">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="#knowTower"
+                  >اعرف برجك <span class="sr-only">(current)</span></a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="compare.html">مقارنة بين الابراج</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="smath.html">حساب الجمل</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="towers.html">اعرف برجك</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Themes -->
+    <ul class="themes">
+      <li class="theme-color" data-theme="dark"></li>
+      <li class="theme-color" data-theme="light"></li>
+      <li class="theme-color" data-theme="red"></li>
+      <li class="theme-color" data-theme="blue"></li>
+      <li class="theme-color" data-theme="yellow"></li>
+      <li class="theme-color" data-theme="green"></li>
+      <!-- 
+        لاضافة لون جديد انسخ واحدة من 
+        <li class="theme-color" data-theme="اسم المود"></li>
+        ملاحظة اسم المود لازم يكون مطابق لاسم المود في ملف ال css
+      -->
+    </ul>
+    <!-- Themes -->
+    <div class="main-container p-4">
+      <div class="options">
+        <button
+          id="autoLocation"
+          class="btn btn-primary d-flex align-items-center"
+        >
+          <i class="gg-data mr-3"></i> تحديد مدينتك تلقائيا
+        </button>
+        <button
+          id="chooseLocation"
+          class="btn btn-outline-primary d-flex align-items-center"
+        >
+          <i class="gg-track mr-3"></i> اختيار الموقع يدويآ
+        </button>
+      </div>
+      <div class="country-info">
+        <div class="overlay" id="overlayPopup">
+          <div class="manual-location" id="manualLocation">
+            <span id="closeLocation" class="close-location">
+              <i class="gg-close"></i>
+            </span>
+            <p>اختار موقعك:</p>
+            <div class="d-flex align-items-center">
+              <div class="form-group">
+                <label for="">الدولة</label>
+                <select
+                  translate="yes"
+                  class="form-control"
+                  name=""
+                  id="country"
+                ></select>
+              </div>
+              <div class="form-group cities">
+                <label for="">المدينة</label>
+                <select
+                  translate="yes"
+                  class="form-control"
+                  name=""
+                  id="city"
+                ></select>
+              </div>
+              <button
+                type="button"
+                id="addLocation"
+                class="btn btn-success"
+                title="حفظ الموقع"
+              >
+                <i class="gg-bookmark"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <ul class="nav nav-list" id="nav-tab" role="tablist">
+          <li class="nav-list-item nav-link">
+            <div class="d-flex"><i class="gg-calendar-today"></i>اليوم</div>
+            <span id="displayDay" class="skelton"></span>
+          </li>
+          <li class="nav-list-item nav-link">
+            <div class="calendar position-relative d-flex">
+              <span class="arrow" id="prevDay">
+                <i class="gg-chevron-double-right"></i>
+              </span>
+              <input id="dateChecker" type="date" />
+              <i class="gg-calendar"></i>التاريخ
+              <span class="arrow" id="nextDay">
+                <i class="gg-chevron-double-right"></i>
+              </span>
+            </div>
+            <div class="d-flex">
+              <span id="displayDateHigry" class="skelton"></span>
+              <button class="btn btn-sm btn-primary" id="backToDate">
+                اليوم
+              </button>
+              <span id="displayDate" class="skelton"></span>
+            </div>
+          </li>
+          <li class="nav-list-item nav-link">
+            <div class="d-flex"><i class="gg-time"></i>الوقت الحالي</div>
+            <span id="timeWatch" class="skelton"></span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Tabs  -->
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a
+            class="nav-item nav-link"
+            id="nav-darken"
+            data-toggle="tab"
+            href="#nav-darken-tab"
+            role="tab"
+            aria-controls="nav-darken-tab"
+            aria-selected="false"
+            ><span><i class="gg-moon"></i></span> ساعات الليل</a
+          >
+
+          <a
+            class="nav-item nav-link active"
+            id="nav-lighten"
+            data-toggle="tab"
+            href="#nav-lighten-tab"
+            role="tab"
+            aria-controls="nav-lighten-tab"
+            aria-selected="true"
+            ><span><i class="gg-sun"></i></span> ساعات النهار</a
+          >
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade darken"
+          id="nav-darken-tab"
+          role="tabpanel"
+          aria-labelledby="nav-darken-tab"
+        >
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th>بداية الساعة</th>
+                <th>الحالة</th>
+                <th>نهاية الساعة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="tab-pane fade show lighten active"
+          id="nav-lighten-tab"
+          role="tabpanel"
+          aria-labelledby="nav-lighten-tab"
+        >
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th>بداية الساعة</th>
+                <th>الحالة</th>
+                <th>نهاية الساعة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+              <tr>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+                <td><span class="skelton"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Tabs  -->
+      <div id="dateToday"></div>
+      <div class="status d-flex align-items-center justify-content-between">
+        <span data-planet="ex" class="status-ex">سعد اكبر</span>
+        <span data-planet="good" class="status-good">سعد اصغر</span>
+        <span data-planet="normal" class="status-normal">ممتزج</span>
+        <span data-planet="bad" class="status-bad">نحس</span>
+      </div>
+    </div>
+    <div id="planetMessage"></div>
+    <div class="visitors" id="visitors">
+    </div>
+    <footer class="mt-3 bg-none">
+      <div class="container text-center p-1">
+        <!-- <div class="d-flex justify-content-between"> -->
+        <p class="m-0">
+          جميع الحقوق محفوظة @ 2022
+          <a class="text-info text-bold" href="/">موقع قبيلة آل زمانان</a>
+        </p>
+        <!-- </div> -->
+      </div>
+    </footer>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.rtlcss.com/bootstrap/v4.5.3/js/bootstrap.min.js"
+      integrity="sha384-VmD+lKnI0Y4FPvr6hvZRw6xvdt/QZoNHQ4h5k0RL30aGkR9ylHU56BzrE2UoohWK"
+      crossorigin="anonymous"
+    ></script>
+        <script
+      src="https://rawgit.com/abdennour/hijri-date/master/cdn/hijri-date-latest.js"
+      type="text/javascript"
+    ></script>
+    <script src="js/global.js" type="module"></script><script src="dist/visitors.bundle.js"></script>
+    <script src="js/index.bundle.js" type="module"></script>
+  </body>
+</html>
