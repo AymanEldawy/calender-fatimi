@@ -318,6 +318,8 @@ td {
   box-shadow: 0 3px 10px #00000038;
   padding: 1rem;
   border-radius: 0.25rem;
+}
+#eventsGrid {
   width: 400px;
 }
 .events-list{
@@ -382,4 +384,21 @@ span.events-item-circle {
 }
 .calender-picker i.icon-add {
   display: none;
+}
+
+.calender-page .calender-list .calender-list-grid-body span {
+  font-size: 1.4rem;
+}
+
+@media(min-width: 991px) {
+  .d-lg-flex {
+    gap: 1rem;
+  }
+  .d-lg-flex .calender-page-display{
+    order: 2;
+    max-width: 400px;
+  }
+  .calender-page-display, .calender-page-controls {
+    flex: 1;
+  }
 }

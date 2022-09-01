@@ -181,9 +181,8 @@ window.addEventListener("DOMContentLoaded", () => {
         day: "numeric",
       });
       let hijri = new Date(event.date).toHijri();
-      let _id = Math.floor(Math.random() * hijri._date);
       eventsContainer.innerHTML += `
-      <li class="events-item">
+      <li class="events-item __counter">
         <h4>${event.title}</h4>
         <p class="d-flex align-items justify-content-between">
           <span>${new Date(event.date).toLocaleDateString("ar-SA", {
@@ -200,7 +199,7 @@ window.addEventListener('click', (e) => {
   if(e.target.matches('._modal')) {
     document.querySelector('._modal').classList.add('hide')
   } 
-  if(e.target.matches('li .open-events-modal')) {
+  if(e.target.matches('.open-events-modal')) {
     document.querySelector('._modal').classList.remove('hide')
   }
 })

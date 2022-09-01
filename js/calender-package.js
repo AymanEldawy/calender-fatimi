@@ -109,7 +109,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (document.querySelector(".calender-page")) {
     Object.keys(Calender.months).forEach((month) => {
       document.getElementById("listOfMonth").innerHTML += `
-      <option value="${month}">${Calender.months[month]}</option>
+      <option value="${month}" ${month == Calender.theCurrentDate.getCurrentMonthHijri() ? "selected" : ""}>${Calender.months[month]}</option>
     `;
     });
     // Events Actions
@@ -135,7 +135,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("click", (e) => {
   if (e.target.matches("#closeEventsBox .gg-close")) {
-    document.querySelector(".events").innerHTML = ''
+    document.getElementById("eventsGrid").innerHTML = ''
   }
 
   if (e.target.matches("span[data-event] .icon-add")) {
@@ -298,18 +298,17 @@ function createEventItem(event) {
 }
 
 function displayEvents(theEventDate) {
-  let containerEvent = document.querySelector(".events");
+  console.log('Run.,.,')
+  let containerEvent = document.getElementById("eventsGrid");
   containerEvent.innerHTML = "";
   let listOfEvents = events.filter((event) => Date.parse(event.date) == Date.parse(theEventDate));
-
+  console.log(listOfEvents, events)
   if (listOfEvents.length > 0) {
     listOfEvents.forEach((event) => {
       containerEvent.append(createEventItem(event));
     });
   } else {
-    document.querySelector(
-      ".events"
-    ).innerHTML = `
+    containerEvent.innerHTML = `
       <p class="m-0 text-danger">لا يوجد مناسبات لهذا اليوم <span id="closeEventsBox"><i class="gg-close"></i></span></p>
     `;
   }

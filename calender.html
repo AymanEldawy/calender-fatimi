@@ -32,9 +32,7 @@
             <i class="gg-menu"></i>
           </button>
           <div class="collapse" id="collapsibleNavId">
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-              
-            </ul>
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0"></ul>
           </div>
         </div>
       </nav>
@@ -76,42 +74,44 @@
     </div>
     <div class="container">
       <div class="calender-page">
-        <div
-          class="calender-page-display d-flex align-items-center justify-content-between"
-        >
-          <button id="today">اليوم</button>
-          <p id="theDate">أغسطس 2022</p>
-        </div>
-        <div
-          class="calender-page-controls d-flex align-items-center justify-content-between"
-        >
-          <div class="controls-by d-flex align-items-center">
-            <span id="goPrev">
-              <i class="gg-chevron-right"></i>
-            </span>
-            <select name="" id="listOfControls" class="form-control mx-3">
-              <!-- <option value="day" selected>يوم</option> -->
-              <option value="month" selected>شهر</option>
-              <option value="year">سنة</option>
-            </select>
-            <span id="goNext">
-              <i class="gg-chevron-right __left"></i>
-            </span>
+        <div class="d-lg-flex">
+          <div
+            class="calender-page-display d-flex align-items-center justify-content-between"
+          >
+            <button id="today">اليوم</button>
+            <p id="theDate">أغسطس 2022</p>
           </div>
-          <div class="controls-by-month d-flex">
-            <div class="change-by-year d-flex align-items-center">
-              <input
-                type="text"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                class="form-control"
-                id="changeByYear"
-                placeholder="أدخل السنة"
-              />
-              <button id="btnChangeByYear" class="btn btn-primary mx-2">
-                أبحث
-              </button>
+          <div
+            class="calender-page-controls d-flex align-items-center justify-content-between"
+          >
+            <div class="controls-by d-flex align-items-center">
+              <span id="goPrev">
+                <i class="gg-chevron-right"></i>
+              </span>
+              <select name="" id="listOfControls" class="form-control mx-3">
+                <!-- <option value="day" selected>يوم</option> -->
+                <option value="month" selected>شهر</option>
+                <option value="year">سنة</option>
+              </select>
+              <span id="goNext">
+                <i class="gg-chevron-right __left"></i>
+              </span>
             </div>
-            <select name="" class="form-control" id="listOfMonth"></select>
+            <div class="controls-by-month d-flex">
+              <div class="change-by-year d-flex align-items-center">
+                <input
+                  type="text"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                  class="form-control"
+                  id="changeByYear"
+                  placeholder="أدخل السنة"
+                />
+                <button id="btnChangeByYear" class="btn btn-primary mx-2">
+                  أبحث
+                </button>
+              </div>
+              <select name="" class="form-control" id="listOfMonth"></select>
+            </div>
           </div>
         </div>
         <div class="calender-body">
@@ -127,7 +127,7 @@
             </div>
             <div class="calender-list-grid-body"></div>
           </div>
-          <div class="events"></div>
+          <div id="eventsGrid" class="events"></div>
         </div>
       </div>
     </div>
