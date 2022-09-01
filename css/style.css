@@ -131,7 +131,6 @@ footer .container {
 .nav-list {
   display: flex;
   justify-content: space-between;
-  overflow: hidden;
   background: #0093d5;
 }
 @media (max-width: 600px) {
@@ -172,11 +171,12 @@ span.arrow:hover {
 span#nextDay {
   transform: rotate(180deg);
 }
-.nav-list-item .d-flex i {
+.nav-list-item > .d-flex i:not(.gg-chevron-right) {
   margin-left: 6px;
 }
 #displayDateHigry,
-.nav-list-item span:last-of-type:not(.arrow) {
+.nav-list-item > span:last-of-type:not(.arrow) ,
+.nav-list-item > span:last-of-type:not(#closeCalender) {
   background: #fff;
   color: #fff;
   border-radius: 0.25rem;
@@ -252,7 +252,7 @@ button#backToDate.show {
 .nav-tabs .nav-link:hover {
   border-color: transparent;
 }
-.nav-list input {
+.nav-list input#dateChecker {
   position: absolute;
   top: 0;
   left: 0;
@@ -284,6 +284,7 @@ button#backToDate.show {
 }
 #nav-lighten-tab tr.active {
   background: #f7f1bc;
+  box-shadow: none;
 }
 tr:not(.active) #tableTime {
   display: none;
@@ -382,7 +383,7 @@ span.status-bad ~ #tableTime .flex-column span:first-child {
 .dark .main-container {
   box-shadow: 0 1px 4px #1e1d1d;
 }
-.dark .form-control {
+.dark .form-control:not(.calender-picker .form-control) {
   color: #888;
   border-color: #222;
   background-color: #111;

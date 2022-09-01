@@ -1,5 +1,31 @@
+
 import { a2e, months } from "./calender-setup.js";
-console.log("run.2");
+
+export let storageLocation = {
+  fetchLocation: () => {
+    let location = localStorage.getItem("TM_location");
+    return JSON.parse(location)
+      ? JSON.parse(location)
+      : {
+          lat: "17.5065",
+          long: "44.1316",
+          country: "SA",
+          city: "Najran",
+        };
+  },
+  saveLocation: (location) => {
+    localStorage.setItem("TM_location", JSON.stringify(location));
+  },
+  fetchTheme: () => {
+    let theme = localStorage.getItem("TM_theme");
+    return JSON.parse(theme) ? JSON.parse(theme) : "";
+  },
+  saveTheme: (theme) => {
+    localStorage.setItem("TM_theme", JSON.stringify(theme));
+  },
+};
+
+
 let links = [
   { fileName: "index.html", title: "الصفحة الرئيسية" },
   { fileName: "times.html", title: "ساعات الليل و النهار" },
@@ -114,7 +140,6 @@ export function calculateDate(date) {
   let distance = countDownDate - new Date().getTime();
   let days = Math.floor(distance / (1000 * 60 * 60 * 24));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  console.log(days);
   return `<span class="timerDays ${
     days < 0 && "completed"
   }">${calculateDaysFormat(days)}</span>`;
@@ -131,7 +156,6 @@ window.addEventListener("DOMContentLoaded", () => {
         </ul>
     </div>
    `;
-    console.log(eventModal);
     document.body.prepend(eventModal);
   }
   createEventModal();
@@ -146,9 +170,7 @@ window.addEventListener("DOMContentLoaded", () => {
     </li>
     `;
   });
-  menu.innerHTML += ` <li class="nav-item" >
-    <span class="nav-link open-events-modal">المناسبات</span>
-  </li>`;
+  menu.innerHTML += `<span class="open-events-modal">المناسبات</span>`;
 
   if (document.querySelector(".events-page .events")) {
     let eventsContainer = document.querySelector(".events-page .events");

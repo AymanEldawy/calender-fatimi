@@ -4,32 +4,9 @@ import {
   getCitiesByCountryCode,
 } from "country-city-location";
 import { weeks, daysInfo } from "./weeks.js";
-
-let SunCalc = require("suncalc2");
-
-export let storageLocation = {
-  fetchLocation: () => {
-    let location = localStorage.getItem("TM_location");
-    return JSON.parse(location)
-      ? JSON.parse(location)
-      : {
-          lat: "17.5065",
-          long: "44.1316",
-          country: "SA",
-          city: "Najran",
-        };
-  },
-  saveLocation: (location) => {
-    localStorage.setItem("TM_location", JSON.stringify(location));
-  },
-  fetchTheme: () => {
-    let theme = localStorage.getItem("TM_theme");
-    return JSON.parse(theme) ? JSON.parse(theme) : "";
-  },
-  saveTheme: (theme) => {
-    localStorage.setItem("TM_theme", JSON.stringify(theme));
-  },
-};
+import { storageLocation } from "./global.js";
+const SunCalc = require("suncalc2");
+console.log(SunCalc, storageLocation);
 
 let days = [
   "الاحد",
@@ -42,8 +19,8 @@ let days = [
 ];
 
 let latAndLong = {
-  lat: "17.5065",
-  long: "44.1316",
+  latitude: "17.5065",
+  longitude: "44.1316",
   day: "today",
   dayDate: new Date()
     .toLocaleDateString("en-UK")
@@ -129,8 +106,8 @@ function setLocation() {
 }
 function defaultLocation() {
   let LOCATION = storageLocation.fetchLocation();
-  latAndLong.lat = LOCATION.lat;
-  latAndLong.long = LOCATION.long;
+  latAndLong.latitude = LOCATION.latitude;
+  latAndLong.longitude = LOCATION.longitude;
   if (LOCATION && LOCATION.country) {
     document.querySelectorAll("#country option").forEach((e) => {
       if (LOCATION.country == e.value) {
@@ -240,7 +217,7 @@ window.addEventListener("DOMContentLoaded", () => {
         .reverse()
         .join("-");
     }
-    loadDate(latAndLong.lat, latAndLong.long, theNextDay);
+    loadDate(latAndLong.latitude, latAndLong.longitude, theNextDay);
     backToDate.classList.add("show");
   });
   nextDay.addEventListener("click", () => {
@@ -265,7 +242,7 @@ window.addEventListener("DOMContentLoaded", () => {
         .join("-");
     }
 
-    loadDate(latAndLong.lat, latAndLong.long, theNextDay);
+    loadDate(latAndLong.latitude, latAndLong.longitude, theNextDay);
     backToDate.classList.add("show");
   });
   // Run default function if user not allow location
@@ -300,7 +277,6 @@ window.addEventListener("DOMContentLoaded", () => {
       "timeWatch"
     ).innerHTML = `${hours}:${minutes}:${seconds} ${ampm}`;
   }, 1000);
-
   displayCountry();
   document.getElementById("country").addEventListener("change", (e) => {
     changeCountry(e.target.value);
@@ -308,12 +284,27 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("city").addEventListener("change", (e) => {
     if (e.target.value.indexOf("-") !== -1) {
       let data = e.target.value.split("-");
-      latAndLong.lat = data[0];
-      latAndLong.long = data[1];
-      loadDate(latAndLong.lat, latAndLong.long, latAndLong.dayDate);
+      latAndLong.latitude = data[0];
+      latAndLong.longitude = data[1];
+      loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
     }
   });
   getSunriseTime();
+  Array.from(
+    document.querySelectorAll(".calender-list-grid-body span")
+  ).forEach((_day) => {
+    _day.addEventListener("click", () => {
+      document
+        .querySelector(".calender-picker")
+        .classList.add("close-calender");
+      let _date = new Date(_day.dataset.current_date);
+      _date.setHours(new Date().getHours());
+      document.getElementById("displayDay").textContent =
+        new Date(_date).toLocaleDateString("ar-EG", { weekday: "long" });
+      backToDate.classList.add("show");
+      loadDate(latAndLong.latitude, latAndLong.longitude, _date);
+    });
+  });
 });
 
 function getLocation() {
@@ -331,10 +322,10 @@ async function showPosition(position) {
 }
 function showError() {
   let LOCATION = storageLocation.fetchLocation();
-  if (LOCATION && LOCATION.lat) {
-    loadDate(LOCATION.lat, LOCATION.long);
+  if (LOCATION && LOCATION.latitude) {
+    loadDate(LOCATION.latitude, LOCATION.longitude);
   } else {
-    loadDate(latAndLong.lat, latAndLong.long, latAndLong.dayDate);
+    loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
   }
 }
 
@@ -495,13 +486,15 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   let tableNight = document.querySelector("#nav-darken-tab tbody");
 
   tableDaylight.innerHTML = "";
-  let dayLen = `${parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])}:${
+  let dayLen = `${
+    parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
+  }:${
     parseInt(sunsetStr.split(":")[1]) - parseInt(sunriseStr.split(":")[1])
   }`.split(":");
-  let dayLenLight = parseInt(dayLen[0]) * 60 + parseInt(dayLen[1])
+  let dayLenLight = parseInt(dayLen[0]) * 60 + parseInt(dayLen[1]);
   let dayLenNight = 1440 - dayLenLight;
-  let valuePlusLight = Math.floor(((dayLenLight / 12) * 1 ) - 60);
-  let valuePlusNight = Math.floor(((dayLenNight / 12) * 1 ) - 60);
+  let valuePlusLight = Math.floor((dayLenLight / 12) * 1 - 60);
+  let valuePlusNight = Math.floor((dayLenNight / 12) * 1 - 60);
   // console.log(valuePlusLight, valuePlusNight)
   // let _valuePlusLight = parseFloat(valuePlusLight).toFixed(2).split('.')[1];
   // let _valuePlusNight = parseFloat(valuePlusNight).toFixed(2).split('.')[1];
@@ -509,22 +502,22 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   // _valuePlusNight = parseInt(parseFloat(`.${_valuePlusNight}`) * 12)
   // valuePlusLight = valuePlusLight > 0 ? valuePlusLight + _valuePlusLight : valuePlusLight - _valuePlusLight
   // valuePlusNight = valuePlusNight > 0 ? valuePlusNight + _valuePlusNight : valuePlusNight - _valuePlusNight
- 
+
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenLight / 12) * i) / 60);
-    let theMinutes = ((dayLenLight / 12) * i ) % 60;
-    let theMisSeconds = parseFloat(theMinutes).toFixed(2).split('.')[1];
+    let theMinutes = ((dayLenLight / 12) * i) % 60;
+    let theMisSeconds = parseFloat(theMinutes).toFixed(2).split(".")[1];
     // let theSeconds = (theMisSeconds * 12) / 60;
     // console.log(theMisSeconds, theSeconds)
-    // theMinutes += parseInt(theSeconds) 
+    // theMinutes += parseInt(theSeconds)
     // theSeconds = theMisSeconds - (theSeconds * 60)
     let hours = parseInt(sunrise[0]) + theHours;
     let minutes = parseInt(sunrise[1]) + theMinutes;
 
     let dev = parseInt(minutes / 60);
-    hours = hours +dev;
+    hours = hours + dev;
     minutes = minutes - dev * 60;
-    let start = resetTime(parseInt(hours),  parseInt(minutes), "sunrise");
+    let start = resetTime(parseInt(hours), parseInt(minutes), "sunrise");
     let end = endHoursFn(
       parseInt(hours),
       parseInt(minutes),
@@ -536,7 +529,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
       createItemOfTable(start, end, weeks[`${theDay}light`][i])
     );
   }
-
 
   let last = document.querySelector(
     "#nav-lighten-tab tr:last-child td:last-child"
@@ -551,21 +543,19 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   last.textContent = `${lastTime.join(":")} PM`;
   tableNight.innerHTML = "";
 
-
-  
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenNight / 12) * i) / 60);
-    let theMinutes = ((dayLenNight / 12) * i ) % 60;
+    let theMinutes = ((dayLenNight / 12) * i) % 60;
     // let theMisSeconds = parseFloat(theMinutes).toFixed(2).split('.')[1];
     // let theSeconds = (theMisSeconds * 12) / 60
-    // theMinutes += parseInt(theSeconds) 
+    // theMinutes += parseInt(theSeconds)
     // theSeconds = theMisSeconds - (theSeconds * 60)
     let hours = parseInt(sunset[0]) + theHours;
     let minutes = parseInt(sunset[1]) + theMinutes;
     let dev = parseInt(minutes / 60);
     hours = hours + dev;
     minutes = minutes - dev * 60;
-    let start = resetTime(parseInt(hours),  parseInt(minutes), "sunset");
+    let start = resetTime(parseInt(hours), parseInt(minutes), "sunset");
     let end = endHoursFn(
       parseInt(hours),
       parseInt(minutes),
@@ -579,8 +569,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   let lastNight = document.querySelector(
     "#nav-darken-tab tr:last-child td:last-child"
   );
-
-
 
   let lastNightTime = sunrise;
   if (lastNightTime[1] > 1 && lastNightTime[1] <= 59) lastNightTime[1] -= 1;
@@ -663,9 +651,11 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
           isLess =
             parseInt(timeCheckLess.replace("01", "13")) >=
             parseInt(`${hours}${minutes}`);
-            if(start[i].textContent.indexOf(amOrPm) !== -1 || end[i].textContent.indexOf(amOrPm) !== -1)
-              check = true;
-
+          if (
+            start[i].textContent.indexOf(amOrPm) !== -1 ||
+            end[i].textContent.indexOf(amOrPm) !== -1
+          )
+            check = true;
         }
         if (
           start[i].textContent.indexOf("12") !== -1 &&
@@ -751,18 +741,17 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
       }
     }, 1000);
   }
-  document.getElementById("dateChecker").addEventListener("change", (e) => {
-    document.getElementById("displayDay").textContent = new Date(
-      e.target.value
-    ).toLocaleDateString("ar-EG", { weekday: "long" });
-    backToDate.classList.add("show");
-    loadDate(latAndLong.lat, latAndLong.long, e.target.value);
+  document.getElementById("dateChecker").addEventListener("click", (e) => {
+    document
+      .querySelector(".calender-picker")
+      .classList.remove("close-calender");
   });
+
   backToDate.onclick = function (e) {
     document.getElementById("displayDay").textContent =
       new Date().toLocaleDateString("ar-EG", { weekday: "long" });
     e.target.classList.remove("show");
-    loadDate(latAndLong.lat, latAndLong.long, latAndLong.dayDate);
+    loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
   };
   let theDayDate = new Date(selectedDate)
     .toLocaleDateString("en-UK")
@@ -782,7 +771,11 @@ function createElement(el = "div") {
 }
 
 function getSunriseTime() {
-  let sunCalc = SunCalc.getTimes(new Date(), latAndLong.lat, latAndLong.long);
+  let sunCalc = SunCalc.getTimes(
+    new Date(),
+    latAndLong.latitude,
+    latAndLong.longitude
+  );
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
   let sunset = sunsetStr.split(":").join("");
   let date = new Date();
@@ -799,7 +792,7 @@ function getSunriseTime() {
       .split("-")
       .reverse()
       .join("-");
-    loadDate(latAndLong.lat, latAndLong.long, latAndLong.dayDate);
+    loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
     displayDate.innerHTML = new Date().toLocaleDateString("ar-EG");
   }
 }

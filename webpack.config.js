@@ -2,8 +2,8 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    index: './__webpack_js/main.js',
-    visitors: './__webpack_js/visitors.js',
+    sunriseTime: './js/sunrise-time.js',
+    visitors: './js/visitors.js',
   },
   output: {
     path: path.resolve(__dirname, 'js'),

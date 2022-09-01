@@ -159,7 +159,6 @@ const towers = [
 ];
 if (document.getElementById("knowTower")) {
   function templateResult(info) {
-    console.log(info);
     if (info.name) {
       document.getElementById(
         "showResult"

@@ -1,21 +1,5 @@
 import * as Calender from "./calender-setup.js";
-console.log(Calender);
-let storeLocation = {
-  fetchLocation: () => {
-    let location = localStorage.getItem("TM_location");
-    return JSON.parse(location)
-      ? JSON.parse(location)
-      : {
-          lat: "17.5065",
-          long: "44.1316",
-          country: "SA",
-          city: "Najran",
-        };
-  },
-  saveLocation: (location) => {
-    localStorage.setItem("TM_location", JSON.stringify(location));
-  },
-};
+import { storageLocation } from './global.js';
 
 const PrayerTimeDefault = {
   month: 0, //current month
@@ -24,47 +8,12 @@ const PrayerTimeDefault = {
   longitude: "44.1316",
 };
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition, showError);
-  }
-}
-getLocation();
-async function showPosition(position) {
-  let currentLocation = {
-    latitude: position.coords.latitude,
-    longitude: position.coords.longitude,
-  };
-  storeLocation.saveLocation(currentLocation);
-}
-let LOCATION = storeLocation.fetchLocation();
-function showError() {
-  if (LOCATION && LOCATION.lat) {
-    PrayerTimeDefault.latitude = LOCATION.latitude;
-    PrayerTimeDefault.latitude = LOCATION.longitude;
-  }
-}
+let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault
+console.log(LOCATION, storageLocation.fetchLocation() )
 
 export async function prayerTimingDay(date = new Date()) {
   let prayerTime = await getPrayTimeByDate(date);
   let timings = prayerTime.data.timings;
-  // document.getElementById("dateDayHijri").textContent = new Date(
-  //   date
-  // ).toLocaleDateString("ar-SA", {
-  //   weekday: "long",
-  //   year: "numeric",
-  //   month: "long",
-  //   day: "numeric",
-  // });
-  // document.getElementById("dateDayGregorian").textContent = new Date(
-  //   date
-  // ).toLocaleDateString("ar-EG", {
-  //   weekday: "long",
-  //   year: "numeric",
-  //   month: "long",
-  //   day: "numeric",
-  // });
-  // let timingsList = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha' ]
   let prayGrid = document.querySelector(".prayer-grid");
   prayGrid.innerHTML = `
   <div class="prayer-grid-item">
@@ -101,7 +50,6 @@ async function getPrayTimeByMonth(month, year) {
   )
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       return data;
     });
   return prayerTime;
@@ -112,7 +60,6 @@ async function getPrayTimeByDate(date = new Date()) {
   )
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       return data;
     });
   return prayerTime;
@@ -140,9 +87,6 @@ async function displayPryerTime(date = new Date()) {
   let currentYearHijri = Calender.theCurrentDate.getCurrentYearHijri();
   let currentMonthHijri = Calender.theCurrentDate.getCurrentMonthHijri();
   let currentDayNumHijri = Calender.theCurrentDate.getCurrentDateHijri();
-  console.log(
-    Calender.countDayOfMoth(HijriConfiguration.hijriMonth, yearNumber)
-  );
   let firstDayNumOfMonth =
     (Calender.countOfMonthDays(HijriConfiguration.hijriMonth - 1, yearNumber) +
       parseInt(firstDayOfYear.count)) %
@@ -234,8 +178,10 @@ window.addEventListener("DOMContentLoaded", () => {
       btn.classList.add("active");
     });
   });
-  document.getElementById("goNextMonth").addEventListener("click", goNext);
-  document.getElementById("goPrevMonth").addEventListener("click", goPrev);
+  if(document.getElementById("goNextMonth")) {
+    document.getElementById("goNextMonth").addEventListener("click", goNext);
+    document.getElementById("goPrevMonth").addEventListener("click", goPrev);
+  }
 });
 
 // Go Prev [ Month - year - day]

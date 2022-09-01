@@ -313,22 +313,3 @@ export function displayListOfMonths() {
   }
 }
 
-export const countDownTime = (date, display) => {
-  let _ = document.getElementById(display)
-
-  let x = setInterval(function () {
-    let now = new Date().getTime();
-
-
-    if(days < 1) {
-      console.log('اليوم')
-    }
-    if (distance < 0) {
-      clearInterval(x);
-      _.innerHTML = `اليوم`;
-    } else {
-    }
-  }, 1000);
-  console.log(_)
-
-};

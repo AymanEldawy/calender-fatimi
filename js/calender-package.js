@@ -161,7 +161,7 @@ window.addEventListener("click", (e) => {
 let listOfControls = document.getElementById("listOfControls");
 
 // Go Prev [ Month - year - day]
-function goPrev() {
+export function goPrev() {
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
     Calender.theCurrentDate.gregorianDate
   );
@@ -183,7 +183,7 @@ function goPrev() {
   displayCalenderGrid(theNewDate);
   Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
 }
-function goNext() {
+export function goNext() {
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
     Calender.theCurrentDate.gregorianDate
   );
@@ -206,7 +206,7 @@ function goNext() {
   displayCalenderGrid(theNewDate);
   Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
 }
-function returnHijriConfiguration(date) {
+export  function returnHijriConfiguration(date) {
   let gregorianDate = new Date(date);
   let hijri = gregorianDate.toHijri();
   return {
@@ -219,7 +219,7 @@ function returnHijriConfiguration(date) {
   };
 }
 
-function enterYear() {
+export  function enterYear() {
   let year = document.getElementById("changeByYear");
   let hijri = new HijriDate(+year.value, 1, 1);
   let gregorian = hijri.toGregorian();
@@ -239,14 +239,11 @@ function changeMonth(e) {
   displayCalenderGrid(theGerDate);
   Calender.theCurrentDate.gregorianDate = new Date(theGerDate);
 }
-function __today() {
+export  function __today() {
   displayCalenderGrid();
   Calender.theCurrentDate.gregorianDate = new Date();
 }
-// Events
-function openCalender() {
-  document.querySelector(".calender-picker").classList.remove("close-calender");
-}
+
 function checkInputTitle(inputTitle) {
   if (inputTitle.value == "") {
     inputTitle.classList.add("error");
@@ -304,7 +301,6 @@ function displayEvents(theEventDate) {
   let containerEvent = document.querySelector(".events");
   containerEvent.innerHTML = "";
   let listOfEvents = events.filter((event) => Date.parse(event.date) == Date.parse(theEventDate));
-  console.log(theEventDate, listOfEvents)
 
   if (listOfEvents.length > 0) {
     listOfEvents.forEach((event) => {
@@ -320,6 +316,5 @@ function displayEvents(theEventDate) {
 }
 function checkIfDateHasEvents(theEventDate) {
   let listOfEvents = events.filter((event) => Date.parse(event.date) == Date.parse(theEventDate));
-  console.log(`hs`,listOfEvents)
   return listOfEvents.length > 0;
 }

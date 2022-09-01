@@ -53,11 +53,12 @@ body {
   background: #fff;
   padding: 15px;
   border-radius: 0.25rem;
-  z-index: 2;
+  z-index: 99;
   font-size: 0.8rem;
   max-width: 360px;
-  transition: opacity 0.2s ease-in-out;
-  pointer-events: unset;
+  display: block;
+  /* transition: opacity 0.2s ease-in-out;
+  pointer-events: unset; */
 }
 
 .calender-picker .calender-page-controls {
@@ -85,6 +86,7 @@ body {
   position: relative;
   /* background: #f7f6f6; */
   padding-top: 17px;
+  width: 47px;
 }
 .calender-picker .calender-list .calender-list-grid-body span > * {
   pointer-events: none;
@@ -104,16 +106,6 @@ body {
 
 input[type="color"] {
   max-width: 90px;
-}
-.calender-picker span:hover ,
-.calender-picker span:not(.active) {
-  color: inherit !important;
-  background: inherit !important;
-  font-size: inherit !important;
-  border: 1px solid #504f4f36 !important;
-}
-.calender-picker span[data-event] .icon-add {
-  display: none !important;
 }
 .calender-picker .calender-list .calender-list-grid-body span.active{
   background-color: #00b7ff;
@@ -228,7 +220,7 @@ td {
 }
 #listOfMonth,
 .change-by-year input {
-  width: 90px;
+  width: 100px;
 }
 .calender-body {
   display: flex;
@@ -276,24 +268,24 @@ td {
   background-color: #00b7ff;
   color: #fff;
 }
-.calender-list .calender-list-grid-body span.visited{
+.calender-page .calender-list .calender-list-grid-body span.visited{
   border-color: #e91e63  #673ab7 #3f51b5 #9c27b0;
   border-width: 3px;
 }
 
-.calender-list .calender-list-grid-body span[data-has_event="true"] {
+.calender-page .calender-list .calender-list-grid-body span[data-has_event="true"] {
   background-image: linear-gradient(45deg, #673ab7, #b02799, #3f51b5);
   color: #fff;
   font-size: 1.2rem;
 }
-.calender-list .calender-list-grid-body :hover {
+.calender-page .calender-list .calender-list-grid-body :hover {
   border-color: #e91e63  #673ab7 #3f51b5 #9c27b0;
 
   /* box-shadow: 0px 0px 0px 1px #2196f3 inset; */
   border-width: 3px;
 
 }
-.calender-list .calender-list-grid-body span[data-event] .icon-add {
+.calender-page .calender-list .calender-list-grid-body span[data-event] .icon-add {
   left: 3px;
   bottom: -50px;
   position: absolute;
@@ -371,4 +363,23 @@ span.events-item-circle {
   background: #f052;
   padding: 0.25rem;
   border-radius: 0.25rem;
+}
+
+.calender-picker .calender-page-controls {
+  box-shadow: none;
+}
+
+.calender-picker .change-by-year{
+  margin-top: 0.5rem;
+}
+
+.calender-picker .calender-list .calender-list-grid-head span {
+  padding: 0.5rem 0;
+  width: 47px;
+}
+.calender-picker  .calender-list-grid-body {
+
+}
+.calender-picker i.icon-add {
+  display: none;
 }

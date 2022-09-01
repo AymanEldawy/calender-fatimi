@@ -17,6 +17,12 @@ body {
   font-family: "Helvetica Neue W23 for SKY Reg";
   padding-top: 55px;
 }
+.open-events-modal {
+  background: #fff;
+  padding: .5rem;
+  border-radius: .25rem;
+  cursor: pointer;
+}
 
 ._modal {
   position: fixed;
@@ -73,7 +79,9 @@ ul.events.text-center {
   list-style: none;
 }
 
-.calender-picker.close-calender,
+.calender-picker.close-calender {
+  display: none;
+}
 .hide,
 .modal-events.close {
   pointer-events: none;
@@ -89,18 +97,22 @@ ul.events.text-center {
   width: 100%;
 }
 
+.navbar-dark .navbar-nav .nav-item {
+  margin-bottom: .5rem
+}
 .navbar-dark .navbar-nav .nav-item:hover > .nav-link,
 .navbar-dark .navbar-nav .active > .nav-link,
 .navbar-dark .navbar-nav .nav-link.active,
 .navbar-dark .navbar-nav .nav-link.show,
 .navbar-dark .navbar-nav .show > .nav-link {
   color: #fff;
-  background: #2196f3;
+  border-left: 4px solid aliceblue;
+  background: #fff5;
 }
 .navbar .container,
 footer .container {
   position: relative;
-  max-width: 900px !important;
+  /* max-width: 900px !important; */
 }
 div#collapsibleNavId {
   position: fixed;

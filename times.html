@@ -10,10 +10,12 @@
       integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="css/icons.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/index.css" />
     <link rel="stylesheet" href="css/globle.css" />
     <link rel="stylesheet" href="css/pages.css" />
+    <link rel="stylesheet" href="css/calender.css" />
     <title>موقع قبيلة آل زمانان</title>
   </head>
   <body>
@@ -28,7 +30,7 @@
     <input
       type="hidden"
       id="changeHijriDate"
-      data-action="زيادة"
+      data-action=""
       data-countofdays="1"
     />
     <!-- تغيير التاريخ الهجري -->
@@ -146,8 +148,65 @@
               <span class="arrow" id="prevDay">
                 <i class="gg-chevron-double-right"></i>
               </span>
-              <input id="dateChecker" type="date" />
-              <i class="gg-calendar"></i>التاريخ
+              <div id="fatimitCalender" class="position-relative d-flex">
+                <div class="calender-picker close-calender">
+                  <div
+                    class="calender-page-controls d-flex align-items-center justify-content-between"
+                  >
+                    <span id="goPrev">
+                      <i class="gg-chevron-right"></i>
+                    </span>
+                    <div class="d-flex flex-column">
+                      <p id="theDate">أغسطس 2022</p>
+                      <button
+                        type="button"
+                        class="btn text-primary p-0 mx-1"
+                        id="today"
+                      >
+                        اليوم
+                      </button>
+                    </div>
+                    <span id="goNext">
+                      <i class="gg-chevron-right __left"></i>
+                    </span>
+                  </div>
+                  <div class="calender-list">
+                    <div class="calender-list-grid-head">
+                      <span>الأحد</span>
+                      <span>الأثنين</span>
+                      <span>الثلاثاء</span>
+                      <span>الأربعاء</span>
+                      <span>الخميس</span>
+                      <span>الجمعة</span>
+                      <span>السبت</span>
+                    </div>
+                    <div class="calender-list-grid-body"></div>
+                  </div>
+                  <div
+                    class="calender-page-controls d-flex align-items-center justify-content-between"
+                  >
+                    <div class="change-by-year d-flex align-items-center">
+                      <input
+                        type="text"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                        class="form-control"
+                        id="changeByYear"
+                        placeholder="أدخل السنة"
+                      />
+                      <button
+                        type="button"
+                        id="btnChangeByYear"
+                        class="btn btn-primary mx-2"
+                      >
+                        أبحث
+                      </button>
+                      <span class="btn btn-danger" id="closeCalender">x</span>
+                    </div>
+                  </div>
+                </div>
+                <input id="dateChecker" type="text" readonly/>
+                <i class="gg-calendar"></i>التاريخ
+              </div>
               <span class="arrow" id="nextDay">
                 <i class="gg-chevron-double-right"></i>
               </span>
@@ -322,8 +381,7 @@
       </div>
     </div>
     <div id="planetMessage"></div>
-    <div class="visitors" id="visitors">
-    </div>
+    <div class="visitors" id="visitors"></div>
     <footer class="mt-3 bg-none">
       <div class="container text-center p-1">
         <!-- <div class="d-flex justify-content-between"> -->
@@ -349,11 +407,13 @@
       integrity="sha384-VmD+lKnI0Y4FPvr6hvZRw6xvdt/QZoNHQ4h5k0RL30aGkR9ylHU56BzrE2UoohWK"
       crossorigin="anonymous"
     ></script>
-        <script
+    <script
       src="https://rawgit.com/abdennour/hijri-date/master/cdn/hijri-date-latest.js"
       type="text/javascript"
     ></script>
-    <script src="js/global.js" type="module"></script><script src="dist/visitors.bundle.js"></script>
-    <script src="js/index.bundle.js" type="module"></script>
+    <script src="js/global.js" type="module"></script> 
+    <script src="js/visitors.bundle.js"></script> 
+    <script src="js/calender-box.js" type="module"></script>
+    <script src="js/sunriseTime.bundle.js" type="module"></script>
   </body>
 </html>

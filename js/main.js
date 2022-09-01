@@ -183,7 +183,6 @@ const towers = [
 
 if (document.getElementById("knowTower")) {
   function templateResult(info) {
-    console.log(info);
     if (info.name) {
       document.getElementById("showResult").innerHTML = `
     <div class="result-template mx-auto pt-3" style="max-width:600px; border-top:1px solid #ccc">
