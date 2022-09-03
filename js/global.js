@@ -7,8 +7,8 @@ export let storageLocation = {
     return JSON.parse(location)
       ? JSON.parse(location)
       : {
-          lat: "17.5065",
-          long: "44.1316",
+          latitude: "17.5065",
+          longitude: "44.1316",
           country: "SA",
           city: "Najran",
         };
@@ -151,9 +151,15 @@ window.addEventListener("DOMContentLoaded", () => {
     eventModal.className = "_modal hide";
     eventModal.innerHTML = `
       <div class="events-page">
-        <h2 class="text-center">المناسبات</h2>
-        <ul class="events text-center">
-        </ul>
+        <div class="modal-tabs">
+          <button id="tab-events-btn" class="active">المناسبات</button>
+          <button id="tab-days-btn">الايام الفاضلة</button>
+        </div>
+        <div class="tab-toggler open-events-tab">
+          <ul id="tab-events" class="events text-center">
+          </ul>
+          <ul id="tab-days" class="events text-center"><ul>
+        </div>
     </div>
    `;
     document.body.prepend(eventModal);
@@ -198,6 +204,16 @@ window.addEventListener("DOMContentLoaded", () => {
 window.addEventListener('click', (e) => {
   if(e.target.matches('._modal')) {
     document.querySelector('._modal').classList.add('hide')
+  } 
+  if(e.target.matches('#tab-events-btn')) {
+    document.querySelector('#tab-events-btn').classList.add('active')
+    document.querySelector('#tab-days-btn').classList.remove('active')
+    document.querySelector('.tab-toggler').classList.toggle('open-events-tab open-days-tab ')
+  } 
+  if(e.target.matches('#tab-days-btn')) {
+    document.querySelector('#tab-days-btn').classList.add('active')
+    document.querySelector('#tab-events-btn').classList.remove('active')
+    document.querySelector('.tab-toggler').classList.toggle('open-events-tab open-days-tab ')
   } 
   if(e.target.matches('.open-events-modal')) {
     document.querySelector('._modal').classList.remove('hide')

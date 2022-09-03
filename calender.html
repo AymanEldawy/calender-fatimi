@@ -74,44 +74,40 @@
     </div>
     <div class="container">
       <div class="calender-page">
-        <div class="d-lg-flex">
-          <div
-            class="calender-page-display d-flex align-items-center justify-content-between"
-          >
-            <button id="today">اليوم</button>
-            <p id="theDate">أغسطس 2022</p>
+        <div class="calender-page-title">
+          <h1 id="theDate">أغسطس 2022</h1>
+          <button class="btn btn-sm btn-primary hide" id="today">اليوم</button>
+        </div>
+        <div
+          class="calender-page-controls d-flex align-items-center justify-content-between"
+        >
+          <div class="controls-by d-flex align-items-center">
+            <span id="goPrev">
+              <i class="gg-chevron-right"></i>
+            </span>
+            <select name="" id="listOfControls" class="form-control mx-3">
+              <!-- <option value="day" selected>يوم</option> -->
+              <option value="month" selected>شهر</option>
+              <option value="year">سنة</option>
+            </select>
+            <span id="goNext">
+              <i class="gg-chevron-right __left"></i>
+            </span>
           </div>
-          <div
-            class="calender-page-controls d-flex align-items-center justify-content-between"
-          >
-            <div class="controls-by d-flex align-items-center">
-              <span id="goPrev">
-                <i class="gg-chevron-right"></i>
-              </span>
-              <select name="" id="listOfControls" class="form-control mx-3">
-                <!-- <option value="day" selected>يوم</option> -->
-                <option value="month" selected>شهر</option>
-                <option value="year">سنة</option>
-              </select>
-              <span id="goNext">
-                <i class="gg-chevron-right __left"></i>
-              </span>
+          <div class="controls-by-month d-flex">
+            <div class="change-by-year d-flex align-items-center">
+              <input
+                type="text"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                class="form-control"
+                id="changeByYear"
+                placeholder="أدخل السنة"
+              />
+              <button id="btnChangeByYear" class="btn btn-primary mx-2">
+                أبحث
+              </button>
             </div>
-            <div class="controls-by-month d-flex">
-              <div class="change-by-year d-flex align-items-center">
-                <input
-                  type="text"
-                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                  class="form-control"
-                  id="changeByYear"
-                  placeholder="أدخل السنة"
-                />
-                <button id="btnChangeByYear" class="btn btn-primary mx-2">
-                  أبحث
-                </button>
-              </div>
-              <select name="" class="form-control" id="listOfMonth"></select>
-            </div>
+            <select name="" class="form-control" id="listOfMonth"></select>
           </div>
         </div>
         <div class="calender-body">
@@ -161,7 +157,7 @@
     ></script>
     <script src="js/global.js" type="module"></script>
     <script src="js/visitors.bundle.js" type="module"></script>
-    <script src="js/calender-package.js" type="module"></script>
+    <script src="js/calender-box.js" type="module"></script>
     <!-- <script src="js/calender.js"></script> -->
   </body>
 </html>

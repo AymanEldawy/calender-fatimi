@@ -79,7 +79,7 @@ button.navbar-toggler[aria-expanded="true"] {
 }
 #closeLocation {
   position: absolute;
-  left: 0;
+  left: 10px;
   color: #f44336;
   cursor: pointer;
 }

@@ -17,6 +17,7 @@ body {
   font-family: "Helvetica Neue W23 for SKY Reg";
   padding-top: 55px;
   counter-reset: section;
+  background: #d7dee1;
 }
 ::-webkit-scrollbar {
   width: 8px;
@@ -52,11 +53,43 @@ body {
   transition: opacity 0.3s ease-out;
 }
 
+._modal .modal-tabs {
+  justify-content: space-around;
+  display: flex;
+  border-bottom: 2px solid #ccc;
+}
+._modal button {
+  flex: 1;
+  border: none;
+}
+._modal button.active {
+  color: #ff9800;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-bottom: 4px solid #ff9800 !important;
+  background: #ff98004a;
+  padding: 0.5rem;
+  transform: translateY(2px);
+  pointer-events: none;
+}
 ._modal .events {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
 }
+._modal .tab-toggler.open-events-tab .tab-events {
+  display: block
+}
+._modal .tab-toggler.open-events-tab .tab-days {
+  display: none
+}
+._modal .tab-toggler.open-days-tab .tab-events {
+  display: none
+}
+._modal .tab-toggler.open-days-tab .tab-days {
+  display: block
+}
+
 @media (min-width: 991px) {
   ._modal .events {
     grid-template-columns: 1fr 1fr;
@@ -314,4 +347,8 @@ button.navbar-toggler[aria-expanded="true"] {
 .status-bad {
   background-color: #f44336;
   color: #fff;
+}
+
+.table {
+  background-color: #fff;
 }

@@ -42,20 +42,41 @@
     <div class="homepage">
       <div class="container">
         <div class="page-info text-center">
-          <p id="date"></p>
-          <p id="yearLeap"></p>
+          <div class="table-style">
+            <div class="table-style-item">
+              <span class="table-style-label">اليوم</span>
+              <span class="table-style-value" id="dayWeek"></span>
+            </div>
+            <div class="table-style-item">
+              <span class="table-style-label">التاريخ</span>
+              <span class="table-style-value" id="date"></span>
+            </div>
+            <div class="table-style-item">
+              <span class="table-style-label">كبيسة</span>
+              <span class="table-style-value" id="yearLeap"></span>
+            </div>
+            <div class="table-style-item">
+              <span class="table-style-label">آية السنة</span>
+              <span class="table-style-value" id="firstDayOfYear"></span>
+            </div>
+          </div>
+          <div class="table-style">
+            <div class="table-style-item">
+              <span class="table-style-label">الساعة الحالية</span>
+              <span class="table-style-value" id="timeNow"></span>
+            </div>
+            <div class="table-style-item">
+              <span class="table-style-label"> الساعة التالية</span>
+              <span class="table-style-value" id="timeNext"></span>
+            </div>
+          </div>
           <p id="bigCentury"></p>
-          <p id="timeNow"></p>
+        </div>
+        <div id="closestEvent" class="event">
+         
         </div>
         <div class="prayer-single">
           <div class="prayer-grid"></div>
-        </div>
-        <div class="event">
-          <span>مناسبة ما</span>
-          <div class="timer">
-            باقي من الوقت
-            <span class="timer-style"> 25 يوم</span>
-          </div>
         </div>
       </div>
     </div>

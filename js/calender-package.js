@@ -18,7 +18,7 @@ if (eventsExists.length < 1) {
       title: event.title,
       date: event.date,
       deletable: event.deletable,
-      color: "#0d6efd",
+      color: "#ffc107",
     });
   });
   storeEvents.saveEvents(events);
@@ -186,8 +186,15 @@ export function goPrev() {
   }
   displayCalenderGrid(theNewDate);
   Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
+  if(Calender.theCurrentDate.currentHijriDate == new Date(theNewDate).toLocaleDateString('ar-SA')) {
+    document.getElementById('today').classList.add('hide')
+  } else {
+    document.getElementById('today').classList.remove('hide')
+  }
+
 }
 export function goNext() {
+
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
     Calender.theCurrentDate.gregorianDate
   );
@@ -208,7 +215,16 @@ export function goNext() {
   }
 
   displayCalenderGrid(theNewDate);
+  if(Calender.theCurrentDate.currentHijriDate == new Date(theNewDate).toLocaleDateString('ar-SA')) {
+    document.getElementById('today').classList.add('hide')
+  } else {
+    document.getElementById('today').classList.remove('hide')
+  }
+
   Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
+
+
+
 }
 export  function returnHijriConfiguration(date) {
   let gregorianDate = new Date(date);
@@ -244,6 +260,7 @@ function changeMonth(e) {
   Calender.theCurrentDate.gregorianDate = new Date(theGerDate);
 }
 export  function __today() {
+  document.getElementById('today').classList.add('hide')
   displayCalenderGrid();
   Calender.theCurrentDate.gregorianDate = new Date();
 }
@@ -304,18 +321,21 @@ function createEventItem(event) {
 
 function displayEvents(theEventDate) {
   console.log('Run.,.,')
-  let containerEvent = document.getElementById("eventsGrid");
-  containerEvent.innerHTML = "";
-  let listOfEvents = events.filter((event) => Date.parse(event.date) == Date.parse(theEventDate));
-  console.log(listOfEvents, events)
-  if (listOfEvents.length > 0) {
-    listOfEvents.forEach((event) => {
-      containerEvent.append(createEventItem(event));
-    });
-  } else {
-    containerEvent.innerHTML = `
+  if(document.querySelector('.calender-page')) {
+    
+    let containerEvent = document.getElementById("eventsGrid");
+    containerEvent.innerHTML = "";
+    let listOfEvents = events.filter((event) => Date.parse(event.date) == Date.parse(theEventDate));
+    console.log(listOfEvents, events)
+    if (listOfEvents.length > 0) {
+      listOfEvents.forEach((event) => {
+        containerEvent.append(createEventItem(event));
+      });
+    } else {
+      containerEvent.innerHTML = `
       <p class="m-0 text-danger">لا يوجد مناسبات لهذا اليوم <span id="closeEventsBox"><i class="gg-close"></i></span></p>
-    `;
+      `;
+    }
   }
 }
 function checkIfDateHasEvents(theEventDate) {

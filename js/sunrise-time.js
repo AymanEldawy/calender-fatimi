@@ -6,7 +6,6 @@ import {
 import { weeks, daysInfo } from "./weeks.js";
 import { storageLocation } from "./global.js";
 const SunCalc = require("suncalc2");
-console.log(SunCalc, storageLocation);
 
 let days = [
   "الاحد",
@@ -90,14 +89,14 @@ function setLocation() {
   let country = document.getElementById("country").value;
   let cityInfo = document.getElementById("city").value;
   let cityLocation = cityInfo.split("-");
-  let lat = cityLocation[0];
-  let long = cityLocation[1];
+  let latitude = cityLocation[0];
+  let longitude = cityLocation[1];
   let city = cityLocation[2];
   let currentLocation = {
     country,
     city,
-    lat,
-    long,
+    latitude,
+    longitude,
   };
   storageLocation.saveLocation(currentLocation);
   setTimeout(() => {
@@ -314,8 +313,8 @@ function getLocation() {
 }
 async function showPosition(position) {
   let currentLocation = {
-    lat: position.coords.latitude,
-    long: position.coords.longitude,
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude,
   };
   storageLocation.saveLocation(currentLocation);
   loadDate(position.coords.latitude, position.coords.longitude);
@@ -495,7 +494,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   let dayLenNight = 1440 - dayLenLight;
   let valuePlusLight = Math.floor((dayLenLight / 12) * 1 - 60);
   let valuePlusNight = Math.floor((dayLenNight / 12) * 1 - 60);
-  // console.log(valuePlusLight, valuePlusNight)
   // let _valuePlusLight = parseFloat(valuePlusLight).toFixed(2).split('.')[1];
   // let _valuePlusNight = parseFloat(valuePlusNight).toFixed(2).split('.')[1];
   // _valuePlusLight = parseInt(parseFloat(`.${_valuePlusLight}`) * 12)
@@ -508,7 +506,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
     let theMinutes = ((dayLenLight / 12) * i) % 60;
     let theMisSeconds = parseFloat(theMinutes).toFixed(2).split(".")[1];
     // let theSeconds = (theMisSeconds * 12) / 60;
-    // console.log(theMisSeconds, theSeconds)
     // theMinutes += parseInt(theSeconds)
     // theSeconds = theMisSeconds - (theSeconds * 60)
     let hours = parseInt(sunrise[0]) + theHours;
