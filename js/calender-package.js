@@ -1,5 +1,5 @@
 import * as Calender from "./calender-setup.js";
-import { calculateDate, globalEvents } from "./global.js";
+import { calculateDate, globalEvents, storageLocation } from "./global.js";
 // Let storage
 export let storeEvents = {
   fetchEvents() {
@@ -137,10 +137,14 @@ window.addEventListener("click", (e) => {
   if (e.target.matches("#closeEventsBox .gg-close")) {
     document.getElementById("eventsGrid").innerHTML = ''
   }
+  if (e.target.matches(".delete-event .gg-close")) {
+    deleteEvent(e.target.parentElement.dataset.title)
+    e.target.parentElement.parentElement.remove()
+  }
 
   if (e.target.matches("span[data-event] .icon-add")) {
     document.getElementById("datePicker").value =
-      e.target.parentElement.dataset.current_date;
+      e.target.parentElement.parentElement.dataset.current_date;
     document.querySelector(".modal-events").classList.remove("close");
   }
 
@@ -285,6 +289,7 @@ function createEventItem(event) {
   div.className = "events-item";
   div.style.background = event.color;
   div.innerHTML = `
+  ${event.deletable ? `<span data-title="${event.title}" class="delete-event"><i class="gg-close"></i></span>` : ''}
   <h4>${event.title}</h4>
   <p class="d-flex align-items justify-content-between">
     <span>${new Date(event.date).toLocaleDateString("ar-SA", {
@@ -316,4 +321,11 @@ function displayEvents(theEventDate) {
 function checkIfDateHasEvents(theEventDate) {
   let listOfEvents = events.filter((event) => Date.parse(event.date) == Date.parse(theEventDate));
   return listOfEvents.length > 0;
+}
+
+function deleteEvent(title) {
+  console.log(title)
+  let newEvents = events.filter(event => event.title !== title)
+  console.log(events,newEvents)
+  storeEvents.saveEvents(newEvents)
 }

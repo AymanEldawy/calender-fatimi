@@ -1,0 +1,33 @@
+{
+  "name": "fatimi-cal",
+  "version": "1.0.0",
+  "description": "\"# calender-fatimi\"",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AymanEldawy/calender-fatimi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AymanEldawy/calender-fatimi/issues"
+  },
+  "homepage": "https://github.com/AymanEldawy/calender-fatimi#readme",
+  "dependencies": {
+    "countapi-js": "^1.0.2",
+    "country-city-location": "^1.0.13",
+    "suncalc2": "^1.8.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.13",
+    "@babel/preset-env": "^7.18.10",
+    "babel-loader": "^8.2.5"
+  }
+}

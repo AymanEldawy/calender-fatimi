@@ -319,9 +319,7 @@ td {
   padding: 1rem;
   border-radius: 0.25rem;
 }
-#eventsGrid {
-  width: 400px;
-}
+
 .events-list{
   padding:0
 }
@@ -349,14 +347,22 @@ td {
 .events-item p {
   margin-bottom: 0.25rem;
 }
-span.events-item-circle {
-  display: block;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ccc;
+span.delete-event {
+  position: absolute;
+  top: -10px;
+  right: 0px;
+  background: #540803;
+  color: #f51807;
+  border-radius: 0.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease-out
 }
-
+.events-item:hover span.delete-event {
+  opacity: 1;
+  pointer-events: unset;
+  
+}
 
 .events p.text-danger {
   white-space: pre;
@@ -401,4 +407,7 @@ span.events-item-circle {
   .calender-page-display, .calender-page-controls {
     flex: 1;
   }
+  #eventsGrid {
+  width: 400px;
+}
 }
