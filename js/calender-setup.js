@@ -265,25 +265,25 @@ export let theCurrentDate = {
 export function getCentury(year) {
   switch (true) {
     case year < 31:
-      return "الاول";
+      return "1";
       break;
     case year > 30 && year < 61:
-      return "الثاني";
+      return "2";
       break;
     case year > 60 && year < 91:
-      return "الثالث";
+      return "3";
       break;
     case year > 90 && year < 121:
-      return "الرابع";
+      return "4";
       break;
     case year > 120 && year < 151:
-      return "الخامس";
+      return "5";
       break;
     case year > 150 && year < 181:
-      return "السادس";
+      return "6";
       break;
     case year > 180 && year < 211:
-      return "السابع";
+      return "7";
       break;
   }
 }

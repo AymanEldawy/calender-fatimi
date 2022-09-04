@@ -185,6 +185,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("goNextMonth").addEventListener("click", goNext);
     document.getElementById("goPrevMonth").addEventListener("click", goPrev);
   }
+  document.querySelector('.print').addEventListener('click', () => window.print())
 });
 
 // Go Prev [ Month - year - day]
@@ -217,22 +218,3 @@ function returnHijriConfiguration(date) {
   };
 }
 
-
-
-function printDiv(divID) {
-  //Get the HTML of div
-  var divElements = document.querySelector(".prayer-list").innerHTML;
-  //Get the HTML of whole page
-  var oldPage = document.body.innerHTML;
-  //Reset the page's HTML with div's HTML only
-  document.body.innerHTML = 
-    "<html><head><title></title></head><body>" + 
-    divElements + "</body>";
-  //Print Page
-  window.print();
-  //Restore orignal HTML
-  document.body.innerHTML = oldPage;
-
-}
-// printDiv()
-// window.print()

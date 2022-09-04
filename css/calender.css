@@ -242,6 +242,7 @@ td {
 .calender-body {
   display: flex;
   gap: 1rem;
+
 }
 .calender-list {
   flex: 1;
@@ -469,4 +470,28 @@ span.delete-event {
 span.empty {
   background: transparent !important;
   border: none !important;
+}
+
+
+/* Hidden elements on print */
+
+@media print {
+  body {
+    padding: 0;
+  }
+  title,
+  #visitors,
+  footer,
+  .prayer-controls button,
+  header,
+  .print {
+    display: none;
+  }
+  .prayer-controls {
+    justify-content: center;
+  }
+  p.dateInsideList {
+    text-align: center;
+    font-size: 2.2rem;
+  }
 }

@@ -28,7 +28,6 @@ function displayCalenderGrid(date = new Date()) {
   // check events by this day
   let HijriConfiguration = returnHijriConfiguration(date);
   const yearNumber = HijriConfiguration.hijriYear % 210;
-  const theSmallCentury = Calender.getCentury(yearNumber);
   let firstDayOfYear = Calender.daysFormat[Calender.century[yearNumber]];
   let firstWeekDayOfYear = firstDayOfYear.day; // weekday not used
   let currentYearHijri = Calender.theCurrentDate.getCurrentYearHijri();

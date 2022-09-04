@@ -12,15 +12,7 @@ import { calculateDate, globalEvents } from "./global.js";
 import { prayerTimingDay } from "./prayer-time.js";
 import { weeks } from "./weeks.js";
 
-let bigCenturyName = [
-  "الاول",
-  "الثاني",
-  "الثالث",
-  "الرابع",
-  "الخامس",
-  "السادس",
-  "السابع",
-];
+let bigCenturyName = ["1", "2", "3", "4", "5", "6", "7"];
 window.addEventListener("DOMContentLoaded", () => {
   let yearCalc = parseInt(
     a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
@@ -44,29 +36,29 @@ window.addEventListener("DOMContentLoaded", () => {
     "ar-SA",
     { weekday: "long" }
   );
-  document.getElementById("bigCentury").innerHTML = `القرن <span>${getCentury(
+  document.getElementById("smallCentury").innerHTML = getCentury(
     parseInt(yearCalc % 210)
-  )}</span> الاصغر من القرن <span>${
-    bigCenturyName[parseInt(yearCalc / 210)]
-  }</span> الاكبر`;
+  );
+  document.getElementById("bigCentury").innerHTML =
+    bigCenturyName[parseInt(yearCalc / 210)];
   prayerTimingDay();
 
   let hours = new Date().getHours();
   let day = new Date().getDay();
-  let timeNow =  document.getElementById("timeNow");
-  let timeNext =  document.getElementById("timeNext");
+  let timeNow = document.getElementById("timeNow");
+  let timeNext = document.getElementById("timeNext");
   if (hours > 5 && hours < 18) {
     console.log("run", hours);
     let planetNow = weeks[`${day}light`][(hours + 18) % 12];
     let planetNext = weeks[`${day}light`][(hours + 19) % 12];
-    if (hours + 18 < 24 ) {
+    if (hours + 18 < 24) {
       planetNext = weeks[`${day}night`][(hours + 6) % 12];
     }
     timeNow.innerHTML = planetNow.planet;
     timeNow.classList.add(`status-${planetNow.status}`);
     timeNext.innerHTML = planetNext.planet;
     timeNext.classList.add(`status-${planetNext.status}`);
-    } else {
+  } else {
     console.log("run n", hours);
 
     let planetNow = weeks[`${day}night`][(hours + 6) % 12];
@@ -91,14 +83,13 @@ function displayPlanetNow(planetNow) {
 }
 
 function displayClosestEvent(event) {
-  document.getElementById('closestEvent').innerHTML = `
+  document.getElementById("closestEvent").innerHTML = `
     <span>${event.title}</span>
     <div class="timer">
       باقي من الوقت
       <span class="timer-style">${calculateDate(event.date)}</span>
     </div>
-  `
-  
+  `;
 }
 function testMonthDays() {
   const yearNumber = theCurrentDate.getCurrentYearHijri() % 210;
