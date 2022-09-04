@@ -52,6 +52,7 @@ async function getPrayTimeByMonth(month, year) {
     .then((data) => {
       return data;
     });
+    console.log(prayerTime)
   return prayerTime;
 }
 async function getPrayTimeByDate(date = new Date()) {
@@ -131,30 +132,12 @@ async function displayPryerTime(date = new Date()) {
         }</th>
         
         <td>${i} ${monthName} ${HijriConfiguration.hijriYear}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Fajr.replace(
-          "(EET)",
-          ""
-        )}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Sunrise.replace(
-          "(EET)",
-          ""
-        )}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Dhuhr.replace(
-          "(EET)",
-          ""
-        )}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Asr.replace(
-          "(EET)",
-          ""
-        )}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Maghrib.replace(
-          "(EET)",
-          ""
-        )}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Isha.replace(
-          "(EET)",
-          ""
-        )}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Fajr.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Sunrise.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Dhuhr.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Asr.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Maghrib.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Isha.split(" ")[0]}</td>
       </tr>
       `;
   }
