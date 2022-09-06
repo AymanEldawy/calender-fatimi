@@ -7,16 +7,56 @@ import {
   a2e,
   theCurrentDate,
   countDayOfMoth,
+  countOfMonthDays,
 } from "./calender-setup.js";
 import { calculateDate, globalEvents } from "./global.js";
 import { prayerTimingDay } from "./prayer-time.js";
 import { weeks } from "./weeks.js";
 
 let bigCenturyName = ["1", "2", "3", "4", "5", "6", "7"];
-window.addEventListener("DOMContentLoaded", () => {
-  let yearCalc = parseInt(
-    a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
+
+let yearCalc = parseInt(
+  a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
+);
+const yearNumber = yearCalc % 210;
+let firstDayOfYear = daysFormat[century[yearNumber]];
+let firstWeekDayOfYear = firstDayOfYear.day; // weekday not used
+console.log(firstDayOfYear);
+// let currentYearHijri = theCurrentDate.getCurrentYearHijri();
+// let currentMonthHijri = theCurrentDate.getCurrentMonthHijri();
+// let currentDayNumHijri = theCurrentDate.getCurrentDateHijri();
+
+let firstDayNumOfMonth =
+  (countOfMonthDays(2 - 1, yearNumber) + parseInt(firstDayOfYear.count)) % 7; // calculate the first weekDay of month
+console.log(firstDayNumOfMonth);
+console.log(daysFormat[Object.keys(daysFormat)[firstDayNumOfMonth]]);
+
+function createColDate(hijriDate) {
+  let div = document.createElement("div");
+  let gregorian = hijriDate.toGregorian();
+  let GregorianDateIncrement = new Date(gregorian);
+  console.log(
+    GregorianDateIncrement.toLocaleDateString("ar-SA", { weekday: "long" })
   );
+
+  div.innerHTML = `
+    <p>${ GregorianDateIncrement.toLocaleDateString("ar-EG", { weekday: "long"})}</p>
+    <p>1 ${months[hijriDate._month]}</p>
+    <p>${ GregorianDateIncrement.toLocaleDateString("ar-EG", { day: "numeric", month: "long" })}</p>
+  `;
+  document.querySelector('.row-first-days').append(div)
+}
+
+function displayRowFirstDayOfMonth() {
+  for (let i = 1; i <= 12; i++) {
+    let _hijri = new HijriDate(yearCalc, i, 1);
+    createColDate(_hijri)
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  
+  displayRowFirstDayOfMonth();
   document.getElementById(
     "date"
   ).textContent = `${new Date().toLocaleDateString("ar-SA", {
@@ -48,7 +88,6 @@ window.addEventListener("DOMContentLoaded", () => {
   let timeNow = document.getElementById("timeNow");
   let timeNext = document.getElementById("timeNext");
   if (hours > 5 && hours < 18) {
-    console.log("run", hours);
     let planetNow = weeks[`${day}light`][(hours + 18) % 12];
     let planetNext = weeks[`${day}light`][(hours + 19) % 12];
     if (hours + 18 < 24) {
@@ -59,8 +98,6 @@ window.addEventListener("DOMContentLoaded", () => {
     timeNext.innerHTML = planetNext.planet;
     timeNext.classList.add(`status-${planetNext.status}`);
   } else {
-    console.log("run n", hours);
-
     let planetNow = weeks[`${day}night`][(hours + 6) % 12];
     let planetNext = weeks[`${day}night`][(hours + 7) % 12];
     if (hours == 0 && hours + 7 > 18) {
@@ -72,16 +109,6 @@ window.addEventListener("DOMContentLoaded", () => {
     timeNext.classList.add(`status-${planetNext.status}`);
   }
 });
-
-function displayPlanetNow(planetNow) {
-  let timeNowElement = document.getElementById("timeNow");
-  timeNowElement.classList.add(`border-${planetNow.status}`);
-  timeNowElement.innerHTML = `
-  <span class="status-${planetNow.status}">${planetNow.planet}</span>
-  <p>${planetNow.msg}</p>
-`;
-}
-
 function displayClosestEvent(event) {
   document.getElementById("closestEvent").innerHTML = `
     <span>${event.title}</span>
@@ -97,7 +124,6 @@ function testMonthDays() {
     theCurrentDate.getCurrentMonthHijri(),
     yearNumber
   );
-  console.log(theMonth);
   for (let eventDate of globalEvents) {
     if (!(Date.parse(new Date()) > Date.parse(eventDate.date))) {
       displayClosestEvent(eventDate);
@@ -107,3 +133,12 @@ function testMonthDays() {
 }
 
 testMonthDays();
+
+window.addEventListener('click', (e) => {
+  if(e.target.matches('._modal-days')){
+    e.target.classList.add('hide')
+  }
+  if(e.target.matches('.table-style:first-of-type .table-style-item .table-style-value')){
+    document.querySelector('._modal-days').classList.remove('hide')
+  }
+})

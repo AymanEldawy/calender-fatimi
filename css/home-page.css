@@ -17,9 +17,6 @@ a {
   justify-content: center;
   align-items: center;
 }
-.page-info {
-  margin-top: 2rem;
-}
 
 .table-style {
   display: flex;
@@ -54,9 +51,10 @@ a {
   white-space: nowrap;
   color: #fff;
   background: #2b2b2b;
+  cursor: pointer;
 }
 
-.table-style-item:last-of-type span.table-style-value  {
+.table-style-item:last-of-type span.table-style-value {
   background: #245;
 }
 
@@ -147,6 +145,7 @@ li.link {
 }
 /* Prayer grid */
 .prayer-grid {
+  margin-top: 2rem;
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -173,4 +172,32 @@ li.link {
   border-radius: 0.25rem;
   font-size: 0.9rem;
   padding: 0.2rem 0.5rem;
+}
+
+.row-first-days {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  flex-direction: column;
+}
+.row-first-days div {
+  display: flex;
+  justify-content: space-between;
+  min-width: 460px;
+  text-align: right;
+  border-bottom: 1px solid #ccc6;
+  align-items: center;
+}
+.row-first-days div:last-of-type {
+  border: none;
+}
+.row-first-days div:nth-child(odd) {
+  background-color: #f6f6f6;
+}
+.row-first-days p {
+  flex: 1;
+  margin: 0;
+  padding: .5rem;
 }

@@ -239,13 +239,32 @@ td {
 .change-by-year input {
   width: 100px;
 }
-.calender-body {
-  display: flex;
-  gap: 1rem;
-
+div#listOfMonth {
+  /* display: flex;
+  flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: 100%;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
 }
+#listOfMonth button {
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+}
+#listOfMonth button.active {
+  background: #ffc107;
+}
+#listOfMonth button:not(.active):hover {
+  background: #fffde7 !important;
+}
+
 .calender-list {
   flex: 1;
+  margin-bottom: 1rem;
 }
 .calender-list-grid-head,
 .calender-list-grid-body {
@@ -420,12 +439,6 @@ span.delete-event {
   font-size: 1.4rem;
 }
 
-@media (min-width: 991px) {
-  #eventsGrid {
-    width: 400px;
-  }
-}
-
 #closeCalender {
   background-color: #dc3545;
   border-color: #dc3545;
@@ -471,7 +484,6 @@ span.empty {
   background: transparent !important;
   border: none !important;
 }
-
 
 /* Hidden elements on print */
 

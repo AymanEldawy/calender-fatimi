@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="css/home-page.css" />
   </head>
   <body>
+    <div class="_modal-days hide">
+      <div class="row-first-days">
+
+      </div>
+    </div>
     <header>
       <nav class="navbar navbar-dark bg-primary">
         <div class="container d-flex">
@@ -39,25 +44,10 @@
     </header>
     <div class="homepage">
       <div class="container">
+        <div class="prayer-single">
+          <div class="prayer-grid"></div>
+        </div>
         <div class="page-info text-center">
-          <div class="table-style">
-            <div class="table-style-item">
-              <span class="table-style-label">اليوم</span>
-              <span class="table-style-value" id="dayWeek"></span>
-            </div>
-            <div class="table-style-item">
-              <span class="table-style-label">التاريخ</span>
-              <span class="table-style-value" id="date"></span>
-            </div>
-            <div class="table-style-item">
-              <span class="table-style-label">كبيسة</span>
-              <span class="table-style-value" id="yearLeap"></span>
-            </div>
-            <div class="table-style-item">
-              <span class="table-style-label">آية السنة</span>
-              <span class="table-style-value" id="firstDayOfYear"></span>
-            </div>
-          </div>
           <div class="table-style">
             <div class="table-style-item">
               <span class="table-style-label">القرن الأصغر</span>
@@ -66,6 +56,26 @@
             <div class="table-style-item">
               <span class="table-style-label"> القرن الأكبر </span>
               <span class="table-style-value" id="bigCentury"></span>
+            </div>
+
+            <div class="table-style-item">
+              <span class="table-style-label">كبيسة</span>
+              <span class="table-style-value" id="yearLeap"></span>
+            </div>
+            <div class="table-style-item">
+              <span class="table-style-label">آية السنة</span>
+              <span class="table-style-value" id="firstDayOfYear"></span>
+            </div>
+
+          </div>
+          <div class="table-style">
+            <div class="table-style-item">
+              <span class="table-style-label">اليوم</span>
+              <span class="table-style-value" id="dayWeek"></span>
+            </div>
+            <div class="table-style-item">
+              <span class="table-style-label">التاريخ</span>
+              <span class="table-style-value" id="date"></span>
             </div>
           </div>
 
@@ -81,9 +91,6 @@
           </div>
         </div>
         <div id="closestEvent" class="event"></div>
-        <div class="prayer-single">
-          <div class="prayer-grid"></div>
-        </div>
       </div>
     </div>
     <div class="visitors" id="visitors"></div>

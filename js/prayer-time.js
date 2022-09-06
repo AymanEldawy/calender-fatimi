@@ -9,11 +9,11 @@ const PrayerTimeDefault = {
 };
 
 let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault
-console.log(LOCATION, storageLocation.fetchLocation() )
 
 export async function prayerTimingDay(date = new Date()) {
   let prayerTime = await getPrayTimeByDate(date);
   let timings = prayerTime.data.timings;
+  console.log(timings)
   let prayGrid = document.querySelector(".prayer-grid");
   prayGrid.innerHTML = `
   <div class="prayer-grid-item">
@@ -52,10 +52,10 @@ async function getPrayTimeByMonth(month, year) {
     .then((data) => {
       return data;
     });
-    console.log(prayerTime)
   return prayerTime;
 }
 async function getPrayTimeByDate(date = new Date()) {
+  console.log(LOCATION)
   let prayerTime = await fetch(
     `https://api.aladhan.com/v1/timings/${date}?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=2`
   )
@@ -131,7 +131,7 @@ async function displayPryerTime(date = new Date()) {
           // Calender.daysFormat[Object.keys(Calender.daysFormat)[dayWeek]].day
         }</th>
         
-        <td>${i} ${monthName} ${HijriConfiguration.hijriYear}</td>
+        <td>${i}</td>
         <td>${timePrayerByMonth.data[i - 1].timings.Fajr.split(" ")[0]}</td>
         <td>${timePrayerByMonth.data[i - 1].timings.Sunrise.split(" ")[0]}</td>
         <td>${timePrayerByMonth.data[i - 1].timings.Dhuhr.split(" ")[0]}</td>

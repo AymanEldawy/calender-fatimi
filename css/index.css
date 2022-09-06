@@ -102,9 +102,9 @@ body {
   color: #222;
   font-size: 2.5rem;
 }
-.compare {
+/* .compare {
   max-width:900px !important; 
-}
+} */
 .compare .col-4 {
   -webkit-box-flex: 0 !important;
   flex: 0 0 32.333333%;
@@ -177,4 +177,8 @@ body {
 }
 .list-group-item.align-items-center.d-flex span:first-of-type {
   width: 50%;
+}
+.mini-container.container.text-center.bg-light.p-1 {
+  margin: 0 auto;
+  text-align: center;
 }

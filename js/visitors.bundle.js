@@ -16,7 +16,7 @@
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var countapi_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! countapi-js */ \"./node_modules/countapi-js/index.js\");\n // countapi.set(\"th_visitor\",\"visitors\",0)\n// countapi.visits().then((result) => {\n//   console.log(result.value);\n// });\n\ncountapi_js__WEBPACK_IMPORTED_MODULE_0__.visits(\"global\").then(function (result) {\n  var displayCounter = \"\";\n  var spratedCount = result.value.toString().split(\"\");\n\n  for (var i = spratedCount.length - 1; i >= 0; i--) {\n    displayCounter += \"<span class=\\\"counter-item\\\">\".concat(spratedCount[i], \"</span>\");\n  }\n\n  document.getElementById(\"visitors\").innerHTML = displayCounter;\n});\n\n//# sourceURL=webpack://fatimi-cal/./js/visitors.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var countapi_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! countapi-js */ \"./node_modules/countapi-js/index.js\");\n\ncountapi_js__WEBPACK_IMPORTED_MODULE_0__.visits(\"global\").then(function (result) {\n  var displayCounter = \"\";\n  var spratedCount = result.value.toString().split(\"\");\n\n  for (var i = spratedCount.length - 1; i >= 0; i--) {\n    displayCounter += \"<span class=\\\"counter-item\\\">\".concat(spratedCount[i], \"</span>\");\n  }\n\n  document.getElementById(\"visitors\").innerHTML = displayCounter;\n});\n\n//# sourceURL=webpack://fatimi-cal/./js/visitors.js?");
 
 /***/ }),
 
