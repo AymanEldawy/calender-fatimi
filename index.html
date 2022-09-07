@@ -17,15 +17,25 @@
   </head>
   <body>
     <div class="_modal-days hide">
-      <div class="row-first-days">
-
-      </div>
+      <div class="row-first-days"></div>
     </div>
-    <header>
       <nav class="navbar navbar-dark bg-primary">
         <div class="container d-flex">
-          <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a
-          ><button
+          <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a>
+          <button
+            id="autoLocation"
+            class="btn d-flex align-items-center"
+          >
+            <i class="gg-data"></i>
+          </button>
+          <button
+            id="chooseLocation"
+            class="btn d-flex align-items-center"
+          >
+            <i class="gg-track"></i>
+          </button>
+
+          <button
             class="navbar-toggler"
             type="button"
             data-toggle="collapse"
@@ -41,13 +51,20 @@
           </div>
         </div>
       </nav>
-    </header>
     <div class="homepage">
       <div class="container">
-        <div class="prayer-single">
-          <div class="prayer-grid"></div>
-        </div>
+       
         <div class="page-info text-center">
+          <div class="table-style">
+            <div class="table-style-item">
+              <span class="table-style-label">اليوم</span>
+              <span class="table-style-value" id="dayWeek"></span>
+            </div>
+            <div class="table-style-item">
+              <span class="table-style-label">التاريخ</span>
+              <span class="table-style-value" id="date"></span>
+            </div>
+          </div>
           <div class="table-style">
             <div class="table-style-item">
               <span class="table-style-label">القرن الأصغر</span>
@@ -66,17 +83,9 @@
               <span class="table-style-label">آية السنة</span>
               <span class="table-style-value" id="firstDayOfYear"></span>
             </div>
-
           </div>
-          <div class="table-style">
-            <div class="table-style-item">
-              <span class="table-style-label">اليوم</span>
-              <span class="table-style-value" id="dayWeek"></span>
-            </div>
-            <div class="table-style-item">
-              <span class="table-style-label">التاريخ</span>
-              <span class="table-style-value" id="date"></span>
-            </div>
+          <div class="prayer-single">
+            <div class="prayer-grid"></div>
           </div>
 
           <div class="table-style">

@@ -34,42 +34,39 @@
       data-countofdays="1"
     />
     <!-- تغيير التاريخ الهجري -->
-    <header>
-      <nav class="navbar navbar-dark bg-primary">
-        <div class="container mini-container d-flex">
-          <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a
-          ><button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#collapsibleNavId"
-            aria-controls="collapsibleNavId"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <i class="gg-menu"></i>
-          </button>
-          <div class="collapse" id="collapsibleNavId">
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#knowTower"
-                  >اعرف برجك <span class="sr-only">(current)</span></a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="compare.html">مقارنة بين الابراج</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="smath.html">حساب الجمل</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="towers.html">اعرف برجك</a>
-              </li>
-            </ul>
-          </div>
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container mini-container d-flex">
+        <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a>
+        <button
+          id="autoLocation"
+          class="btn d-flex align-items-center"
+        >
+          <i class="gg-data"></i>
+        </button>
+        <button
+          id="chooseLocation"
+          class="btn d-flex align-items-center"
+        >
+          <i class="gg-track"></i>
+        </button>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="gg-menu"></i>
+        </button>
+        <div class="collapse" id="collapsibleNavId">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0"></ul>
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
+
     <!-- Themes -->
     <ul class="themes">
       <li class="theme-color" data-theme="dark"></li>
@@ -85,58 +82,23 @@
       -->
     </ul>
     <!-- Themes -->
-    <div class="main-container container mini-container p-4">
-      <div class="options">
+    <div class="main-container mini-container container  p-4">
+      <!-- <div class="options">
         <button
           id="autoLocation"
           class="btn btn-primary d-flex align-items-center"
         >
-          <i class="gg-data mr-3"></i> تحديد مدينتك تلقائيا
+          <i class="gg-data"></i> تحديد مدينتك تلقائيا
         </button>
         <button
           id="chooseLocation"
           class="btn btn-outline-primary d-flex align-items-center"
         >
-          <i class="gg-track mr-3"></i> اختيار الموقع يدويآ
+          <i class="gg-track"></i> اختيار الموقع يدويآ
         </button>
-      </div>
+      </div> -->
       <div class="country-info">
-        <div class="overlay" id="overlayPopup">
-          <div class="manual-location" id="manualLocation">
-            <span id="closeLocation" class="close-location">
-              <i class="gg-close"></i>
-            </span>
-            <p>اختار موقعك:</p>
-            <div class="d-flex align-items-center">
-              <div class="form-group">
-                <label for="">الدولة</label>
-                <select
-                  translate="yes"
-                  class="form-control"
-                  name=""
-                  id="country"
-                ></select>
-              </div>
-              <div class="form-group cities">
-                <label for="">المدينة</label>
-                <select
-                  translate="yes"
-                  class="form-control"
-                  name=""
-                  id="city"
-                ></select>
-              </div>
-              <button
-                type="button"
-                id="addLocation"
-                class="btn btn-success"
-                title="حفظ الموقع"
-              >
-                <i class="gg-bookmark"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+       
 
         <ul class="nav nav-list" id="nav-tab" role="tablist">
           <li class="nav-list-item nav-link">
@@ -204,7 +166,7 @@
                     </div>
                   </div>
                 </div>
-                <input id="dateChecker" type="text" readonly/>
+                <input id="dateChecker" type="text" readonly />
                 <i class="gg-calendar"></i>التاريخ
               </div>
               <span class="arrow" id="nextDay">
@@ -411,9 +373,9 @@
       src="https://rawgit.com/abdennour/hijri-date/master/cdn/hijri-date-latest.js"
       type="text/javascript"
     ></script>
-    <script src="js/global.js" type="module"></script> 
-    <script src="js/visitors.bundle.js"></script> 
+    <script src="js/global.js" type="module"></script>
+    <script src="js/visitors.bundle.js"></script>
     <script src="js/calender-box.js" type="module"></script>
-    <script src="js/sunriseTime.bundle.js" type="module"></script>
+    <script src="js/sunrise-time.js" type="module"></script>
   </body>
 </html>

@@ -18,6 +18,9 @@ a {
   align-items: center;
 }
 
+.table-style:first-child { 
+  margin-top: 2rem;
+}
 .table-style {
   display: flex;
   flex-wrap: wrap;
@@ -145,7 +148,6 @@ li.link {
 }
 /* Prayer grid */
 .prayer-grid {
-  margin-top: 2rem;
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;

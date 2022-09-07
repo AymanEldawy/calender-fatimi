@@ -1,5 +1,7 @@
+import SunCalc from "./suncalc.js";
 import * as Calender from "./calender-setup.js";
 import { storageLocation } from './global.js';
+// import { repeatPrayerTime } from "./home-page.js";
 
 const PrayerTimeDefault = {
   month: 0, //current month
@@ -10,54 +12,69 @@ const PrayerTimeDefault = {
 
 let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault
 
-export async function prayerTimingDay(date = new Date()) {
-  let prayerTime = await getPrayTimeByDate(date);
-  let timings = prayerTime.data.timings;
-  console.log(timings)
-  let prayGrid = document.querySelector(".prayer-grid");
-  prayGrid.innerHTML = `
-  <div class="prayer-grid-item">
-      <span>الفجر</span>
-      <span>${timings.Fajr} </span>
-  </div>
-  <div class="prayer-grid-item">
-      <span>الشروق</span>
-      <span>${timings.Sunrise}</span>
-  </div>
-  <div class="prayer-grid-item">
-      <span>الظهر</span>
-      <span>${timings.Dhuhr}</span>
-  </div>
-  <div class="prayer-grid-item">
-      <span>العصر</span>
-      <span>${timings.Asr}</span>
-  </div>
-  <div class="prayer-grid-item">
-      <span>المغرب</span>
-      <span>${timings.Maghrib}</span>
-  </div>
-  <div class="prayer-grid-item">
-      <span>العشاء</span>
-      <span>${timings.Isha}</span>
-  </div>
-  `;
-}
+
+
+
+function repeatPrayerTime(theDate = new Date()) {
+  let sunCalc = SunCalc.getTimes(
+    /*Date*/ theDate,
+    /*Number*/ LOCATION.latitude,
+    /*Number*/ LOCATION.longitude
+  );
+  let sunriseStr =
+    sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
+  let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
+  let dayLen = `${
+    parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
+  }:${
+    parseInt(sunsetStr.split(":")[1]) - parseInt(sunriseStr.split(":")[1])
+  }`.split(":");
+  // Calculate Fajr Time
+  let fajrCalcTime = (parseInt(sunriseStr.split(":")[0]) * 60 )+ parseInt(sunriseStr.split(":")[1]) - 75
+  let fajrHours = parseInt(fajrCalcTime / 60);
+  let fajrMinutes = parseInt(parseFloat(fajrCalcTime / 60).toFixed(2).split('.')[1] * 60 / 60 ) ;
+  let timeFajr = `${fajrHours.toString().padStart(2, 0)}:${fajrMinutes.toString().padStart(2, 0)}`
+
+  // Calculate sunrise Time
+  let timeSunrise = `${parseInt(sunriseStr.split(':')[0]).toString().padStart(2, 0)}:${parseInt(sunriseStr.split(':')[1]).toString().padStart(2, 0)}`
+
+
+  // Calculate Dhuhr Time
+  let sunriseFullMinutes = (parseInt(sunriseStr.split(":")[0]) * 60 ) + parseInt(sunriseStr.split(":")[1])
+  let dayLenLight = parseInt(dayLen[0]) * 60 + parseInt(dayLen[1]);
+
+  let DhuhrFullTime = (parseInt(((dayLenLight / 12) * 7) + sunriseFullMinutes) / 60)
+  let DhuhrHours = parseInt(DhuhrFullTime);
+  let DhuhrMintes = Math.round(parseFloat(`.${DhuhrFullTime.toFixed(2).split('.')[1]}`) * 60);
+  let timeDhuhr = `${DhuhrHours.toString().padStart(2, 0)}:${DhuhrMintes.toString().padStart(2, 0)}`
+  
+  // Calculate Aser Time
+  let aserHours = (DhuhrHours + 2 ) % 12
+  let timeAser = `${aserHours.toString().padStart(2, 0)}:${DhuhrMintes.toString().padStart(2, 0)}`
+  
+  // Calculate Maghrib Time
+  let timeMaghrib = `${(parseInt(sunsetStr.split(':')[0]) % 12).toString().padStart(2, 0)}:${parseInt(sunsetStr.split(':')[1]).toString().padStart(2, 0)}`
+
+  // Calculate Isha Time
+  let IshaCalcTime = (parseInt(sunsetStr.split(":")[0]) * 60 ) + parseInt(sunsetStr.split(":")[1]) + 90
+  let IshaHours = parseInt(IshaCalcTime / 60) % 12;
+  let IshaMinutes = Math.round((`.${parseFloat(IshaCalcTime / 60).toFixed(2).split('.')[1]}`) * 60) ;
+  let timeIsha = `${IshaHours.toString().padStart(2, 0)}:${IshaMinutes.toString().padStart(2, 0)}`
+  
+  return {
+    Fajr: timeFajr,
+    Sunrise: timeSunrise,
+    Dhuhr: timeDhuhr,
+    Asr: timeAser,
+    Maghrib: timeMaghrib,
+    Isha: timeIsha,
+  }
+} 
 
 // Fetch Prayer Time
 async function getPrayTimeByMonth(month, year) {
   let prayerTime = await fetch(
     `http://api.aladhan.com/v1/hijriCalendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=2&month=${month}&year=${year}`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
-  return prayerTime;
-}
-async function getPrayTimeByDate(date = new Date()) {
-  console.log(LOCATION)
-  let prayerTime = await fetch(
-    `https://api.aladhan.com/v1/timings/${date}?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=2`
   )
     .then((res) => res.json())
     .then((data) => {
@@ -101,7 +118,7 @@ async function displayPryerTime(date = new Date()) {
     HijriConfiguration.hijriMonth,
     HijriConfiguration.hijriYear
   );
-  let dyesGrid = document.querySelector(".prayer-list tbody");
+  let dyesGrid = document.querySelector(".prayer-list tbody") || undefined;
   dyesGrid.innerHTML = "";
   for (
     let i = 1;
@@ -122,8 +139,9 @@ async function displayPryerTime(date = new Date()) {
     ) {
       activeStyle = true;
     }
+    let timings = repeatPrayerTime(GregorianDateIncrement)
     dyesGrid.innerHTML += `
-      <tr class="${activeStyle && "active"}">
+      <tr class="${activeStyle ? "active" : ""}">
         <th scope="row">${
           GregorianDateIncrement.toLocaleDateString("ar-EG", {
             weekday: "long",
@@ -132,12 +150,12 @@ async function displayPryerTime(date = new Date()) {
         }</th>
         
         <td>${i}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Fajr.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Sunrise.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Dhuhr.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Asr.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Maghrib.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i - 1].timings.Isha.split(" ")[0]}</td>
+        <td>${timings.Fajr.split(" ")[0]}</td>
+        <td>${timings.Sunrise.split(" ")[0]}</td>
+        <td>${timings.Dhuhr.split(" ")[0]}</td>
+        <td>${timings.Asr.split(" ")[0]}</td>
+        <td>${timings.Maghrib.split(" ")[0]}</td>
+        <td>${timings.Isha.split(" ")[0]}</td>
       </tr>
       `;
   }
@@ -167,8 +185,8 @@ window.addEventListener("DOMContentLoaded", () => {
   if(document.getElementById("goNextMonth")) {
     document.getElementById("goNextMonth").addEventListener("click", goNext);
     document.getElementById("goPrevMonth").addEventListener("click", goPrev);
+    document.querySelector('.print').addEventListener('click', () => window.print())
   }
-  document.querySelector('.print').addEventListener('click', () => window.print())
 });
 
 // Go Prev [ Month - year - day]

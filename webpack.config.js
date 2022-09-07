@@ -2,7 +2,6 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    sunriseTime: './js/sunrise-time.js',
     visitors: './js/visitors.js',
   },
   output: {

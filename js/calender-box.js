@@ -1,6 +1,4 @@
-import * as Calender from './calender-setup.js';
-import { __today, goNext, goPrev, enterYear, returnHijriConfiguration} from './calender-package.js'
-// Events
+import * as Calender from "./calender-setup.js";
 function openCalender() {
   document.querySelector(".calender-picker").classList.remove("close-calender");
 }
@@ -62,6 +60,86 @@ function displayCalenderGrid(date = new Date()) {
   }
 }
 
+// Go Prev [ Month - year - day]
+function goPrev() {
+  let HIJRI_CONFIGURATION = returnHijriConfiguration(
+    Calender.theCurrentDate.gregorianDate
+  );
+  let date = new Date(Calender.theCurrentDate.gregorianDate);
+  let theNewDate = date;
+  HIJRI_CONFIGURATION.hijriMonth -= 1;
+  theNewDate = date.setDate(
+    date.getDate() -
+      Calender.countDayOfMoth(
+        HIJRI_CONFIGURATION.hijriMonth + 1,
+        Calender.theCurrentDate.getCurrentYearHijri()
+      )
+  );
+  displayCalenderGrid(theNewDate);
+  Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
+  if (
+    Calender.theCurrentDate.currentHijriDate ==
+    new Date(theNewDate).toLocaleDateString("ar-SA")
+  ) {
+    document.getElementById("today").classList.add("hide");
+  } else {
+    document.getElementById("today").classList.remove("hide");
+  }
+}
+function goNext() {
+  let HIJRI_CONFIGURATION = returnHijriConfiguration(
+    Calender.theCurrentDate.gregorianDate
+  );
+  let date = new Date(Calender.theCurrentDate.gregorianDate);
+  let theNewDate = date;
+  HIJRI_CONFIGURATION.hijriMonth += 1;
+  theNewDate = date.setDate(
+    date.getDate() +
+      Calender.countDayOfMoth(
+        HIJRI_CONFIGURATION.hijriMonth,
+        Calender.theCurrentDate.getCurrentYearHijri()
+      )
+  );
+  displayCalenderGrid(theNewDate);
+  if (
+    Calender.theCurrentDate.currentHijriDate ==
+    new Date(theNewDate).toLocaleDateString("ar-SA")
+  ) {
+    document.getElementById("today").classList.add("hide");
+  } else {
+    document.getElementById("today").classList.remove("hide");
+  }
+
+  Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
+}
+function returnHijriConfiguration(date) {
+  let gregorianDate = new Date(date);
+  let hijri = gregorianDate.toHijri();
+  return {
+    // hijriMonth: parseInt(Calender.a2e(dateHijri.split("/")[1])),
+    // hijriDayNum: parseInt(Calender.a2e(dateHijri.split("/")[0])),
+    // hijriYear: parseInt(Calender.a2e(dateHijri.split("/")[2])),
+    hijriMonth: hijri._month,
+    hijriDayNum: hijri._date,
+    hijriYear: hijri._year,
+  };
+}
+
+function enterYear() {
+  let year = document.getElementById("changeByYear");
+  let hijri = new HijriDate(+year.value, 1, 1);
+  let gregorian = hijri.toGregorian();
+  displayCalenderGrid(gregorian);
+  Calender.theCurrentDate.gregorianDate = gregorian;
+}
+function __today() {
+  document.getElementById("today").classList.add("hide");
+  displayCalenderGrid();
+  Calender.theCurrentDate.gregorianDate = new Date();
+}
+
+// Events
+
 window.addEventListener("DOMContentLoaded", () => {
   displayCalenderGrid(); // display calender
   document
@@ -72,4 +150,5 @@ window.addEventListener("DOMContentLoaded", () => {
   // invoke go next and go prev
   document.getElementById("goNext").addEventListener("click", goNext);
   document.getElementById("goPrev").addEventListener("click", goPrev);
+  document.getElementById('dateChecker').addEventListener('click', openCalender)
 });

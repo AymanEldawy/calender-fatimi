@@ -495,7 +495,7 @@ span.empty {
   #visitors,
   footer,
   .prayer-controls button,
-  header,
+  .navbar,
   .print {
     display: none;
   }
@@ -506,4 +506,7 @@ span.empty {
     text-align: center;
     font-size: 2.2rem;
   }
+  .table>:not(caption)>*>* {
+    padding: 0.15rem .5rem;
+}
 }

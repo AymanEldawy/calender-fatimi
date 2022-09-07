@@ -165,18 +165,19 @@ div#collapsibleNavId {
   position: absolute;
   top: 47px;
   left:0;
-  max-height: 0;
   width: 200px;
   background: rgb(13 110 253);
   z-index: 99;
   padding: 1rem;
   text-align: center;
+  opacity: 0;
   transition: all 0.2s ease-in-out;
+  pointer-events: none;
   overflow: auto;
 }
 div#collapsibleNavId.show {
-  max-height: 440px;
-  /* max-height: fit-content; */
+  opacity: 1;
+  pointer-events: unset;
 }
 button.navbar-toggler {
   padding: 0.75rem;
@@ -369,5 +370,91 @@ button.navbar-toggler[aria-expanded="true"] {
 
 .mini-container {
   max-width: 600px !important;
-  padding: 0 15px;
+  padding: 0 ;
+}
+
+
+/* Locations */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: #242424db;
+  z-index: 999;
+  padding: 2rem;
+  transition: opacity 0.3s ease-out;
+  opacity: 0;
+  pointer-events: none;
+  color: #fff;
+}
+.overlay.open {
+  opacity: 1;
+  pointer-events: unset;
+}
+.overlay p {
+  font-size: 1.3rem;
+}
+.manual-location {
+  margin: 0.5rem 0;
+  overflow: hidden;
+  position: relative;
+  background: #181717;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+.manual-location .d-flex{
+  gap: 1rem;
+}
+#closeLocation {
+  position: absolute;
+  left: 10px;
+  color: #f44336;
+  cursor: pointer;
+}
+.manual-location .country-info {
+  box-shadow: 0px 2px 1px #0f0e0e36;
+  background: #03a9f4;
+  border-radius: 0.25rem;
+  color: #fff;
+  overflow: hidden;
+}
+.country-info > p {
+  margin: 0;
+  padding-top: 1rem;
+  padding-right: 1rem;
+}
+.country-info .d-flex {
+  /* gap: 1rem; */
+  align-items: center;
+}
+.country-info .form-group {
+  width: 50%;
+}
+#addLocation {
+  padding: 0.6rem 1rem;
+  margin-top: 25px;
+}
+#autoLocation {
+  margin-right: auto;
+}
+#chooseLocation {
+  margin-left: .5rem;
+}
+#chooseLocation,
+#autoLocation {
+  color: #fff;
+}
+.navbar-dark .navbar-toggler:hover,
+#chooseLocation:hover,
+#autoLocation:hover {
+  background-color: #6d9de7;
+}
+.navbar .container.d-flex {
+  justify-content: unset;
 }

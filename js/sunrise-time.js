@@ -1,12 +1,8 @@
-import {
-  countries,
-  cities,
-  getCitiesByCountryCode,
-} from "country-city-location";
-import { weeks, daysInfo } from "./weeks.js";
-import { storageLocation } from "./global.js";
-const SunCalc = require("suncalc2");
 
+import { weeks, daysInfo } from "./weeks.js";
+import { storageLocation, latAndLong } from "./global.js";
+// const SunCalc = require("suncalc2");
+import SunCalc from './suncalc.js';
 let days = [
   "الاحد",
   "الاتنين",
@@ -17,17 +13,6 @@ let days = [
   "السبت",
 ];
 
-let latAndLong = {
-  latitude: "17.5065",
-  longitude: "44.1316",
-  day: "today",
-  dayDate: new Date()
-    .toLocaleDateString("en-UK")
-    .replace(/\//g, "-")
-    .split("-")
-    .reverse()
-    .join("-"),
-};
 
 function closePlanetMessage() {
   document.getElementById("planetMessage").innerHTML = "";
@@ -65,64 +50,23 @@ function resetDateHigry(theDate = new Date()) {
   return new Date(dateAfterReset).toLocaleDateString("ar-SA");
 }
 
-function changeCountry(countryCode = "SA") {
-  let citiesSelected = getCitiesByCountryCode(countryCode);
-  document.getElementById("city").innerHTML = "";
-  citiesSelected.forEach((city) => {
-    document.getElementById(
-      "city"
-    ).innerHTML += `<option value="${city.lat}-${city.lng}-${city.name}">${city.name}</option>`;
-  });
-}
 
-function displayCountry() {
-  document.getElementById("country").innerHTML = "";
-  countries.forEach((country) => {
-    document.getElementById(
-      "country"
-    ).innerHTML += `<option value="${country.Alpha2Code}">${country.Name}</option>`;
-  });
-  changeCountry(countries[0].Alpha2Code);
-}
-
-function setLocation() {
-  let country = document.getElementById("country").value;
-  let cityInfo = document.getElementById("city").value;
-  let cityLocation = cityInfo.split("-");
-  let latitude = cityLocation[0];
-  let longitude = cityLocation[1];
-  let city = cityLocation[2];
-  let currentLocation = {
-    country,
-    city,
-    latitude,
-    longitude,
-  };
-  storageLocation.saveLocation(currentLocation);
-  setTimeout(() => {
-    document.getElementById("overlayPopup").classList.remove("open");
-  }, 500);
-}
-function defaultLocation() {
-  let LOCATION = storageLocation.fetchLocation();
-  latAndLong.latitude = LOCATION.latitude;
-  latAndLong.longitude = LOCATION.longitude;
-  if (LOCATION && LOCATION.country) {
-    document.querySelectorAll("#country option").forEach((e) => {
-      if (LOCATION.country == e.value) {
-        e.setAttribute("selected", "selected");
-        changeCountry(LOCATION.country);
-        document.querySelectorAll("#city option").forEach((e) => {
-          if (LOCATION.city == e.value.split("-")[2]) {
-            e.setAttribute("selected", "selected");
-          }
-        });
-      }
-    });
-  }
-}
 let theme = storageLocation.fetchTheme();
 window.addEventListener("click", (e) => {
+  window.addEventListener("click", (e) => {
+    if (e.target.matches(".calender-list-grid-body span")) {
+      document
+        .querySelector(".calender-picker")
+        .classList.add("close-calender");
+      let _date = new Date(e.target.dataset.current_date);
+      _date.setHours(new Date().getHours());
+      document.getElementById("displayDay").textContent = new Date(
+        _date
+      ).toLocaleDateString("ar-EG", { weekday: "long" });
+      backToDate.classList.add("show");
+      loadDate(latAndLong.latitude, latAndLong.longitude, _date);
+    }
+  });
   if (
     e.target.id == "planetMessage" ||
     e.target.classList.contains(".envelope")
@@ -141,6 +85,7 @@ window.addEventListener("click", (e) => {
   }
 });
 window.addEventListener("DOMContentLoaded", () => {
+  loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
   if (theme) {
     document.body.style.background = theme.bg;
     document
@@ -191,7 +136,6 @@ window.addEventListener("DOMContentLoaded", () => {
       </div>
   `;
   });
-  defaultLocation();
   // change date next day or perv day
   let nextDay = document.getElementById("nextDay");
   let prevDay = document.getElementById("prevDay");
@@ -245,22 +189,7 @@ window.addEventListener("DOMContentLoaded", () => {
     backToDate.classList.add("show");
   });
   // Run default function if user not allow location
-  showError();
-  // Save location info in storage
-  let addLocation = document.getElementById("addLocation");
-  let autoLocation = document.getElementById("autoLocation");
-  let closeLocation = document.getElementById("closeLocation");
-  let chooseLocation = document.getElementById("chooseLocation");
-  let overlayPopup = document.getElementById("overlayPopup");
-  autoLocation.addEventListener("click", getLocation);
-  addLocation.addEventListener("click", setLocation);
-  chooseLocation.addEventListener("click", () => {
-    defaultLocation();
-    overlayPopup.classList.add("open");
-  });
-  closeLocation.addEventListener("click", () => {
-    overlayPopup.classList.remove("open");
-  });
+  
   setInterval(() => {
     let date = new Date();
     let hours = date.getHours();
@@ -276,57 +205,9 @@ window.addEventListener("DOMContentLoaded", () => {
       "timeWatch"
     ).innerHTML = `${hours}:${minutes}:${seconds} ${ampm}`;
   }, 1000);
-  displayCountry();
-  document.getElementById("country").addEventListener("change", (e) => {
-    changeCountry(e.target.value);
-  });
-  document.getElementById("city").addEventListener("change", (e) => {
-    if (e.target.value.indexOf("-") !== -1) {
-      let data = e.target.value.split("-");
-      latAndLong.latitude = data[0];
-      latAndLong.longitude = data[1];
-      loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
-    }
-  });
+  
   getSunriseTime();
-  Array.from(
-    document.querySelectorAll(".calender-list-grid-body span")
-  ).forEach((_day) => {
-    _day.addEventListener("click", () => {
-      document
-        .querySelector(".calender-picker")
-        .classList.add("close-calender");
-      let _date = new Date(_day.dataset.current_date);
-      _date.setHours(new Date().getHours());
-      document.getElementById("displayDay").textContent =
-        new Date(_date).toLocaleDateString("ar-EG", { weekday: "long" });
-      backToDate.classList.add("show");
-      loadDate(latAndLong.latitude, latAndLong.longitude, _date);
-    });
-  });
 });
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition, showError);
-  }
-}
-async function showPosition(position) {
-  let currentLocation = {
-    latitude: position.coords.latitude,
-    longitude: position.coords.longitude,
-  };
-  storageLocation.saveLocation(currentLocation);
-  loadDate(position.coords.latitude, position.coords.longitude);
-}
-function showError() {
-  let LOCATION = storageLocation.fetchLocation();
-  if (LOCATION && LOCATION.latitude) {
-    loadDate(LOCATION.latitude, LOCATION.longitude);
-  } else {
-    loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
-  }
-}
 
 function createItemOfTable(start, end, planet) {
   let tr = document.createElement("tr");
