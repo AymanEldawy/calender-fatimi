@@ -193,10 +193,11 @@ button.navbar-toggler[aria-expanded="true"] {
   justify-content: space-around;
   align-items: center;
   gap: 5px;
-  margin: 1rem auto;
-  background: #151515;
+  margin: 1rem auto 2rem;
+  background: #fff;
   border-radius: 0.25rem;
   width: fit-content;
+  box-shadow: 0 6px 5px #0002;
 }
 .counter-item {
   background: #222;

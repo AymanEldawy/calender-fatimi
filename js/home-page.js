@@ -43,10 +43,10 @@ function createColDate(hijriDate) {
   let GregorianDateIncrement = new Date(gregorian);
 
   div.innerHTML = `
+    <p>الاول ${months[hijriDate._month]}</p>
     <p>${GregorianDateIncrement.toLocaleDateString("ar-EG", {
       weekday: "long",
     })}</p>
-    <p>1 ${months[hijriDate._month]}</p>
     <p>${GregorianDateIncrement.toLocaleDateString("ar-EG", {
       day: "numeric",
       month: "long",
@@ -61,24 +61,42 @@ function displayRowFirstDayOfMonth() {
     createColDate(_hijri);
   }
 }
+function resetDate(theNewDate) {
+  let sunCalc = SunCalc.getTimes(new Date(),LOCATION.latitude,LOCATION.longitude)
+  console.log(parseInt(`${sunCalc.sunset.getHours()}${sunCalc.sunset.getMinutes()}`))
+  console.log(sunCalc.sunset.getHours(), sunCalc.sunset.getMinutes())
+  console.log(new Date().getHours(),new Date().getMinutes())
+  console.log(parseInt(`${new Date().getHours()}${new Date().getMinutes()}`) )
+  if (
+    parseInt(`${new Date().getHours().toString().padStart(2,0)}${new Date().getMinutes().toString().padStart(2,0)}`) >
+    parseInt(`${sunCalc.sunset.getHours().toString().padStart(2,0)}${sunCalc.sunset.getMinutes().toString().padStart(2,0)}`)
+  ) {
+    let setDate = theNewDate.setDate(theNewDate.getDate() + 1)
+    console.log(theNewDate)
+    console.log(setDate)
+    return new Date(setDate)
+  } else {
+    return theNewDate
+  }
+}
 
 window.addEventListener("DOMContentLoaded", () => {
   displayRowFirstDayOfMonth();
   document.getElementById(
     "date"
-  ).textContent = `${new Date().toLocaleDateString("ar-SA", {
+  ).textContent = `${resetDate(new Date()).toLocaleDateString("ar-SA", {
     year: "numeric",
     month: "long",
     day: "numeric",
   })}`;
   document.getElementById("yearLeap").innerHTML = leapYears.includes(
-    new Date().toLocaleDateString("ar-SA") % 210
+    resetDate(new Date()).toLocaleDateString("ar-SA") % 210
   )
     ? "نعم"
     : "لا";
   document.getElementById("firstDayOfYear").innerHTML =
     daysFormat[century[yearCalc % 210]].count + 1;
-  document.getElementById("dayWeek").innerHTML = new Date().toLocaleDateString(
+  document.getElementById("dayWeek").innerHTML = resetDate(new Date()).toLocaleDateString(
     "ar-SA",
     { weekday: "long" }
   );
@@ -88,67 +106,6 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("bigCentury").innerHTML =
     bigCenturyName[parseInt(yearCalc / 210)];
   prayerTimingDay();
-
-  let hours = new Date().getHours();
-  let day = new Date().getDay();
-  let timeNow = document.getElementById("timeNow");
-  let timeNext = document.getElementById("timeNext");
-
-  // Times
-  let sunCalc = SunCalc.getTimes(
-    /*Date*/ new Date(),
-    /*Number*/ LOCATION.latitude,
-    /*Number*/ LOCATION.longitude
-  );
-  let sunriseStr =
-    sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
-  let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
-
-  let dayLen = `${
-    parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
-  }:${
-    parseInt(sunsetStr.split(":")[1]) - parseInt(sunriseStr.split(":")[1])
-  }`.split(":");
-  let dayLenLight = parseInt(dayLen[0]) * 60 + parseInt(dayLen[1]);
-  let dayLenNight = 1440 - dayLenLight;
-  let date = new Date();
-
-  if (
-    hours > parseInt(sunriseStr.split(":")[0]) &&
-    hours < parseInt(sunsetStr.split(":")[0])
-  ) {
-    let theHoursNext = parseInt(((dayLenLight / 12) * (hours + 1)) / 60);
-    let theMinutesNext = ((dayLenLight / 12) * (hours + 1)) % 60;
-    let finallyMinutes =
-      (theHoursNext - date.getHours()) * 60 +
-      (theMinutesNext - date.getMinutes());
-    // console.log(theHoursNext, theMinutesNext);
-    // console.log(finallyMinutes);
-
-    let planetNow = weeks[`${day}light`][(hours + 18) % 12];
-    let planetNext = weeks[`${day}light`][(hours + 19) % 12];
-    if (hours + 18 < 24) {
-      planetNext = weeks[`${day}night`][(hours + 6) % 12];
-    }
-    timeNow.innerHTML = planetNow.planet;
-    timeNow.classList.add(`status-${planetNow.status}`);
-    timeNext.innerHTML = planetNext.planet;
-    timeNext.classList.add(`status-${planetNext.status}`);
-  } else {
-    let theHoursNight = parseInt(((dayLenNight / 12) * hours) / 60);
-    let theMinutesNight = ((dayLenNight / 12) * hours) % 60;
-    // console.log(theHoursNight, theMinutesNight);
-
-    let planetNow = weeks[`${(day + 1 ) % 7}night`][(hours + 6) % 12];
-    let planetNext = weeks[`${(day + 1 ) % 7}night`][(hours + 7) % 12];
-    if (hours == 0 && hours + 7 > 18) {
-      planetNext = weeks[`${(day + 1 ) % 7}night`][(hours + 18) % 12];
-    }
-    timeNow.innerHTML = planetNow.planet;
-    timeNow.classList.add(`status-${planetNow.status}`);
-    timeNext.innerHTML = planetNext.planet;
-    timeNext.classList.add(`status-${planetNext.status}`);
-  }
 });
 function displayClosestEvent(event) {
   document.getElementById("closestEvent").innerHTML = `
@@ -189,52 +146,97 @@ window.addEventListener("click", (e) => {
 });
 
 // Prayer time
-export function repeatPrayerTime(theDate = new Date()) {
+function repeatPrayerTime(AfterSunset = new Date()) {
   let sunCalc = SunCalc.getTimes(
-    /*Date*/ theDate,
+    /*Date*/ AfterSunset,
     /*Number*/ LOCATION.latitude,
     /*Number*/ LOCATION.longitude
   );
+  let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
-  let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
   let dayLen = `${
     parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
   }:${
     parseInt(sunsetStr.split(":")[1]) - parseInt(sunriseStr.split(":")[1])
   }`.split(":");
+
+  function resetPrayerTime(hours, minutes) {
+    if (minutes > 59) {
+      hours += 1;
+      minutes = minutes % 60;
+    }
+    if (minutes < 0) {
+      hours -= 1;
+      minutes = 60 - minutes;
+    }
+
+    return `${hours.toString().padStart(2, 0)}:${minutes
+      .toString()
+      .padStart(2, 0)}`;
+  }
   // Calculate Fajr Time
-  let fajrCalcTime = (parseInt(sunriseStr.split(":")[0]) * 60 )+ parseInt(sunriseStr.split(":")[1]) - 75
+  let fajrCalcTime =
+    parseInt(sunriseStr.split(":")[0]) * 60 +
+    parseInt(sunriseStr.split(":")[1]) -
+    75;
   let fajrHours = parseInt(fajrCalcTime / 60);
-  let fajrMinutes = parseInt(parseFloat(fajrCalcTime / 60).toFixed(2).split('.')[1] * 60 / 60 ) ;
-  let timeFajr = `${fajrHours.toString().padStart(2, 0)}:${fajrMinutes.toString().padStart(2, 0)}`
+  let fajrMinutes = parseInt(
+    (parseFloat(fajrCalcTime / 60)
+      .toFixed(2)
+      .split(".")[1] *
+      60) /
+      60
+  );
+  let timeFajr = resetPrayerTime(fajrHours, fajrMinutes);
 
   // Calculate sunrise Time
-  let timeSunrise = `${parseInt(sunriseStr.split(':')[0]).toString().padStart(2, 0)}:${parseInt(sunriseStr.split(':')[1]).toString().padStart(2, 0)}`
-
+  let timeSunrise = `${parseInt(sunriseStr.split(":")[0])
+    .toString()
+    .padStart(2, 0)}:${parseInt(sunriseStr.split(":")[1])
+    .toString()
+    .padStart(2, 0)}`;
 
   // Calculate Dhuhr Time
-  let sunriseFullMinutes = (parseInt(sunriseStr.split(":")[0]) * 60 ) + parseInt(sunriseStr.split(":")[1])
+  let sunriseFullMinutes =
+    parseInt(sunriseStr.split(":")[0]) * 60 +
+    parseInt(sunriseStr.split(":")[1]);
   let dayLenLight = parseInt(dayLen[0]) * 60 + parseInt(dayLen[1]);
 
-  let DhuhrFullTime = (parseInt(((dayLenLight / 12) * 7) + sunriseFullMinutes) / 60)
+  let DhuhrFullTime =
+    parseInt((dayLenLight / 12) * 7 + sunriseFullMinutes) / 60;
   let DhuhrHours = parseInt(DhuhrFullTime);
-  let DhuhrMintes = Math.round(parseFloat(`.${DhuhrFullTime.toFixed(2).split('.')[1]}`) * 60);
-  let timeDhuhr = `${DhuhrHours.toString().padStart(2, 0)}:${DhuhrMintes.toString().padStart(2, 0)}`
-  
+  let DhuhrMinutes = Math.round(
+    parseFloat(`.${DhuhrFullTime.toFixed(2).split(".")[1]}`) * 60
+  );
+  let timeDhuhr = resetPrayerTime(DhuhrHours, DhuhrMinutes);
+
   // Calculate Aser Time
-  let aserHours = (DhuhrHours + 2 ) % 12
-  let timeAser = `${aserHours.toString().padStart(2, 0)}:${DhuhrMintes.toString().padStart(2, 0)}`
-  
+  let aserHours = (DhuhrHours + 2) % 12;
+  let timeAser = resetPrayerTime(aserHours, DhuhrMinutes);
+
   // Calculate Maghrib Time
-  let timeMaghrib = `${(parseInt(sunsetStr.split(':')[0]) % 12).toString().padStart(2, 0)}:${parseInt(sunsetStr.split(':')[1]).toString().padStart(2, 0)}`
+  let timeMaghrib = `${(parseInt(sunsetStr.split(":")[0]) % 12)
+    .toString()
+    .padStart(2, 0)}:${parseInt(sunsetStr.split(":")[1])
+    .toString()
+    .padStart(2, 0)}`;
 
   // Calculate Isha Time
-  let IshaCalcTime = (parseInt(sunsetStr.split(":")[0]) * 60 ) + parseInt(sunsetStr.split(":")[1]) + 90
+  let IshaCalcTime =
+    parseInt(sunsetStr.split(":")[0]) * 60 +
+    parseInt(sunsetStr.split(":")[1]) +
+    90;
   let IshaHours = parseInt(IshaCalcTime / 60) % 12;
-  let IshaMinutes = Math.round((`.${parseFloat(IshaCalcTime / 60).toFixed(2).split('.')[1]}`) * 60) ;
-  let timeIsha = `${IshaHours.toString().padStart(2, 0)}:${IshaMinutes.toString().padStart(2, 0)}`
-  
+  let IshaMinutes = Math.round(
+    `.${
+      parseFloat(IshaCalcTime / 60)
+        .toFixed(2)
+        .split(".")[1]
+    }` * 60
+  );
+  let timeIsha = resetPrayerTime(IshaHours, IshaMinutes);
+
   return {
     Fajr: timeFajr,
     Sunrise: timeSunrise,
@@ -242,21 +244,8 @@ export function repeatPrayerTime(theDate = new Date()) {
     Asr: timeAser,
     Maghrib: timeMaghrib,
     Isha: timeIsha,
-  }
-} 
-
-
-
-// async function getPrayTimeByDate(date = new Date()) {
-//   let prayerTime = await fetch(
-//     `https://api.aladhan.com/v1/timings/${date}?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=2`
-//   )
-//     .then((res) => res.json())
-//     .then((data) => {
-//       return data;
-//     });
-//   return prayerTime;
-// }
+  };
+}
 
 async function prayerTimingDay(date = new Date()) {
   // let prayerTime = await getPrayTimeByDate(date);

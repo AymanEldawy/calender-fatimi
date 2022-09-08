@@ -203,3 +203,56 @@ li.link {
   margin: 0;
   padding: .5rem;
 }
+
+
+
+#timeNowTimer {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  text-align: center;
+  justify-content: center;
+  border: 1px solid #ccc5;
+  width: fit-content;
+  margin: 0.5rem auto 0;
+  /* box-shadow: 0 1px 5px #0000002b inset; */
+  background: #d3d1d1;
+  padding-top: 2px;
+}
+#timeNowTimer span:first-child {
+  padding: 0.1rem 0.25rem;
+  margin: 0 0.15rem;
+  /* color: #fff; */
+  border-radius: 0.2em;
+}
+#timeNowTimer .dot {
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin-top: -3px;
+  /* color: #064d77; */
+}
+
+span.status-ex ~ #timeNowTimer .dot {
+  color: #4caf50;
+}
+span.status-ex ~ #timeNowTimer .flex-column span:first-child {
+  background-color: #4caf50;
+}
+span.status-good ~ #timeNowTimer .dot {
+  color: #2196f3;
+}
+span.status-good ~ #timeNowTimer .flex-column span:first-child {
+  background-color: #2196f3;
+}
+span.status-normal ~ #timeNowTimer .dot {
+  color: #9e9e9e;
+}
+span.status-normal ~ #timeNowTimer .flex-column span:first-child {
+  background-color: #9e9e9e;
+}
+span.status-bad ~ #timeNowTimer .dot {
+  color: #f44336;
+}
+span.status-bad ~ #timeNowTimer .flex-column span:first-child {
+  background-color: #f44336;
+}

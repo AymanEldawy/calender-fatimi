@@ -84,8 +84,28 @@ export const globalEvents = [
     deletable: false,
   },
   {
-    title: "رمضان",
+    title: "الاول من رمضان",
     date: toDateGregorian({ month: 9, day: 1 }),
+    deletable: false,
+  },
+  {
+    title: "السابع عشر من رمضان",
+    date: toDateGregorian({ month: 9, day: 17 }),
+    deletable: false,
+  },
+  {
+    title: "التاسع عشر من رمضان",
+    date: toDateGregorian({ month: 9, day: 19 }),
+    deletable: false,
+  },
+  {
+    title: "الواحد و العشرون من رمضان",
+    date: toDateGregorian({ month: 9, day: 21 }),
+    deletable: false,
+  },
+  {
+    title: "الاخر من رمضان",
+    date: toDateGregorian({ month: 9, day: 30 }),
     deletable: false,
   },
   {
@@ -101,6 +121,11 @@ export const globalEvents = [
   {
     title: "عيد الاضحي",
     date: toDateGregorian({ month: 12, day: 10 }),
+    deletable: false,
+  },
+  {
+    title: "عيد الغدير المواف",
+    date: toDateGregorian({ month: 12, day: 18 }),
     deletable: false,
   },
 ];
@@ -250,7 +275,7 @@ window.addEventListener("click", (e) => {
   });
   document.querySelector("#city").addEventListener("change", (e) => {
     if (e.target.value.indexOf("-") !== -1) {
-      let data = e.target.value.split("-");
+      let data = e.target.value.split("%");
       latAndLong.latitude = data[0];
       latAndLong.longitude = data[1];
     }
@@ -375,7 +400,7 @@ function changeCountry(countryCode = "SA") {
   citiesSelected.forEach((city) => {
     document.querySelector(
       "#city"
-    ).innerHTML += `<option value="${city.lat}-${city.lng}-${city.name}">${city.name}</option>`;
+    ).innerHTML += `<option value="${city.lat}%${city.lng}%${city.name}">${city.name}</option>`;
   });
 }
 

@@ -12,6 +12,7 @@ let days = [
   "الجمعة",
   "السبت",
 ];
+export let thePlanetNow = {}
 
 
 function closePlanetMessage() {
@@ -364,7 +365,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   }
   let tableDaylight = document.querySelector("#nav-lighten-tab tbody");
   let tableNight = document.querySelector("#nav-darken-tab tbody");
-
   tableDaylight.innerHTML = "";
   let dayLen = `${
     parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
@@ -375,23 +375,12 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   let dayLenNight = 1440 - dayLenLight;
   let valuePlusLight = Math.floor((dayLenLight / 12) * 1 - 60);
   let valuePlusNight = Math.floor((dayLenNight / 12) * 1 - 60);
-  // let _valuePlusLight = parseFloat(valuePlusLight).toFixed(2).split('.')[1];
-  // let _valuePlusNight = parseFloat(valuePlusNight).toFixed(2).split('.')[1];
-  // _valuePlusLight = parseInt(parseFloat(`.${_valuePlusLight}`) * 12)
-  // _valuePlusNight = parseInt(parseFloat(`.${_valuePlusNight}`) * 12)
-  // valuePlusLight = valuePlusLight > 0 ? valuePlusLight + _valuePlusLight : valuePlusLight - _valuePlusLight
-  // valuePlusNight = valuePlusNight > 0 ? valuePlusNight + _valuePlusNight : valuePlusNight - _valuePlusNight
 
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenLight / 12) * i) / 60);
     let theMinutes = ((dayLenLight / 12) * i) % 60;
-    let theMisSeconds = parseFloat(theMinutes).toFixed(2).split(".")[1];
-    // let theSeconds = (theMisSeconds * 12) / 60;
-    // theMinutes += parseInt(theSeconds)
-    // theSeconds = theMisSeconds - (theSeconds * 60)
     let hours = parseInt(sunrise[0]) + theHours;
     let minutes = parseInt(sunrise[1]) + theMinutes;
-
     let dev = parseInt(minutes / 60);
     hours = hours + dev;
     minutes = minutes - dev * 60;
@@ -542,6 +531,10 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
           isBig = parseInt(timeCheckBig) < parseInt(`${hours}3${minutes}`);
         }
         if (check && isBig && isLess) {
+          thePlanetNow = {
+            start: start[i].textContent,
+            end: end[i].textContent
+          }
           start[i].parentElement.classList.add("active");
           elActive = start[i].parentElement;
           break;
