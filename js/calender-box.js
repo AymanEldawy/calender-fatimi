@@ -150,5 +150,6 @@ window.addEventListener("DOMContentLoaded", () => {
   // invoke go next and go prev
   document.getElementById("goNext").addEventListener("click", goNext);
   document.getElementById("goPrev").addEventListener("click", goPrev);
-  document.getElementById('dateChecker').addEventListener('click', openCalender)
+  if(document.getElementById('dateChecker'))
+    document.getElementById('dateChecker').addEventListener('click', openCalender)
 });

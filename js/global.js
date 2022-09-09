@@ -30,6 +30,8 @@ export let storageLocation = {
     localStorage.setItem("TM_theme", JSON.stringify(theme));
   },
 };
+
+let theme = storageLocation.fetchTheme();
 export let latAndLong = {
   latitude: "17.5065",
   longitude: "44.1316",
@@ -63,6 +65,28 @@ export const globalEvents = [
     date: toDateGregorian({ month: 1, day: 10 }),
     deletable: false,
   },
+  {
+    title: "عيد الفطر",
+    date: toDateGregorian({ month: 10, day: 1 }),
+    deletable: false,
+  },
+  {
+    title: "يوم عرفة",
+    date: toDateGregorian({ month: 12, day: 9 }),
+    deletable: false,
+  },
+  {
+    title: "عيد الاضحي",
+    date: toDateGregorian({ month: 12, day: 10 }),
+    deletable: false,
+  },
+  {
+    title: "عيد الغدير المواف",
+    date: toDateGregorian({ month: 12, day: 18 }),
+    deletable: false,
+  },
+];
+export const globalDays = [
   {
     title: "الاول من رجب",
     date: toDateGregorian({ month: 7, day: 1 }),
@@ -106,26 +130,6 @@ export const globalEvents = [
   {
     title: "الاخر من رمضان",
     date: toDateGregorian({ month: 9, day: 30 }),
-    deletable: false,
-  },
-  {
-    title: "عيد الفطر",
-    date: toDateGregorian({ month: 10, day: 1 }),
-    deletable: false,
-  },
-  {
-    title: "يوم عرفة",
-    date: toDateGregorian({ month: 12, day: 9 }),
-    deletable: false,
-  },
-  {
-    title: "عيد الاضحي",
-    date: toDateGregorian({ month: 12, day: 10 }),
-    deletable: false,
-  },
-  {
-    title: "عيد الغدير المواف",
-    date: toDateGregorian({ month: 12, day: 18 }),
     deletable: false,
   },
 ];
@@ -187,14 +191,32 @@ export function calculateDate(date) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  let themeList = document.querySelector(".themes");
+  themeList.innerHTML = `
+    <li class="theme-color" data-theme="dark"></li>
+    <li class="theme-color" data-theme="light"></li>
+    <li class="theme-color" data-theme="red"></li>
+    <li class="theme-color" data-theme="blue"></li>
+    <li class="theme-color" data-theme="yellow"></li>
+    <li class="theme-color" data-theme="green"></li>
+  `;
+
+  if (theme) {
+    document.body.style.background = theme.bg;
+    document
+      .querySelector(`[data-theme="${theme.data}"]`)
+      .classList.add("active");
+  }
+
   // Save location info in storage
-  let addLocation = document.getElementById("addLocation");
-  let autoLocation = document.getElementById("autoLocation");
-  let closeLocation = document.getElementById("closeLocation");
-  let chooseLocation = document.getElementById("chooseLocation");
-  let overlayPopup = document.getElementById("overlayPopup");
+  // let addLocation = document.getElementById("addLocation");
+  // let autoLocation = document.getElementById("autoLocation");
+  // let closeLocation = document.getElementById("closeLocation");
+  // let chooseLocation = document.getElementById("chooseLocation");
+  // let overlayPopup = document.getElementById("overlayPopup");
 
   let menu = document.querySelector(".navbar-nav");
+
   menu.innerHTML = "";
   links.forEach((link) => {
     menu.innerHTML += `
@@ -209,6 +231,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (document.querySelector(".events-page .events")) {
     let eventsContainer = document.querySelector(".events-page .events");
+    let daysContainer = document.getElementById("tab-days");
     globalEvents.forEach((event) => {
       let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
         year: "numeric",
@@ -228,9 +251,44 @@ window.addEventListener("DOMContentLoaded", () => {
         ${calculateDate(event.date)}
       `;
     });
+    globalDays.forEach((event) => {
+      let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      let hijri = new Date(event.date).toHijri();
+      daysContainer.innerHTML += `
+      <li class="events-item __counter">
+        <h4>${event.title}</h4>
+        <p class="d-flex align-items justify-content-between">
+          <span>${new Date(event.date).toLocaleDateString("ar-SA", {
+            weekday: "long",
+          })} ${hijri._date} ${months[hijri._month]} ${hijri._year}</span>
+          <span>${gregorian}</span>
+          </p>
+        ${calculateDate(event.date)}
+      `;
+    });
   }
 });
 window.addEventListener("click", (e) => {
+  if (e.target.classList.contains("theme-color")) {
+    let siblings = [...e.target.parentElement.children];
+    siblings.forEach((sibling) => sibling.classList.remove("active"));
+    e.target.classList.add("active");
+    let bg = window
+      .getComputedStyle(e.target, null)
+      .getPropertyValue("background-color");
+    document.body.style.background = bg;
+    storageLocation.saveTheme({ bg, data: e.target.dataset.theme });
+    document.querySelector(".themes").classList.add("hide");
+  }
+
+  if (e.target.matches("#changeTheme .gg-color-picker")) {
+    console.log("ruN..");
+    document.querySelector(".themes").classList.remove("hide");
+  }
   if (e.target.matches("#autoLocation .gg-data")) {
     getLocation();
   }
@@ -267,19 +325,19 @@ window.addEventListener("click", (e) => {
 });
 
 // window.onload = function () {
-  openChooseLocation();
-  createEventModal();
-  displayCountry();
-  document.querySelector("#country").addEventListener("change", (e) => {
-    changeCountry(e.target.value);
-  });
-  document.querySelector("#city").addEventListener("change", (e) => {
-    if (e.target.value.indexOf("-") !== -1) {
-      let data = e.target.value.split("%");
-      latAndLong.latitude = data[0];
-      latAndLong.longitude = data[1];
-    }
-  });
+openChooseLocation();
+createEventModal();
+displayCountry();
+document.querySelector("#country").addEventListener("change", (e) => {
+  changeCountry(e.target.value);
+});
+document.querySelector("#city").addEventListener("change", (e) => {
+  if (e.target.value.indexOf("-") !== -1) {
+    let data = e.target.value.split("%");
+    latAndLong.latitude = data[0];
+    latAndLong.longitude = data[1];
+  }
+});
 // };
 
 function openChooseLocation() {

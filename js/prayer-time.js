@@ -142,14 +142,14 @@ async function displayPryerTime(date = new Date()) {
     let timings = repeatPrayerTime(GregorianDateIncrement)
     dyesGrid.innerHTML += `
       <tr class="${activeStyle ? "active" : ""}">
-        <th scope="row">${
+        <th scope="row">${i}</th>
+        <td>${
           GregorianDateIncrement.toLocaleDateString("ar-EG", {
             weekday: "long",
           })
           // Calender.daysFormat[Object.keys(Calender.daysFormat)[dayWeek]].day
-        }</th>
+        }</td>
         
-        <td>${i}</td>
         <td>${timings.Fajr.split(" ")[0]}</td>
         <td>${timings.Sunrise.split(" ")[0]}</td>
         <td>${timings.Dhuhr.split(" ")[0]}</td>
@@ -173,6 +173,7 @@ async function displayPryerTime(date = new Date()) {
 
 displayPryerTime(); // display calender
 window.addEventListener("DOMContentLoaded", () => {
+  
   document.querySelectorAll(".display button").forEach((btn) => {
     btn.addEventListener("click", () => {
       document

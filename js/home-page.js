@@ -22,7 +22,7 @@ const PrayerTimeDefault = {
 };
 let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault;
 
-let bigCenturyName = ["1", "2", "3", "4", "5", "6", "7"];
+export let bigCenturyName = ["1", "2", "3", "4", "5", "6", "7"];
 
 let yearCalc = parseInt(
   a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
@@ -43,7 +43,7 @@ function createColDate(hijriDate) {
   let GregorianDateIncrement = new Date(gregorian);
 
   div.innerHTML = `
-    <p>الاول ${months[hijriDate._month]}</p>
+    <p>الاول من ${months[hijriDate._month]}</p>
     <p>${GregorianDateIncrement.toLocaleDateString("ar-EG", {
       weekday: "long",
     })}</p>
@@ -82,6 +82,7 @@ function resetDate(theNewDate) {
 
 window.addEventListener("DOMContentLoaded", () => {
   displayRowFirstDayOfMonth();
+  let theHours = new Date().getHours();
   document.getElementById(
     "date"
   ).textContent = `${resetDate(new Date()).toLocaleDateString("ar-SA", {
@@ -96,10 +97,13 @@ window.addEventListener("DOMContentLoaded", () => {
     : "لا";
   document.getElementById("firstDayOfYear").innerHTML =
     daysFormat[century[yearCalc % 210]].count + 1;
-  document.getElementById("dayWeek").innerHTML = resetDate(new Date()).toLocaleDateString(
+  document.getElementById("dayWeek").innerHTML = theHours > 5 && theHours < 18 ? `يوم ${resetDate(new Date()).toLocaleDateString(
     "ar-SA",
     { weekday: "long" }
-  );
+  )}` : `ليلة ${resetDate(new Date()).toLocaleDateString(
+    "ar-SA",
+    { weekday: "long" }
+  )}`;
   document.getElementById("smallCentury").innerHTML = getCentury(
     parseInt(yearCalc % 210)
   );

@@ -18,27 +18,43 @@
     rel="stylesheet" type="text/css" />
   <title>موقع قبيلة آل زمانان</title>
 </head>
-
 <body>
-  <title>اعرف نجمك بحساب الجمل</title>
-  <header>
-    <nav class="navbar navbar-dark bg-primary">
-      <div class="container d-flex"> <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a><button
-          class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavId"
-          aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"><i class="gg-menu"></i>
-        </button>
-        <div class="collapse" id="collapsibleNavId">
-          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li class="nav-item"> <a class="nav-link" href="index.html">اعرف برجك <span
-                  class="sr-only">(current)</span></a> </li>
-            <li class="nav-item active"> <a class="nav-link" href="#">مقارنة بين الابراج</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="smath.html">حساب الجمل</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="towers.html">اعرف برجك</a> </li>
-          </ul>
-        </div>
+  <nav class="navbar navbar-dark bg-primary">
+    <div class="container mini-container d-flex">
+      <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a>
+
+      <!-- Themes -->
+      <div id="theme">
+        <button id="changeTheme" class="btn"><i class="gg-color-picker"></i></button>
+        <ul class="themes hide">
+        </ul>
       </div>
-    </nav>
-  </header>
+      <!-- Themes -->
+      <button id="autoLocation" class="btn d-flex align-items-center">
+        <i class="gg-data"></i>
+      </button>
+      <button id="chooseLocation" class="btn d-flex align-items-center">
+        <i class="gg-track"></i>
+      </button>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="gg-menu"></i>
+      </button>
+
+
+      <div class="collapse" id="collapsibleNavId">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0"></ul>
+      </div>
+    </div>
+  </nav>
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog" role="document">

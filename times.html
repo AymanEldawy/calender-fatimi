@@ -37,16 +37,18 @@
     <nav class="navbar navbar-dark bg-primary">
       <div class="container mini-container d-flex">
         <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a>
-        <button
-          id="autoLocation"
-          class="btn d-flex align-items-center"
-        >
+
+        <!-- Themes -->
+        <div id="theme">
+          <button id="changeTheme" class="btn"><i class="gg-color-picker"></i></button>
+          <ul class="themes hide">
+          </ul>
+        </div>
+        <!-- Themes -->
+        <button id="autoLocation" class="btn d-flex align-items-center">
           <i class="gg-data"></i>
         </button>
-        <button
-          id="chooseLocation"
-          class="btn d-flex align-items-center"
-        >
+        <button id="chooseLocation" class="btn d-flex align-items-center">
           <i class="gg-track"></i>
         </button>
 
@@ -61,45 +63,15 @@
         >
           <i class="gg-menu"></i>
         </button>
+
+
         <div class="collapse" id="collapsibleNavId">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0"></ul>
         </div>
       </div>
     </nav>
-
-    <!-- Themes -->
-    <ul class="themes">
-      <li class="theme-color" data-theme="dark"></li>
-      <li class="theme-color" data-theme="light"></li>
-      <li class="theme-color" data-theme="red"></li>
-      <li class="theme-color" data-theme="blue"></li>
-      <li class="theme-color" data-theme="yellow"></li>
-      <li class="theme-color" data-theme="green"></li>
-      <!-- 
-        لاضافة لون جديد انسخ واحدة من 
-        <li class="theme-color" data-theme="اسم المود"></li>
-        ملاحظة اسم المود لازم يكون مطابق لاسم المود في ملف ال css
-      -->
-    </ul>
-    <!-- Themes -->
-    <div class="main-container mini-container container  p-4">
-      <!-- <div class="options">
-        <button
-          id="autoLocation"
-          class="btn btn-primary d-flex align-items-center"
-        >
-          <i class="gg-data"></i> تحديد مدينتك تلقائيا
-        </button>
-        <button
-          id="chooseLocation"
-          class="btn btn-outline-primary d-flex align-items-center"
-        >
-          <i class="gg-track"></i> اختيار الموقع يدويآ
-        </button>
-      </div> -->
+    <div class="main-container mini-container container p-4">
       <div class="country-info">
-       
-
         <ul class="nav nav-list" id="nav-tab" role="tablist">
           <li class="nav-list-item nav-link">
             <div class="d-flex"><i class="gg-calendar-today"></i>اليوم</div>

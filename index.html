@@ -19,41 +19,41 @@
     <div class="_modal-days hide">
       <div class="row-first-days"></div>
     </div>
-      <nav class="navbar navbar-dark bg-primary">
-        <div class="container d-flex">
-          <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a>
-          <button
-            id="autoLocation"
-            class="btn d-flex align-items-center"
-          >
-            <i class="gg-data"></i>
-          </button>
-          <button
-            id="chooseLocation"
-            class="btn d-flex align-items-center"
-          >
-            <i class="gg-track"></i>
-          </button>
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container d-flex">
+        <a class="navbar-brand" href="/">موقع قبيلة آل زمانان</a>
 
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#collapsibleNavId"
-            aria-controls="collapsibleNavId"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <i class="gg-menu"></i>
-          </button>
-          <div class="collapse" id="collapsibleNavId">
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0"></ul>
-          </div>
+        <!-- Themes -->
+        <div id="theme">
+          <button id="changeTheme" class="btn"><i class="gg-color-picker"></i></button>
+          <ul class="themes hide"></ul>
         </div>
-      </nav>
+        <!-- Themes -->
+        <button id="autoLocation" class="btn d-flex align-items-center">
+          <i class="gg-data"></i>
+        </button>
+        <button id="chooseLocation" class="btn d-flex align-items-center">
+          <i class="gg-track"></i>
+        </button>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="gg-menu"></i>
+        </button>
+        <div class="collapse" id="collapsibleNavId">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0"></ul>
+        </div>
+      </div>
+    </nav>
     <div class="homepage">
       <div class="container">
-       
         <div class="page-info text-center">
           <div class="table-style">
             <div class="table-style-item">
@@ -82,7 +82,6 @@
               <span class="table-style-label"> القرن الأكبر </span>
               <span class="table-style-value" id="bigCentury"></span>
             </div>
-
           </div>
           <div class="prayer-single">
             <div class="prayer-grid"></div>
@@ -94,7 +93,9 @@
               <span class="table-style-value" id="timeNow"></span>
             </div>
             <div class="table-style-item">
-              <span class="table-style-label">باقي من الوقت علي الساعة التالية</span>
+              <span class="table-style-label"
+                >باقي من الوقت علي الساعة التالية</span
+              >
               <span id="timeNowTimer"></span>
             </div>
             <div class="table-style-item">

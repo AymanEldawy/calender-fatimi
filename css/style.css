@@ -58,6 +58,7 @@ footer .container {
 .main-container {
   max-width: 800px;
   margin: 0 auto;
+  margin-top: 2rem;
   border-radius: 0.25rem;
   width: 90%;
   background-color: rgb(0 123 255);

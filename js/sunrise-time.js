@@ -52,7 +52,6 @@ function resetDateHigry(theDate = new Date()) {
 }
 
 
-let theme = storageLocation.fetchTheme();
 window.addEventListener("click", (e) => {
   window.addEventListener("click", (e) => {
     if (e.target.matches(".calender-list-grid-body span")) {
@@ -74,25 +73,11 @@ window.addEventListener("click", (e) => {
   ) {
     closePlanetMessage();
   }
-  if (e.target.classList.contains("theme-color")) {
-    let siblings = [...e.target.parentElement.children];
-    siblings.forEach((sibling) => sibling.classList.remove("active"));
-    e.target.classList.add("active");
-    let bg = window
-      .getComputedStyle(e.target, null)
-      .getPropertyValue("background-color");
-    document.body.style.background = bg;
-    storageLocation.saveTheme({ bg, data: e.target.dataset.theme });
-  }
+ 
 });
 window.addEventListener("DOMContentLoaded", () => {
   loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
-  if (theme) {
-    document.body.style.background = theme.bg;
-    document
-      .querySelector(`[data-theme="${theme.data}"]`)
-      .classList.add("active");
-  }
+  
   document.getElementById("displayDay").addEventListener("click", (e) => {
     let value = e.target.textContent;
     let dayInfo = daysInfo[days.indexOf(value)];

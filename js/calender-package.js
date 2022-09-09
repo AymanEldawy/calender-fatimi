@@ -1,6 +1,13 @@
 import * as Calender from "./calender-setup.js";
-import { calculateDate, globalEvents, storageLocation } from "./global.js";
+import {
+  calculateDate,
+  globalDays,
+  globalEvents,
+  storageLocation,
+} from "./global.js";
 // Let storage
+let bigCenturyName = ["1", "2", "3", "4", "5", "6", "7"];
+
 export let storeEvents = {
   fetchEvents() {
     let events = JSON.parse(localStorage.getItem("events"));
@@ -21,13 +28,27 @@ if (eventsExists.length < 1) {
       color: "#ffc107",
     });
   });
+  globalDays.forEach((event) => {
+    events.push({
+      title: event.title,
+      date: event.date,
+      deletable: event.deletable,
+      color: "#ffc107",
+    });
+  });
   storeEvents.saveEvents(events);
 }
 
-function displayCalenderGrid(date = new Date(), display = ".calender-list-grid-body") {
+function displayCalenderGrid(
+  date = new Date(),
+  display = ".calender-list-grid-body"
+) {
+  
   // check events by this day
   let HijriConfiguration = returnHijriConfiguration(date);
   const yearNumber = HijriConfiguration.hijriYear % 210;
+  console.log(yearNumber, HijriConfiguration)
+  displayYearInfo(HijriConfiguration.hijriYear)
   let firstDayOfYear = Calender.daysFormat[Calender.century[yearNumber]];
   let firstWeekDayOfYear = firstDayOfYear.day; // weekday not used
   let currentYearHijri = Calender.theCurrentDate.getCurrentYearHijri();
@@ -106,13 +127,32 @@ function displayCalenderGrid(date = new Date(), display = ".calender-list-grid-b
     ...setMonth
   ).join(" - ")}`;
 }
+function displayYearInfo(year) {
+  // Info year
+  document.getElementById("yearLeap").innerHTML = Calender.leapYears.includes(
+    year % 210
+  )
+    ? "نعم"
+    : "لا";
+  document.getElementById("firstDayOfYear").innerHTML =
+    Calender.daysFormat[Calender.century[year % 210]].count + 1;
+  document.getElementById("smallCentury").innerHTML = Calender.getCentury(
+    parseInt(year % 210)
+  );
+  document.getElementById("bigCentury").innerHTML =
+    bigCenturyName[parseInt(year / 210)];
+}
 
 window.addEventListener("DOMContentLoaded", () => {
   displayCalenderGrid(); // display calender
-  document
-    .getElementById("btnChangeByYear")
-    .addEventListener("click", enterYear); // change by years
+  console.log("loaded");
+  document.getElementById("today").classList.remove("hide");
+  document.getElementById("btnChangeByYear").addEventListener("click", () => {
+    enterYear();
+    console.log("231231");
+  }); // change by years
   if (document.querySelector(".calender-page")) {
+    console.log("run...");
     Object.keys(Calender.months).forEach((month) => {
       document.getElementById("listOfMonth").innerHTML += `
       <button data-month="${month}" class="${
@@ -178,8 +218,6 @@ window.addEventListener("click", (e) => {
   }
 });
 
-let listOfControls = document.getElementById("listOfControls");
-
 // Go Prev [ Month - year - day]
 export function goPrev() {
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
@@ -187,19 +225,14 @@ export function goPrev() {
   );
   let date = new Date(Calender.theCurrentDate.gregorianDate);
   let theNewDate = date;
-  if (listOfControls && listOfControls.value == "year") {
-    HIJRI_CONFIGURATION.hijriYear -= 1;
-    theNewDate = date.setDate(date.getDate() - 355);
-  } else {
-    HIJRI_CONFIGURATION.hijriMonth -= 1;
-    theNewDate = date.setDate(
-      date.getDate() -
-        Calender.countDayOfMoth(
-          HIJRI_CONFIGURATION.hijriMonth + 1,
-          Calender.theCurrentDate.getCurrentYearHijri()
-        )
-    );
-  }
+  HIJRI_CONFIGURATION.hijriMonth -= 1;
+  theNewDate = date.setDate(
+    date.getDate() -
+      Calender.countDayOfMoth(
+        HIJRI_CONFIGURATION.hijriMonth + 1,
+        Calender.theCurrentDate.getCurrentYearHijri()
+      )
+  );
   displayCalenderGrid(theNewDate);
   Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
   if (
@@ -217,19 +250,14 @@ export function goNext() {
   );
   let date = new Date(Calender.theCurrentDate.gregorianDate);
   let theNewDate = date;
-  if (listOfControls && listOfControls.value == "year") {
-    HIJRI_CONFIGURATION.hijriYear += 1;
-    theNewDate = date.setDate(date.getDate() + 355);
-  } else {
-    HIJRI_CONFIGURATION.hijriMonth += 1;
-    theNewDate = date.setDate(
-      date.getDate() +
-        Calender.countDayOfMoth(
-          HIJRI_CONFIGURATION.hijriMonth,
-          Calender.theCurrentDate.getCurrentYearHijri()
-        )
-    );
-  }
+  HIJRI_CONFIGURATION.hijriMonth += 1;
+  theNewDate = date.setDate(
+    date.getDate() +
+      Calender.countDayOfMoth(
+        HIJRI_CONFIGURATION.hijriMonth,
+        Calender.theCurrentDate.getCurrentYearHijri()
+      )
+  );
 
   displayCalenderGrid(theNewDate);
   if (
@@ -243,7 +271,7 @@ export function goNext() {
 
   Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
 }
-export function returnHijriConfiguration(date) {
+function returnHijriConfiguration(date) {
   let gregorianDate = new Date(date);
   let hijri = gregorianDate.toHijri();
   return {
@@ -252,13 +280,13 @@ export function returnHijriConfiguration(date) {
     hijriYear: hijri._year,
   };
 }
-
-export function enterYear() {
+function enterYear() {
   let year = document.getElementById("changeByYear");
   let hijri = new HijriDate(+year.value, 1, 1);
   let gregorian = hijri.toGregorian();
   displayCalenderGrid(gregorian);
   Calender.theCurrentDate.gregorianDate = gregorian;
+
 }
 function changeMonth(e) {
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
