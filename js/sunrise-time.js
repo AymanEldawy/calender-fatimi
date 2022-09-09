@@ -630,12 +630,12 @@ function createElement(el = "div") {
 }
 
 function getSunriseTime() {
-  let sunCalc = SunCalc.getTimes(
+  let suncalc = SunCalc.getTimes(
     new Date(),
     latAndLong.latitude,
     latAndLong.longitude
   );
-  let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
+  let sunsetStr = suncalc.sunset.getHours() + ":" + suncalc.sunset.getMinutes();
   let sunset = sunsetStr.split(":").join("");
   let date = new Date();
   let hours = date.getHours();

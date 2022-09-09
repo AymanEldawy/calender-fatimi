@@ -179,6 +179,7 @@ td {
 /* Calender page */
 
 .calender-page {
+  display: none;
   margin-top: 2rem;
 }
 .calender-page-title {
@@ -529,4 +530,66 @@ span.empty {
   .table tbody tr:nth-child(even) {
     background: #e9e9ef;
   }
+}
+
+.tab-control {
+  margin-top: 2rem;
+}
+.tab-control button {
+  border: none;
+  border-bottom: 2px solid;
+  transition: background .1s, color .2s ease-out;
+}
+.tab-control button.active {
+  background: #0d6efd;
+  color: #fff;
+  width: 80px;
+}
+.calender-year {
+  display: none;
+  margin-top: 2rem;
+}
+.calender-year h2 {
+  font-weight: bold;
+  text-align: center;
+  font-size: 2.2rem;
+}
+.calender-year-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.calender-year-grid > div {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  width: fit-content;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  flex: 1;
+  padding-top: 45px;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 1px 4px #00000038;
+}
+.calender-year-grid > div h4 {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+.calender-year-grid > div span {
+  text-align: center;
+}
+.calender-year-grid > div em {
+  display: none;
+}
+
+.mini-container.__month .calender-page {
+  display: block;
+}
+.mini-container.__year .calender-year {
+  display: block;
 }
