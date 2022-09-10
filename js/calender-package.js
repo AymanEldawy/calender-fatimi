@@ -126,7 +126,7 @@ function displayCalenderGrid(
   console.log(Array(...setMonth));
   document.getElementById("theDateGer").textContent = `${Array(
     ...setMonth
-  ).join(" - ")}`;
+  ).join(" - ")} ${new Date(date).getFullYear()}`;
 }
 function displayYearInfo(year) {
   // Info year
@@ -145,7 +145,8 @@ function displayYearInfo(year) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById('theYear').textContent = new Date().getFullYear();
+  displayCalenderGrid()
+  document.getElementById('theYear').textContent = new Date().toLocaleDateString("ar-SA", {year: "numeric"});
   document.getElementById("btnChangeByYear").addEventListener("click", () => {
     enterYear();
     console.log("231231");

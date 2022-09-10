@@ -199,6 +199,7 @@ window.addEventListener("DOMContentLoaded", () => {
     <li class="theme-color" data-theme="blue"></li>
     <li class="theme-color" data-theme="yellow"></li>
     <li class="theme-color" data-theme="green"></li>
+    <li class="theme-color" data-theme="purple"></li>
   `;
 
   if (theme) {
@@ -310,14 +311,14 @@ window.addEventListener("click", (e) => {
     document.querySelector("#tab-days-btn").classList.remove("active");
     document
       .querySelector(".tab-toggler")
-      .classList.toggle("open-events-tab open-days-tab ");
+      .className = `tab-toggler open-events-tab `;
   }
   if (e.target.matches("#tab-days-btn")) {
     document.querySelector("#tab-days-btn").classList.add("active");
     document.querySelector("#tab-events-btn").classList.remove("active");
     document
       .querySelector(".tab-toggler")
-      .classList.toggle("open-events-tab open-days-tab ");
+      .className = `tab-toggler open-days-tab `;
   }
   if (e.target.matches(".open-events-modal")) {
     document.querySelector("._modal").classList.remove("hide");

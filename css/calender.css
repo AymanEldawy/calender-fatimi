@@ -180,12 +180,19 @@ td {
 
 .calender-page {
   display: none;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 .calender-page-title {
   text-align: center;
   margin-bottom: 1rem;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.calender-page-title h1,
+.calender-page-title p {
+  margin: 0;
 }
 .calender-page-title #today {
   position: absolute;
@@ -195,8 +202,9 @@ td {
 }
 .calender-page-title h1 {
   font-weight: bold;
-  font-size: 2.2rem;
+  font-size: 1.5rem;
 }
+.calender-page-title,
 .calender-page-controls {
   box-shadow: 0 1px 4px #2225;
   padding: 0.5rem;
@@ -507,6 +515,9 @@ span.empty {
   .print {
     display: none;
   }
+  body {
+    background-color: #d7dee1;
+  }
   .prayer-title {
     margin: 0;
   }
@@ -538,7 +549,7 @@ span.empty {
 .tab-control button {
   border: none;
   border-bottom: 2px solid;
-  transition: background .1s, color .2s ease-out;
+  transition: background 0.1s, color 0.2s ease-out;
 }
 .tab-control button.active {
   background: #0d6efd;

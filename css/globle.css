@@ -77,16 +77,16 @@ body {
   grid-template-columns: 1fr;
   gap: 1rem;
 }
-._modal .tab-toggler.open-events-tab .tab-events {
+._modal .tab-toggler.open-events-tab #tab-events {
   display: block;
 }
-._modal .tab-toggler.open-events-tab .tab-days {
+._modal .tab-toggler.open-events-tab #tab-days {
   display: none;
 }
-._modal .tab-toggler.open-days-tab .tab-events {
+._modal .tab-toggler.open-days-tab #tab-events {
   display: none;
 }
-._modal .tab-toggler.open-days-tab .tab-days {
+._modal .tab-toggler.open-days-tab #tab-days {
   display: block;
 }
 
@@ -487,23 +487,32 @@ button.navbar-toggler[aria-expanded="true"] {
   cursor: pointer
 }
 .themes li[data-theme="dark"] {
-  background-color: #111;
+  background-color: rgb(71 69 69);
+  /* background-color: #111; */
 }
 .themes li[data-theme="light"] {
   background-color: #d7dee1;
   border: 1px solid #ccc;
 }
 .themes li[data-theme="red"] {
-  background-color: #f44336;
+  background-color: rgb(255 152 152);
+  /* background-color: #f44336; */
+}
+.themes li[data-theme="purple"] {
+  background-color: rgb(236 150 247);
+  /* background-color: #4caf50; */
 }
 .themes li[data-theme="green"] {
-  background-color: #4caf50;
+  background-color: rgb(150 247 165);
+  /* background-color: #4caf50; */
 }
 .themes li[data-theme="blue"] {
-  background-color: #03a9f4;
+  background-color: hwb(198deg 59% 3%);;
+  /* background-color: #03a9f4; */
 }
 .themes li[data-theme="yellow"] {
-  background-color: #ff9800;
+  background-color: rgb(247 231 150);
+  /* background-color: #ff9800; */
 }
 /* 
 لاضافة لون جديد انسخ واحدة من  
