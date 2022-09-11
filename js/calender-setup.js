@@ -228,6 +228,9 @@ export const daysFormat = {
   و: { day: "الجمعة", count: 5 },
   ز: { day: "السبت", count: 6 },
 };
+//  const e2a = (s) => s.replace(/[0-9]/g, (d) => "0123456789".indexOf(d));
+ export const e2a = s => s.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
+
 export const a2e = (s) => s.replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
 export const oddMonth = 30;
 export const evenMonth = 29;
@@ -259,6 +262,7 @@ export let theCurrentDate = {
   getCurrentYearHijri() {
     return parseInt(a2e(this.currentHijriDate.split("/")[2]));
   },
+  yearHijri:parseInt(a2e(new Date().toLocaleDateString("ar-SA", {year: 'numeric'}))), 
 };
 
 // Get the century for year

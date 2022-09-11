@@ -48,10 +48,8 @@ function displayCalenderGrid(
   // check events by this day
   let HijriConfiguration = returnHijriConfiguration(date);
   const yearNumber = HijriConfiguration.hijriYear % 210;
-  console.log(yearNumber, HijriConfiguration);
   displayYearInfo(HijriConfiguration.hijriYear);
   let firstDayOfYear = Calender.daysFormat[Calender.century[yearNumber]];
-  let firstWeekDayOfYear = firstDayOfYear.day; // weekday not used
   let currentYearHijri = Calender.theCurrentDate.getCurrentYearHijri();
   let currentMonthHijri = Calender.theCurrentDate.getCurrentMonthHijri();
   let currentDayNumHijri = Calender.theCurrentDate.getCurrentDateHijri();
@@ -67,9 +65,6 @@ function displayCalenderGrid(
   }
   let setMonth = new Set();
   // Loop of month days
-  console.log(
-    Calender.countDayOfMoth(HijriConfiguration.hijriMonth, yearNumber)
-  );
   let dyesGrid = document.querySelector(display);
   dyesGrid.innerHTML = "";
   for (let i = 1; i <= firstDayNumOfMonth; i++) {
@@ -85,6 +80,8 @@ function displayCalenderGrid(
       HijriConfiguration.hijriMonth,
       i
     );
+    let hijri_day = `${_hijri._date} ${Calender.months[_hijri._month]} ${_hijri._year}` 
+
     let gregorian = _hijri.toGregorian();
     let GregorianDateIncrement = new Date(gregorian);
     let hasEvent = checkIfDateHasEvents(GregorianDateIncrement);
@@ -103,12 +100,12 @@ function displayCalenderGrid(
         HijriConfiguration.hijriMonth == currentMonthHijri &&
         i > currentDayNumHijri
       ) {
-        dyesGrid.innerHTML += `<span data-current_date="${GregorianDateIncrement}" data-has_event="${hasEvent}" data-event="${GregorianDateIncrement}"> ${i} <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
+        dyesGrid.innerHTML += `<span data-display_hijri="${hijri_day}"  data-current_date="${GregorianDateIncrement}" data-has_event="${hasEvent}" data-event="${GregorianDateIncrement}"> ${i} <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
       } else if (
         HijriConfiguration.hijriYear >= currentYearHijri &&
         HijriConfiguration.hijriMonth > currentMonthHijri
       ) {
-        dyesGrid.innerHTML += `<span data-current_date="${GregorianDateIncrement}" data-has_event="${hasEvent}" data-event="${GregorianDateIncrement}"> ${i}  <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
+        dyesGrid.innerHTML += `<span data-display_hijri="${hijri_day}"  data-current_date="${GregorianDateIncrement}" data-has_event="${hasEvent}" data-event="${GregorianDateIncrement}"> ${i}  <em> ${GregorianDateIncrement.getDate()} </em> <i class="icon-add">+</i> </span>`;
       } else
         dyesGrid.innerHTML += `<span data-current_date="${GregorianDateIncrement}" data-has_event="${hasEvent}" >${i} <em> ${GregorianDateIncrement.getDate()} </em></span>`;
     }
@@ -123,7 +120,6 @@ function displayCalenderGrid(
   ) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
-  console.log(Array(...setMonth));
   document.getElementById("theDateGer").textContent = `${Array(
     ...setMonth
   ).join(" - ")} ${new Date(date).getFullYear()}`;
@@ -146,13 +142,12 @@ function displayYearInfo(year) {
 
 window.addEventListener("DOMContentLoaded", () => {
   displayCalenderGrid()
-  document.getElementById('theYear').textContent = new Date().toLocaleDateString("ar-SA", {year: "numeric"});
+  displayCalenderYear()
+  document.getElementById('theYear').textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
   document.getElementById("btnChangeByYear").addEventListener("click", () => {
     enterYear();
-    console.log("231231");
   }); // change by years
   if (document.querySelector(".calender-page")) {
-    console.log("run...");
     Object.keys(Calender.months).forEach((month) => {
       document.getElementById("listOfMonth").innerHTML += `
       <button data-month="${month}" class="${
@@ -187,6 +182,8 @@ window.addEventListener("DOMContentLoaded", () => {
   // invoke go next and go prev
   document.getElementById("goNext").addEventListener("click", goNext);
   document.getElementById("goPrev").addEventListener("click", goPrev);
+  document.getElementById("goNextYear").addEventListener("click", goNextYear);
+  document.getElementById("goPrevYear").addEventListener("click", goPrevYear);
 });
 
 window.addEventListener("click", (e) => {
@@ -211,8 +208,12 @@ window.addEventListener("click", (e) => {
   }
 
   if (e.target.matches("span[data-event] .icon-add")) {
+    console.log(e.target.parentElement.dataset)
     document.getElementById("datePicker").value =
-      e.target.parentElement.parentElement.dataset.current_date;
+      e.target.parentElement.dataset.display_hijri;
+    document.getElementById("datePicker").dataset.date =
+      e.target.parentElement.dataset.current_date;
+    
     document.querySelector(".modal-events").classList.remove("close");
   }
 
@@ -343,7 +344,7 @@ function addEvent() {
   let theDateEvent = document.getElementById("datePicker"); // 0000-00-00
   let event = {
     title: title.value,
-    date: theDateEvent.value,
+    date: theDateEvent.dataset.date,
     color,
     deletable: true,
   };
@@ -405,7 +406,8 @@ function displayEvents(theEventDate) {
 function checkIfDateHasEvents(theEventDate) {
   let listOfEvents = events.filter(
     (event) => Date.parse(event.date) == Date.parse(theEventDate)
-  );
+    );
+  console.log(theEventDate.getDate(), listOfEvents)
   return listOfEvents.length > 0;
 }
 
@@ -429,7 +431,6 @@ function getSunriseTime() {
     `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >
     parseInt(sunset)
   ) {
-    console.log("run...");
     let tomorrow = date.setDate(date.getDate() + 1);
     Calender.theCurrentDate.gregorianDate = new Date(tomorrow);
     Calender.theCurrentDate.currentHijriDate = new Date(
@@ -447,7 +448,6 @@ function displayCalenderGridYear(
   // check events by this day
   let HijriConfiguration = returnHijriConfiguration(date);
   const yearNumber = HijriConfiguration.hijriYear % 210;
-  console.log(yearNumber, HijriConfiguration);
   displayYearInfo(HijriConfiguration.hijriYear);
   let firstDayOfYear = Calender.daysFormat[Calender.century[yearNumber]];
   let currentMonthHijri = Calender.theCurrentDate.getCurrentMonthHijri();
@@ -458,13 +458,13 @@ function displayCalenderGridYear(
   // Display information about date
   let dyesGrid = display;
   dyesGrid.innerHTML = `<h4>${Calender.months[HijriConfiguration.hijriMonth]}</h4>`;
-  // dyesGrid.innerHTML += `<span>الاحد</span>`;
-  // dyesGrid.innerHTML += `<span>الأثنين</span>`;
-  // dyesGrid.innerHTML += `<span>الثلاثاء</span>`;
-  // dyesGrid.innerHTML += `<span>الأربعاء</span>`;
-  // dyesGrid.innerHTML += `<span>الخميس</span>`;
-  // dyesGrid.innerHTML += `<span>الجمعة</span>`;
-  // dyesGrid.innerHTML += `<span>السبت</span>`;
+  dyesGrid.innerHTML += `<span class="text-primary">اح</span>`;
+  dyesGrid.innerHTML += `<span class="text-primary">اث</span>`;
+  dyesGrid.innerHTML += `<span class="text-primary">ث</span>`;
+  dyesGrid.innerHTML += `<span class="text-primary">ار</span>`;
+  dyesGrid.innerHTML += `<span class="text-primary">خ</span>`;
+  dyesGrid.innerHTML += `<span class="text-primary">ج</span>`;
+  dyesGrid.innerHTML += `<span class="text-primary">س</span>`;
   for (let i = 1; i <= firstDayNumOfMonth; i++) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
@@ -502,20 +502,32 @@ function displayCalenderGridYear(
   }
 }
 let item = ""
-for (let i = 0; i < 12; i++) {
-  
-  let HijriConfiguration = returnHijriConfiguration(new Date());
 
-  let _hijri = new HijriDate(
-    HijriConfiguration.hijriYear,
-    i + 1,
-    1
-  );
-  let gregorian = _hijri.toGregorian();
+function displayCalenderYear (year) {
 
-  item = document.getElementById(`month-box-${i+ 1}`)
-  console.log(item)
-  displayCalenderGridYear(gregorian,item)
+  let theYear = year ? year : Calender.theCurrentDate.yearHijri;
+  console.log(year, Calender.theCurrentDate.yearHijri)
+  for (let i = 0; i < 12; i++) {
+    let _hijri = new HijriDate(
+      theYear,
+      i + 1,
+      1
+    );
+    let gregorian = _hijri.toGregorian();
+    item = document.getElementById(`month-box-${i+ 1}`)
+    displayCalenderGridYear(gregorian,item)
+  }
+  document.getElementById('theYear').textContent = `${Calender.theCurrentDate.yearHijri} هـ`
 }
-// (document.querySelectorAll('.list-months')).forEach
 
+
+
+
+function goNextYear() {
+  Calender.theCurrentDate.yearHijri += 1
+  displayCalenderYear(Calender.theCurrentDate.yearHijri )
+}
+function goPrevYear() {
+  Calender.theCurrentDate.yearHijri -= 1
+  displayCalenderYear(Calender.theCurrentDate.yearHijri )
+}

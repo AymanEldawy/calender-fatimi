@@ -55,7 +55,7 @@
 
     <div class="modal-events close">
       <form action="" class="add-event">
-        <h2>أضافة مناسبة</h2>
+        <h2>أضافة مناسبة خاصة</h2>
         <div class="form-group">
           <label for="">اسم المناسبة</label>
           <input
@@ -94,7 +94,11 @@
         <button data-tab="calender-page"  class="active">شهر</button>
       </div>
       <div class="calender-year">
-        <h2 id="theYear"></h2>
+        <div class="year-controls d-flex align-items-center justify-content-between mb-3">
+          <button class="btn btn-primary" id="goPrevYear" data-prev="Year">السنة السابق</button>
+          <h2 id="theYear" class="mb-0"></h2>
+          <button class="btn btn-primary" id="goNextYear" data-next="Year">السنة التالي</button>
+        </div>
         <div class="calender-year-grid">
           <div id="month-box-1"></div>
           <div id="month-box-2"></div>

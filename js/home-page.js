@@ -28,14 +28,6 @@ let yearCalc = parseInt(
   a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
 );
 const yearNumber = yearCalc % 210;
-let firstDayOfYear = daysFormat[century[yearNumber]];
-let firstWeekDayOfYear = firstDayOfYear.day; // weekday not used
-// let currentYearHijri = theCurrentDate.getCurrentYearHijri();
-// let currentMonthHijri = theCurrentDate.getCurrentMonthHijri();
-// let currentDayNumHijri = theCurrentDate.getCurrentDateHijri();
-
-let firstDayNumOfMonth =
-  (countOfMonthDays(2 - 1, yearNumber) + parseInt(firstDayOfYear.count)) % 7; // calculate the first weekDay of month
 
 function createColDate(hijriDate) {
   let div = document.createElement("div");
@@ -62,30 +54,38 @@ function displayRowFirstDayOfMonth() {
   }
 }
 function resetDate(theNewDate) {
-  let sunCalc = SunCalc.getTimes(new Date(),LOCATION.latitude,LOCATION.longitude)
-  console.log(parseInt(`${sunCalc.sunset.getHours()}${sunCalc.sunset.getMinutes()}`))
-  console.log(sunCalc.sunset.getHours(), sunCalc.sunset.getMinutes())
-  console.log(new Date().getHours(),new Date().getMinutes())
-  console.log(parseInt(`${new Date().getHours()}${new Date().getMinutes()}`) )
+  let sunCalc = SunCalc.getTimes(
+    new Date(),
+    LOCATION.latitude,
+    LOCATION.longitude
+  );
   if (
-    parseInt(`${new Date().getHours().toString().padStart(2,0)}${new Date().getMinutes().toString().padStart(2,0)}`) >
-    parseInt(`${sunCalc.sunset.getHours().toString().padStart(2,0)}${sunCalc.sunset.getMinutes().toString().padStart(2,0)}`)
+    parseInt(
+      `${new Date().getHours().toString().padStart(2, 0)}${new Date()
+        .getMinutes()
+        .toString()
+        .padStart(2, 0)}`
+    ) >
+    parseInt(
+      `${sunCalc.sunset.getHours().toString().padStart(2, 0)}${sunCalc.sunset
+        .getMinutes()
+        .toString()
+        .padStart(2, 0)}`
+    )
   ) {
-    let setDate = theNewDate.setDate(theNewDate.getDate() + 1)
-    console.log(theNewDate)
-    console.log(setDate)
-    return new Date(setDate)
+    let setDate = theNewDate.setDate(theNewDate.getDate() + 1);
+    return new Date(setDate);
   } else {
-    return theNewDate
+    return theNewDate;
   }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
   displayRowFirstDayOfMonth();
   let theHours = new Date().getHours();
-  document.getElementById(
-    "date"
-  ).textContent = `${resetDate(new Date()).toLocaleDateString("ar-SA", {
+  document.getElementById("date").textContent = `${resetDate(
+    new Date()
+  ).toLocaleDateString("ar-SA", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -97,13 +97,14 @@ window.addEventListener("DOMContentLoaded", () => {
     : "لا";
   document.getElementById("firstDayOfYear").innerHTML =
     daysFormat[century[yearCalc % 210]].count + 1;
-  document.getElementById("dayWeek").innerHTML = theHours > 5 && theHours < 18 ? `يوم ${resetDate(new Date()).toLocaleDateString(
-    "ar-SA",
-    { weekday: "long" }
-  )}` : `ليلة ${resetDate(new Date()).toLocaleDateString(
-    "ar-SA",
-    { weekday: "long" }
-  )}`;
+  document.getElementById("dayWeek").innerHTML =
+    theHours > 5 && theHours < 18
+      ? `يوم ${resetDate(new Date()).toLocaleDateString("ar-SA", {
+          weekday: "long",
+        })}`
+      : `ليلة ${resetDate(new Date()).toLocaleDateString("ar-SA", {
+          weekday: "long",
+        })}`;
   document.getElementById("smallCentury").innerHTML = getCentury(
     parseInt(yearCalc % 210)
   );
@@ -182,18 +183,19 @@ function repeatPrayerTime(AfterSunset = new Date()) {
   // Calculate Fajr Time
   let fajrCalcTime =
     parseInt(sunriseStr.split(":")[0]) * 60 +
-    parseInt(sunriseStr.split(":")[1]) -
-    75;
-  let fajrHours = parseInt(fajrCalcTime / 60);
-  let fajrMinutes = parseInt(
-    (parseFloat(fajrCalcTime / 60)
-      .toFixed(2)
-      .split(".")[1] *
-      60) /
-      60
-  );
-  let timeFajr = resetPrayerTime(fajrHours, fajrMinutes);
+    parseInt(sunriseStr.split(":")[1]);
+  console.log(fajrCalcTime);
 
+  let fajrHours = parseInt((fajrCalcTime - 75) / 60);
+  console.log(fajrHours);
+  let fajrMinutes = parseFloat((fajrCalcTime - 75) / 60)
+    .toFixed(2)
+    .split(".")[1];
+  let fajrMinuteCalc = Math.round(parseFloat(`.${fajrMinutes}`) * 60);
+
+  console.log(fajrMinutes, fajrMinuteCalc);
+  let timeFajr = resetPrayerTime(fajrHours, fajrMinuteCalc);
+  console.log(timeFajr);
   // Calculate sunrise Time
   let timeSunrise = `${parseInt(sunriseStr.split(":")[0])
     .toString()

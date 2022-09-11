@@ -209,13 +209,6 @@ window.addEventListener("DOMContentLoaded", () => {
       .classList.add("active");
   }
 
-  // Save location info in storage
-  // let addLocation = document.getElementById("addLocation");
-  // let autoLocation = document.getElementById("autoLocation");
-  // let closeLocation = document.getElementById("closeLocation");
-  // let chooseLocation = document.getElementById("chooseLocation");
-  // let overlayPopup = document.getElementById("overlayPopup");
-
   let menu = document.querySelector(".navbar-nav");
 
   menu.innerHTML = "";
@@ -286,18 +279,17 @@ window.addEventListener("click", (e) => {
     document.querySelector(".themes").classList.add("hide");
   }
 
-  if (e.target.matches("#changeTheme .gg-color-picker")) {
-    console.log("ruN..");
-    document.querySelector(".themes").classList.remove("hide");
+  if (e.target.matches("#changeTheme")) {
+    document.querySelector(".themes").classList.toggle("hide");
   }
-  if (e.target.matches("#autoLocation .gg-data")) {
+  if (e.target.matches("#autoLocation")) {
     getLocation();
   }
-  if (e.target.matches("#chooseLocation .gg-track")) {
+  if (e.target.matches("#chooseLocation")) {
     defaultLocation();
     overlayPopup.classList.add("open");
   }
-  if (e.target.matches("#closeLocation .gg-close")) {
+  if (e.target.matches("#closeLocation")) {
     overlayPopup.classList.remove("open");
   }
   if (e.target.matches("#addLocation")) {
@@ -309,16 +301,16 @@ window.addEventListener("click", (e) => {
   if (e.target.matches("#tab-events-btn")) {
     document.querySelector("#tab-events-btn").classList.add("active");
     document.querySelector("#tab-days-btn").classList.remove("active");
-    document
-      .querySelector(".tab-toggler")
-      .className = `tab-toggler open-events-tab `;
+    document.querySelector(
+      ".tab-toggler"
+    ).className = `tab-toggler open-events-tab `;
   }
   if (e.target.matches("#tab-days-btn")) {
     document.querySelector("#tab-days-btn").classList.add("active");
     document.querySelector("#tab-events-btn").classList.remove("active");
-    document
-      .querySelector(".tab-toggler")
-      .className = `tab-toggler open-days-tab `;
+    document.querySelector(
+      ".tab-toggler"
+    ).className = `tab-toggler open-days-tab `;
   }
   if (e.target.matches(".open-events-modal")) {
     document.querySelector("._modal").classList.remove("hide");
@@ -332,14 +324,6 @@ displayCountry();
 document.querySelector("#country").addEventListener("change", (e) => {
   changeCountry(e.target.value);
 });
-document.querySelector("#city").addEventListener("change", (e) => {
-  if (e.target.value.indexOf("-") !== -1) {
-    let data = e.target.value.split("%");
-    latAndLong.latitude = data[0];
-    latAndLong.longitude = data[1];
-  }
-});
-// };
 
 function openChooseLocation() {
   let div = document.createElement("div");
@@ -405,7 +389,7 @@ function createEventModal() {
 function setLocation() {
   let country = document.getElementById("country").value;
   let cityInfo = document.getElementById("city").value;
-  let cityLocation = cityInfo.split("-");
+  let cityLocation = cityInfo.split("__");
   let latitude = cityLocation[0];
   let longitude = cityLocation[1];
   let city = cityLocation[2];
@@ -416,9 +400,8 @@ function setLocation() {
     longitude,
   };
   storageLocation.saveLocation(currentLocation);
-  setTimeout(() => {
-    document.getElementById("overlayPopup").classList.remove("open");
-  }, 500);
+  window.location.reload();
+  document.getElementById("overlayPopup").classList.remove("open");
 }
 
 function getLocation() {
@@ -459,7 +442,7 @@ function changeCountry(countryCode = "SA") {
   citiesSelected.forEach((city) => {
     document.querySelector(
       "#city"
-    ).innerHTML += `<option value="${city.lat}%${city.lng}%${city.name}">${city.name}</option>`;
+    ).innerHTML += `<option value="${city.lat}__${city.lng}__${city.name}">${city.name}</option>`;
   });
 }
 

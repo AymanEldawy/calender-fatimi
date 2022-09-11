@@ -204,6 +204,7 @@ td {
   font-weight: bold;
   font-size: 1.5rem;
 }
+.year-controls,
 .calender-page-title,
 .calender-page-controls {
   box-shadow: 0 1px 4px #2225;
