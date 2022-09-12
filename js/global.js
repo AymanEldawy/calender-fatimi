@@ -38,6 +38,7 @@ export let latAndLong = {
   city: 'Najran',
   country: 'Saudi Arabia',
   day: "today",
+  code: "SA",
   dayDate: new Date()
     .toLocaleDateString("en-UK")
     .replace(/\//g, "-")
@@ -368,22 +369,20 @@ function createEventModal() {
 }
 
 function setLocation() {
-  let country = document.getElementById("country").value.split('%')[0];
+  let country = document.getElementById("country").value.split('%');
   let cityInfo = document.getElementById("city").value;
   let cityLocation = cityInfo.split("__");
   let latitude = cityLocation[0];
   let longitude = cityLocation[1];
   let city = cityLocation[2];
   let currentLocation = {
-    country,
+    country: country[0],
     city,
     latitude,
     longitude,
+    code: country[1]
   };
-  latAndLong.city = city,
-  latAndLong.country = country,
-  latAndLong.latitude = latitude,
-  latAndLong.longitude = longitude,
+  latAndLong = {...latAndLong, ...currentLocation}
   storageLocation.saveLocation(currentLocation);
   window.location.reload();
   document.getElementById("overlayPopup").classList.remove("open");
@@ -395,10 +394,18 @@ function getLocation() {
   }
 }
 async function showPosition(position) {
+  let countryInfo = await fetch(`https://api.db-ip.com/v2/free/self`).then(data=> data.json()).then(d => d)
+  console.log(countryInfo)
   let currentLocation = {
     latitude: position.coords.latitude,
     longitude: position.coords.longitude,
+    city: countryInfo.city,
+    country: countryInfo.countryName,
+    code: countryInfo.countryCode
   };
+  console.log(latAndLong)
+  latAndLong = {...latAndLong, ...currentLocation}
+  console.log(latAndLong)
   if(window.location.pathname == '/prayer-time.html' || window.location.pathname == '/times.html' || window.location.pathname == '/index.html') {
     window.location.reload();
   }
