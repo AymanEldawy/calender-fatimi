@@ -262,11 +262,11 @@ window.addEventListener("click", (e) => {
 
 // // Fetch Prayer Time
 async function getPrayTimeByDate(month, year) {
+  // `http://api.aladhan.com/v1/timings/1398332113?latitude=${latAndLong.latitude}&longitude=${latAndLong.longitude}&method=2`
+  // // `https://api.aladhan.com/v1/calendarByCity?city=${latAndLong.city}&country=${latAndLong.country}%20Kingdom&method=2&month=${month}&year=${year}`
+  // `http://api.aladhan.com/v1/timings/1398332113?latitude=${latitude}&longitude=${longitude}&method=2`
   let prayerTime = await fetch(
     `http://api.aladhan.com/v1/timingsByCity?city=${latAndLong.city}&country=${latAndLong.country}&method=8`
-    // `http://api.aladhan.com/v1/timings/1398332113?latitude=${latAndLong.latitude}&longitude=${latAndLong.longitude}&method=2`
-    // // `https://api.aladhan.com/v1/calendarByCity?city=${latAndLong.city}&country=${latAndLong.country}%20Kingdom&method=2&month=${month}&year=${year}`
-    // `http://api.aladhan.com/v1/timings/1398332113?latitude=${latitude}&longitude=${longitude}&method=2`
   )
     .then((res) => res.json())
     .then((data) => {
