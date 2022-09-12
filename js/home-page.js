@@ -10,7 +10,12 @@ import {
   countOfMonthDays,
 } from "./calender-setup.js";
 
-import { calculateDate, globalEvents, storageLocation } from "./global.js";
+import {
+  calculateDate,
+  globalEvents,
+  latAndLong,
+  storageLocation,
+} from "./global.js";
 import { weeks } from "./weeks.js";
 import SunCalc from "./suncalc.js";
 
@@ -150,138 +155,160 @@ window.addEventListener("click", (e) => {
   }
 });
 
-// Prayer time
-function repeatPrayerTime(AfterSunset = new Date()) {
-  let sunCalc = SunCalc.getTimes(
-    /*Date*/ AfterSunset,
-    /*Number*/ LOCATION.latitude,
-    /*Number*/ LOCATION.longitude
-  );
-  let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
-  let sunriseStr =
-    sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
-  let dayLen = `${
-    parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
-  }:${
-    parseInt(sunsetStr.split(":")[1]) - parseInt(sunriseStr.split(":")[1])
-  }`.split(":");
+// function repeatPrayerTime(theDate = new Date()) {
+//   let sunCalc = SunCalc.getTimes(
+//     /*Date*/ theDate,
+//     /*Number*/ LOCATION.latitude,
+//     /*Number*/ LOCATION.longitude
+//   );
+//   let sunriseStr =
+//     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
+//   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
+//   let dayLen = `${
+//     parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
+//   }:${
+//     parseInt(sunsetStr.split(":")[1]) - parseInt(sunriseStr.split(":")[1])
+//   }`.split(":");
+//   // Calculate Fajr Time
+//   let fajrCalcTime =
+//     parseInt(sunriseStr.split(":")[0]) * 60 +
+//     parseInt(sunriseStr.split(":")[1]) -
+//     75;
+//   let fajrHours = parseInt(fajrCalcTime / 60);
+//   let fajrMinutes = parseInt(
+//     (parseFloat(fajrCalcTime / 60)
+//       .toFixed(2)
+//       .split(".")[1] *
+//       60) /
+//       60
+//   );
+//   let timeFajr = `${fajrHours.toString().padStart(2, 0)}:${fajrMinutes
+//     .toString()
+//     .padStart(2, 0)}`;
 
-  function resetPrayerTime(hours, minutes) {
-    if (minutes > 59) {
-      hours += 1;
-      minutes = minutes % 60;
-    }
-    if (minutes < 0) {
-      hours -= 1;
-      minutes = 60 - minutes;
-    }
+//   // Calculate sunrise Time
+//   let timeSunrise = `${parseInt(sunriseStr.split(":")[0])
+//     .toString()
+//     .padStart(2, 0)}:${parseInt(sunriseStr.split(":")[1])
+//     .toString()
+//     .padStart(2, 0)}`;
 
-    return `${hours.toString().padStart(2, 0)}:${minutes
-      .toString()
-      .padStart(2, 0)}`;
-  }
-  // Calculate Fajr Time
-  let fajrCalcTime =
-    parseInt(sunriseStr.split(":")[0]) * 60 +
-    parseInt(sunriseStr.split(":")[1]);
-  console.log(fajrCalcTime);
+//   // Calculate Dhuhr Time
+//   let sunriseFullMinutes =
+//     parseInt(sunriseStr.split(":")[0]) * 60 +
+//     parseInt(sunriseStr.split(":")[1]);
+//   let dayLenLight = parseInt(dayLen[0]) * 60 + parseInt(dayLen[1]);
 
-  let fajrHours = parseInt((fajrCalcTime - 75) / 60);
-  console.log(fajrHours);
-  let fajrMinutes = parseFloat((fajrCalcTime - 75) / 60)
-    .toFixed(2)
-    .split(".")[1];
-  let fajrMinuteCalc = Math.round(parseFloat(`.${fajrMinutes}`) * 60);
+//   let DhuhrFullTime =
+//     parseInt((dayLenLight / 12) * 7 + sunriseFullMinutes) / 60;
+//   let DhuhrHours = parseInt(DhuhrFullTime);
+//   let DhuhrMintes = Math.round(
+//     parseFloat(`.${DhuhrFullTime.toFixed(2).split(".")[1]}`) * 60
+//   );
+//   let timeDhuhr = `${DhuhrHours.toString().padStart(
+//     2,
+//     0
+//   )}:${DhuhrMintes.toString().padStart(2, 0)}`;
 
-  console.log(fajrMinutes, fajrMinuteCalc);
-  let timeFajr = resetPrayerTime(fajrHours, fajrMinuteCalc);
-  console.log(timeFajr);
-  // Calculate sunrise Time
-  let timeSunrise = `${parseInt(sunriseStr.split(":")[0])
-    .toString()
-    .padStart(2, 0)}:${parseInt(sunriseStr.split(":")[1])
-    .toString()
-    .padStart(2, 0)}`;
+//   // Calculate Aser Time
+//   let aserHours = (DhuhrHours + 2) % 12;
+//   let timeAser = `${aserHours
+//     .toString()
+//     .padStart(2, 0)}:${DhuhrMintes.toString().padStart(2, 0)}`;
 
-  // Calculate Dhuhr Time
-  let sunriseFullMinutes =
-    parseInt(sunriseStr.split(":")[0]) * 60 +
-    parseInt(sunriseStr.split(":")[1]);
-  let dayLenLight = parseInt(dayLen[0]) * 60 + parseInt(dayLen[1]);
+//   // Calculate Maghrib Time
+//   let timeMaghrib = `${(parseInt(sunsetStr.split(":")[0]) % 12)
+//     .toString()
+//     .padStart(2, 0)}:${parseInt(sunsetStr.split(":")[1])
+//     .toString()
+//     .padStart(2, 0)}`;
+//   // Fetch Prayer Time
+//   async function getPrayTimeByDate(month, year) {
+//     let prayerTime = await fetch(
+//       `http://api.aladhan.com/v1/timings/1398332113?latitude=${latitude}&longitude=${longitude}&method=2`
+//     )
+//       .then((res) => res.json())
+//       .then((data) => data);
+//     return prayerTime;
+//   }
 
-  let DhuhrFullTime =
-    parseInt((dayLenLight / 12) * 7 + sunriseFullMinutes) / 60;
-  let DhuhrHours = parseInt(DhuhrFullTime);
-  let DhuhrMinutes = Math.round(
-    parseFloat(`.${DhuhrFullTime.toFixed(2).split(".")[1]}`) * 60
-  );
-  let timeDhuhr = resetPrayerTime(DhuhrHours, DhuhrMinutes);
+//   // Calculate Isha Time
+//   let IshaCalcTime =
+//     parseInt(sunsetStr.split(":")[0]) * 60 +
+//     parseInt(sunsetStr.split(":")[1]) +
+//     90;
+//   let IshaHours = parseInt(IshaCalcTime / 60) % 12;
+//   let IshaMinutes = Math.round(
+//     `.${
+//       parseFloat(IshaCalcTime / 60)
+//         .toFixed(2)
+//         .split(".")[1]
+//     }` * 60
+//   );
+//   let timeIsha = `${IshaHours.toString().padStart(
+//     2,
+//     0
+//   )}:${IshaMinutes.toString().padStart(2, 0)}`;
 
-  // Calculate Aser Time
-  let aserHours = (DhuhrHours + 2) % 12;
-  let timeAser = resetPrayerTime(aserHours, DhuhrMinutes);
+//   return {
+//     Fajr: timeFajr,
+//     Sunrise: timeSunrise,
+//     Dhuhr: timeDhuhr,
+//     Asr: timeAser,
+//     Maghrib: timeMaghrib,
+//     Isha: timeIsha,
+//   };
+// }
 
-  // Calculate Maghrib Time
-  let timeMaghrib = `${(parseInt(sunsetStr.split(":")[0]) % 12)
-    .toString()
-    .padStart(2, 0)}:${parseInt(sunsetStr.split(":")[1])
-    .toString()
-    .padStart(2, 0)}`;
-
-  // Calculate Isha Time
-  let IshaCalcTime =
-    parseInt(sunsetStr.split(":")[0]) * 60 +
-    parseInt(sunsetStr.split(":")[1]) +
-    90;
-  let IshaHours = parseInt(IshaCalcTime / 60) % 12;
-  let IshaMinutes = Math.round(
-    `.${
-      parseFloat(IshaCalcTime / 60)
-        .toFixed(2)
-        .split(".")[1]
-    }` * 60
-  );
-  let timeIsha = resetPrayerTime(IshaHours, IshaMinutes);
-
-  return {
-    Fajr: timeFajr,
-    Sunrise: timeSunrise,
-    Dhuhr: timeDhuhr,
-    Asr: timeAser,
-    Maghrib: timeMaghrib,
-    Isha: timeIsha,
-  };
+// // Fetch Prayer Time
+async function getPrayTimeByDate(month, year) {
+  let prayerTime = await fetch(
+    `http://api.aladhan.com/v1/timingsByCity?city=${city}&country=${latAndLong.country}&method=8`
+    // `http://api.aladhan.com/v1/timings/1398332113?latitude=${latAndLong.latitude}&longitude=${latAndLong.longitude}&method=2`
+    // // `https://api.aladhan.com/v1/calendarByCity?city=${latAndLong.city}&country=${latAndLong.country}%20Kingdom&method=2&month=${month}&year=${year}`
+    // `http://api.aladhan.com/v1/timings/1398332113?latitude=${latitude}&longitude=${longitude}&method=2`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      return data;
+    });
+  return prayerTime;
 }
 
 async function prayerTimingDay(date = new Date()) {
   // let prayerTime = await getPrayTimeByDate(date);
-  let prayerTime = repeatPrayerTime();
+  let prayerTime = await getPrayTimeByDate(
+    theCurrentDate.getCurrentMonthHijri(),
+    theCurrentDate.getCurrentYearHijri()
+  );
+  console.log(prayerTime);
   if (!prayerTime) return;
   let prayGrid = document.querySelector(".prayer-grid");
   prayGrid.innerHTML = `
   <div class="prayer-grid-item">
       <span>الفجر</span>
-      <span>${prayerTime.Fajr} </span>
+      <span>${prayerTime.data.timings.Fajr} </span>
   </div>
   <div class="prayer-grid-item">
       <span>الشروق</span>
-      <span>${prayerTime.Sunrise}</span>
+      <span>${prayerTime.data.timings.Sunrise}</span>
   </div>
   <div class="prayer-grid-item">
       <span>الظهر</span>
-      <span>${prayerTime.Dhuhr}</span>
+      <span>${prayerTime.data.timings.Dhuhr}</span>
   </div>
   <div class="prayer-grid-item">
       <span>العصر</span>
-      <span>${prayerTime.Asr}</span>
+      <span>${prayerTime.data.timings.Asr}</span>
   </div>
   <div class="prayer-grid-item">
       <span>المغرب</span>
-      <span>${prayerTime.Maghrib}</span>
+      <span>${prayerTime.data.timings.Maghrib}</span>
   </div>
   <div class="prayer-grid-item">
       <span>العشاء</span>
-      <span>${prayerTime.Isha}</span>
+      <span>${prayerTime.data.timings.Isha}</span>
   </div>
   `;
 }

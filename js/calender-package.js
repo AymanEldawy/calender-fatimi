@@ -1,7 +1,6 @@
 import * as Calender from "./calender-setup.js";
 import {
   calculateDate,
-  globalDays,
   globalEvents,
   latAndLong,
   storageLocation,
@@ -23,14 +22,6 @@ let events = storeEvents.fetchEvents();
 const eventsExists = events.filter((event) => event.deletable === false);
 if (eventsExists.length < 1) {
   globalEvents.forEach((event) => {
-    events.push({
-      title: event.title,
-      date: event.date,
-      deletable: event.deletable,
-      color: "#ffc107",
-    });
-  });
-  globalDays.forEach((event) => {
     events.push({
       title: event.title,
       date: event.date,

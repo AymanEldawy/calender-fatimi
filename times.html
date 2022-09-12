@@ -40,15 +40,15 @@
 
         <!-- Themes -->
         <div id="theme">
-          <button id="changeTheme" class="btn"><i class="gg-color-picker"></i></button>
+          <button id="changeTheme" data-title="تغيير الثيم" class="btn custom_tooltip"><i class="gg-color-picker"></i></button>
           <ul class="themes hide">
           </ul>
         </div>
         <!-- Themes -->
-        <button id="autoLocation" class="btn d-flex align-items-center">
+        <button id="autoLocation" data-title="تحديد الموقع تلقائيا" class="custom_tooltip btn d-flex align-items-center">
           <i class="gg-data"></i>
         </button>
-        <button id="chooseLocation" class="btn d-flex align-items-center">
+        <button id="chooseLocation" data-title="اختيار الموقع يدويا" class="custom_tooltip btn d-flex align-items-center">
           <i class="gg-track"></i>
         </button>
 
@@ -58,7 +58,7 @@
           data-toggle="collapse"
           data-target="#collapsibleNavId"
           aria-controls="collapsibleNavId"
-          aria-expanded="false"
+          aria-expanded="false" data-title="القائمة" class="custom_tooltip"
           aria-label="Toggle navigation"
         >
           <i class="gg-menu"></i>

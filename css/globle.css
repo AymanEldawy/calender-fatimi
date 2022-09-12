@@ -575,3 +575,26 @@ themes li[data-theme="اسم المود"] {
 #chooseLocation i {
   pointer-events: none
 }
+
+
+.custom_tooltip{
+  position: relative;
+}
+.custom_tooltip::before {
+  content: attr(data-title);
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 0.25rem;
+  background: #000;
+  color: #fff;
+  font-size: .8rem;
+  white-space: nowrap;
+  padding: 0.25rem;
+  opacity: 0;
+  z-index:99
+}
+.custom_tooltip:hover::before {
+  opacity: 1;
+}

@@ -1,6 +1,6 @@
 import SunCalc from "./suncalc.js";
 import * as Calender from "./calender-setup.js";
-import { storageLocation } from './global.js';
+import { latAndLong, storageLocation } from './global.js';
 // import { repeatPrayerTime } from "./home-page.js";
 
 const PrayerTimeDefault = {
@@ -9,27 +9,16 @@ const PrayerTimeDefault = {
   latitude: "17.5065",
   longitude: "44.1316",
 };
-
 let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault
 
 
-
-
 // Fetch Prayer Time
-async function getPrayTimeByDate(month, year) {
+async function getPrayTimeByMonth(city, country, month, year) {
+  console.log(city, country, month, year, LOCATION)
   let prayerTime = await fetch(
-    `http://api.aladhan.com/v1/timings/1398332113?latitude=${latitude}&longitude=${longitude}&method=2`
-  )
-    .then((res) => res.json())
-    .then((data) => data);
-  return prayerTime;
-}
-
-
-// Fetch Prayer Time
-async function getPrayTimeByMonth(month, year) {
-  let prayerTime = await fetch(
-    `http://api.aladhan.com/v1/hijriCalendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=2&month=${month}&year=${year}`
+    // `http://api.aladhan.com/v1/calendarByCity?city=${city}&country=${country}&method=8&month=${month}&year=${year}`
+    // `http://api.aladhan.com/v1/calendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=8&month=${month}&year=${year}`
+    `http://api.aladhan.com/v1/hijriCalendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=8&month=${month}&year=${year}`
   )
     .then((res) => res.json())
     .then((data) => {
@@ -39,7 +28,7 @@ async function getPrayTimeByMonth(month, year) {
 }
 
 // Display Time Prayer
-async function displayPryerTime(date = new Date()) {
+export async function displayPryerTime(date = new Date()) {
   // PryerTime Page
   let HijriConfiguration = returnHijriConfiguration(date);
   let monthName = Calender.months[HijriConfiguration.hijriMonth];
@@ -70,8 +59,12 @@ async function displayPryerTime(date = new Date()) {
 
   // Loop of month days
   let timePrayerByMonth = await getPrayTimeByMonth(
+    latAndLong.city,
+    latAndLong.country,
+    // new Date().getMonth(),
+    // new Date().getFullYear(),
     HijriConfiguration.hijriMonth,
-    HijriConfiguration.hijriYear
+    HijriConfiguration.hijriYear,
   );
   console.log(timePrayerByMonth.data)
   let dyesGrid = document.querySelector(".prayer-list tbody") || undefined;
@@ -105,12 +98,12 @@ async function displayPryerTime(date = new Date()) {
           // Calender.daysFormat[Object.keys(Calender.daysFormat)[dayWeek]].day
         }</td>
         
-        <td>${timePrayerByMonth.data[i].timings.Fajr.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i].timings.Sunrise.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i].timings.Dhuhr.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i].timings.Asr.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i].timings.Maghrib.split(" ")[0]}</td>
-        <td>${timePrayerByMonth.data[i].timings.Isha.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Fajr.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Sunrise.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Dhuhr.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Asr.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Maghrib.split(" ")[0]}</td>
+        <td>${timePrayerByMonth.data[i - 1].timings.Isha.split(" ")[0]}</td>
       </tr>
       `;
   }

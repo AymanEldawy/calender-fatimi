@@ -35,6 +35,8 @@ let theme = storageLocation.fetchTheme();
 export let latAndLong = {
   latitude: "17.5065",
   longitude: "44.1316",
+  city: 'Najran',
+  country: 'Saudi Arabia',
   day: "today",
   dayDate: new Date()
     .toLocaleDateString("en-UK")
@@ -65,28 +67,6 @@ export const globalEvents = [
     date: toDateGregorian({ month: 1, day: 10 }),
     deletable: false,
   },
-  {
-    title: "عيد الفطر",
-    date: toDateGregorian({ month: 10, day: 1 }),
-    deletable: false,
-  },
-  {
-    title: "يوم عرفة",
-    date: toDateGregorian({ month: 12, day: 9 }),
-    deletable: false,
-  },
-  {
-    title: "عيد الاضحي",
-    date: toDateGregorian({ month: 12, day: 10 }),
-    deletable: false,
-  },
-  {
-    title: "عيد الغدير المواف",
-    date: toDateGregorian({ month: 12, day: 18 }),
-    deletable: false,
-  },
-];
-export const globalDays = [
   {
     title: "الاول من رجب",
     date: toDateGregorian({ month: 7, day: 1 }),
@@ -130,6 +110,26 @@ export const globalDays = [
   {
     title: "الاخر من رمضان",
     date: toDateGregorian({ month: 9, day: 30 }),
+    deletable: false,
+  },
+  {
+    title: "عيد الفطر",
+    date: toDateGregorian({ month: 10, day: 1 }),
+    deletable: false,
+  },
+  {
+    title: "يوم عرفة",
+    date: toDateGregorian({ month: 12, day: 9 }),
+    deletable: false,
+  },
+  {
+    title: "عيد الاضحي",
+    date: toDateGregorian({ month: 12, day: 10 }),
+    deletable: false,
+  },
+  {
+    title: "عيد الغدير المواف",
+    date: toDateGregorian({ month: 12, day: 18 }),
     deletable: false,
   },
 ];
@@ -245,25 +245,6 @@ window.addEventListener("DOMContentLoaded", () => {
         ${calculateDate(event.date)}
       `;
     });
-    globalDays.forEach((event) => {
-      let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-      let hijri = new Date(event.date).toHijri();
-      daysContainer.innerHTML += `
-      <li class="events-item __counter">
-        <h4>${event.title}</h4>
-        <p class="d-flex align-items justify-content-between">
-          <span>${new Date(event.date).toLocaleDateString("ar-SA", {
-            weekday: "long",
-          })} ${hijri._date} ${months[hijri._month]} ${hijri._year}</span>
-          <span>${gregorian}</span>
-          </p>
-        ${calculateDate(event.date)}
-      `;
-    });
   }
 });
 window.addEventListener("click", (e) => {
@@ -322,7 +303,7 @@ openChooseLocation();
 createEventModal();
 displayCountry();
 document.querySelector("#country").addEventListener("change", (e) => {
-  changeCountry(e.target.value);
+  changeCountry(e.target.value.split('%')[1]);
 });
 
 function openChooseLocation() {
@@ -331,7 +312,7 @@ function openChooseLocation() {
   div.id = `overlayPopup`;
   div.innerHTML = `
   <div class="manual-location" id="manualLocation">
-    <span id="closeLocation" class="close-location">
+    <span id="closeLocation" data-title="اغلاق" class="custom_tooltip close-location">
       <i class="gg-close"></i>
     </span>
     <p>اختار موقعك:</p>
@@ -387,7 +368,7 @@ function createEventModal() {
 }
 
 function setLocation() {
-  let country = document.getElementById("country").value;
+  let country = document.getElementById("country").value.split('%')[0];
   let cityInfo = document.getElementById("city").value;
   let cityLocation = cityInfo.split("__");
   let latitude = cityLocation[0];
@@ -399,6 +380,10 @@ function setLocation() {
     latitude,
     longitude,
   };
+  latAndLong.city = city,
+  latAndLong.country = country,
+  latAndLong.latitude = latitude,
+  latAndLong.longitude = longitude,
   storageLocation.saveLocation(currentLocation);
   window.location.reload();
   document.getElementById("overlayPopup").classList.remove("open");
@@ -414,6 +399,9 @@ async function showPosition(position) {
     latitude: position.coords.latitude,
     longitude: position.coords.longitude,
   };
+  if(window.location.pathname == '/prayer-time.html' || window.location.pathname == '/times.html' || window.location.pathname == '/index.html') {
+    window.location.reload();
+  }
   storageLocation.saveLocation(currentLocation);
 }
 
@@ -451,7 +439,7 @@ function displayCountry() {
   countries.forEach((country) => {
     document.querySelector(
       "#country"
-    ).innerHTML += `<option value="${country.Alpha2Code}">${country.Name}</option>`;
+    ).innerHTML += `<option value="${country.Name}%${country.Alpha2Code}">${country.Name}</option>`;
   });
   changeCountry(countries[0].Alpha2Code);
 }

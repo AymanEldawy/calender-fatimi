@@ -22,16 +22,16 @@
 
         <!-- Themes -->
         <div id="theme">
-          <button id="changeTheme" class="btn">
+          <button id="changeTheme" data-title="تغيير الثيم" class="btn custom_tooltip">
             <i class="gg-color-picker"></i>
           </button>
           <ul class="themes hide"></ul>
         </div>
         <!-- Themes -->
-        <button id="autoLocation" class="btn d-flex align-items-center">
+        <button id="autoLocation" data-title="تحديد الموقع تلقائيا" class="custom_tooltip btn d-flex align-items-center">
           <i class="gg-data"></i>
         </button>
-        <button id="chooseLocation" class="btn d-flex align-items-center">
+        <button id="chooseLocation" data-title="اختيار الموقع يدويا" class="custom_tooltip btn d-flex align-items-center">
           <i class="gg-track"></i>
         </button>
 
@@ -41,7 +41,7 @@
           data-toggle="collapse"
           data-target="#collapsibleNavId"
           aria-controls="collapsibleNavId"
-          aria-expanded="false"
+          aria-expanded="false" data-title="القائمة" class="custom_tooltip"
           aria-label="Toggle navigation"
         >
           <i class="gg-menu"></i>
@@ -90,8 +90,8 @@
     </div>
     <div class="mini-container __month container" id="calenderTabs">
       <div class="tab-control mt-3">
-        <button data-tab="calender-year">سنة</button>
-        <button data-tab="calender-page"  class="active">شهر</button>
+        <button class="custom_tooltip" data-title="عرض السنة كاملة" data-tab="calender-year">سنة</button>
+        <button class="custom_tooltip active" data-title="عرض شهر واحد" data-tab="calender-page" >شهر</button>
       </div>
       <div class="calender-year">
         <div class="year-controls d-flex align-items-center justify-content-between mb-3">

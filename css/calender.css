@@ -115,6 +115,7 @@ input[type="color"] {
 }
 
 /* Prayer time page */
+.prayer-controls,
 .prayer-title {
   box-shadow: 0 1px 4px #22222259;
   margin: 1rem 0;
@@ -174,6 +175,7 @@ td {
   margin: 1rem 0;
   border-radius: 0.25rem;
   align-items: center;
+  padding:.5rem;
 }
 
 /* Calender page */
