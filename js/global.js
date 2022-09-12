@@ -395,7 +395,6 @@ function getLocation() {
 }
 async function showPosition(position) {
   let countryInfo = await fetch(`https://api.db-ip.com/v2/free/self`).then(data=> data.json()).then(d => d)
-  console.log(countryInfo)
   let currentLocation = {
     latitude: position.coords.latitude,
     longitude: position.coords.longitude,
@@ -403,9 +402,7 @@ async function showPosition(position) {
     country: countryInfo.countryName,
     code: countryInfo.countryCode
   };
-  console.log(latAndLong)
   latAndLong = {...latAndLong, ...currentLocation}
-  console.log(latAndLong)
   if(window.location.pathname == '/prayer-time.html' || window.location.pathname == '/times.html' || window.location.pathname == '/index.html') {
     window.location.reload();
   }

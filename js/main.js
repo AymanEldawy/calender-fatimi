@@ -442,9 +442,6 @@ if (document.getElementById("compare")) {
       document.querySelector(".tower-left").innerHTML = displayTower(
         towers[__left]
       );
-      // let resultCom =
-      // console.log(resultCom)
-      // resultCom == undefined ? resultCompare[2] : resultCom
       document.querySelector(".modal .result").innerHTML =
         resultCompare[checkVal(_left, _right)];
       document.querySelector(".result.bg-success").style.display = "block";

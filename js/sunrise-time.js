@@ -279,7 +279,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   changeTheme();
 
   function endHoursFn(hours, minutes, nightOrLight, value) {
-    console.log(hours)
     let amOrPm = "";
     let endHours = parseInt(hours) + 1;
 
@@ -319,7 +318,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   }
 
   function resetTime(hours, minutes, nightOrLight) {
-    console.log(hours)
     let amOrPm = "";
     if (minutes < 0) {
       minutes = 60 + minutes;

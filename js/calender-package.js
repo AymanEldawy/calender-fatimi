@@ -199,7 +199,6 @@ window.addEventListener("click", (e) => {
   }
 
   if (e.target.matches("span[data-event] .icon-add")) {
-    console.log(e.target.parentElement.dataset)
     document.getElementById("datePicker").value =
       e.target.parentElement.dataset.display_hijri;
     document.getElementById("datePicker").dataset.date =
@@ -398,7 +397,6 @@ function checkIfDateHasEvents(theEventDate) {
   let listOfEvents = events.filter(
     (event) => Date.parse(event.date) == Date.parse(theEventDate)
     );
-  console.log(theEventDate.getDate(), listOfEvents)
   return listOfEvents.length > 0;
 }
 
@@ -497,7 +495,6 @@ let item = ""
 function displayCalenderYear (year) {
 
   let theYear = year ? year : Calender.theCurrentDate.yearHijri;
-  console.log(year, Calender.theCurrentDate.yearHijri)
   for (let i = 0; i < 12; i++) {
     let _hijri = new HijriDate(
       theYear,

@@ -14,11 +14,10 @@ let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault
 
 // Fetch Prayer Time
 async function getPrayTimeByMonth(city, country, month, year) {
-  console.log(city, country, month, year, LOCATION)
   let prayerTime = await fetch(
     // `http://api.aladhan.com/v1/calendarByCity?city=${city}&country=${country}&method=8&month=${month}&year=${year}`
     // `http://api.aladhan.com/v1/calendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=8&month=${month}&year=${year}`
-    `http://api.aladhan.com/v1/hijriCalendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=8&month=${month}&year=${year}`
+    `http://api.aladhan.com/v1/hijriCalendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=4&month=${month}&year=${year}`
   )
     .then((res) => res.json())
     .then((data) => {
@@ -66,7 +65,6 @@ export async function displayPryerTime(date = new Date()) {
     HijriConfiguration.hijriMonth,
     HijriConfiguration.hijriYear,
   );
-  console.log(timePrayerByMonth.data)
   let dyesGrid = document.querySelector(".prayer-list tbody") || undefined;
   dyesGrid.innerHTML = "";
   for (
