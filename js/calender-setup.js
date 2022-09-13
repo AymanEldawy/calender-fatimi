@@ -264,7 +264,6 @@ export let theCurrentDate = {
   },
   yearHijri:parseInt(a2e(new Date().toLocaleDateString("ar-SA", {year: 'numeric'}))), 
 };
-
 // Get the century for year
 export function getCentury(year) {
   switch (true) {

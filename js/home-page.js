@@ -148,7 +148,7 @@ window.addEventListener("click", (e) => {
   }
   if (
     e.target.matches(
-      ".table-style:first-of-type .table-style-item .table-style-value"
+      ".table-style:first-of-type .table-style-item"
     )
   ) {
     document.querySelector("._modal-days").classList.remove("hide");

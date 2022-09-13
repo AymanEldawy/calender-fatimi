@@ -29,6 +29,13 @@ export let storageLocation = {
   saveTheme: (theme) => {
     localStorage.setItem("TM_theme", JSON.stringify(theme));
   },
+  fetchEvents() {
+    let events = JSON.parse(localStorage.getItem("events"));
+    return events && events.length ? events : [];
+  },
+  saveEvents(events) {
+    localStorage.setItem("events", JSON.stringify(events));
+  },
 };
 
 let theme = storageLocation.fetchTheme();
@@ -246,6 +253,27 @@ window.addEventListener("DOMContentLoaded", () => {
         ${calculateDate(event.date)}
       `;
     });
+    let events = storageLocation.fetchEvents()
+    let specificEvents = events.filter(event => event.deletable === true)
+    specificEvents.forEach((event) => {
+      let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      let hijri = new Date(event.date).toHijri();
+      daysContainer.innerHTML += `
+      <li class="events-item __counter">
+        <h4>${event.title}</h4>
+        <p class="d-flex align-items justify-content-between">
+          <span>${new Date(event.date).toLocaleDateString("ar-SA", {
+            weekday: "long",
+          })} ${hijri._date} ${months[hijri._month]} ${hijri._year}</span>
+          <span>${gregorian}</span>
+          </p>
+        ${calculateDate(event.date)}
+      `;
+    });
   }
 });
 window.addEventListener("click", (e) => {
@@ -356,7 +384,7 @@ function createEventModal() {
     <div class="events-page">
       <div class="modal-tabs">
         <button id="tab-events-btn" class="active">المناسبات</button>
-        <button id="tab-days-btn">الايام الفاضلة</button>
+        <button id="tab-days-btn">المناسبات الخاصة</button>
       </div>
       <div class="tab-toggler open-events-tab">
         <ul id="tab-events" class="events text-center">

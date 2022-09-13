@@ -98,7 +98,7 @@ body {
 .events-page {
   overflow: hidden;
   max-height: 80%;
-  width: 80%;
+  max-width: 500px;
   background: #fff;
   padding: 2rem;
   box-shadow: 0 2px 4px #0005;
@@ -537,6 +537,9 @@ themes li[data-theme="اسم المود"] {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1rem;
+}
+.table-style:first-of-type .table-style-item {
+  cursor: pointer
 }
 .table-style-item {
   flex: 1;

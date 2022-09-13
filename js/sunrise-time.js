@@ -240,8 +240,8 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
     let date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    let _sunrise = sunrise.join("");
-    let _sunset = sunset.join("");
+    let _sunrise = `${sunrise[0].toString().padStart(2, 0)}${sunrise[1].toString().padStart(2, 0)}`;
+    let _sunset = `${sunset[0].toString().padStart(2, 0)}${sunset[1].toString().padStart(2, 0)}`;
     let timeCheckAmOrPm =
       `${hours.toString().padStart(2, 0)}${minutes
         .toString()
@@ -439,21 +439,21 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
 
   let hours = date.getHours();
   let minutes = date.getMinutes();
-  let _sunrise = sunriseStr.split(":").join("");
-  let _sunset = sunsetStr.split(":").join("");
+  let _sunrise = sunriseStr.split(":");
+  let _sunset = sunsetStr.split(":");
 
   let start =
     `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >=
-      parseInt(_sunrise) &&
+      parseInt(`${_sunrise[0].toString().padStart(2,0)}${_sunrise[1].toString().padStart(2,0)}`) &&
     `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` <
-      parseInt(_sunset)
+      parseInt(`${_sunset[0].toString().padStart(2,0)}${_sunset[1].toString().padStart(2,0)}`)
       ? Array.from(document.querySelectorAll("#nav-lighten-tab td:first-child"))
       : Array.from(document.querySelectorAll("#nav-darken-tab td:first-child"));
   let end =
     `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >=
-      parseInt(_sunrise) &&
+      parseInt(`${_sunrise[0].toString().padStart(2,0)}${_sunrise[1].toString().padStart(2,0)}`) &&
     `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` <
-      parseInt(_sunset)
+      parseInt(`${_sunset[0].toString().padStart(2,0)}${_sunset[1].toString().padStart(2,0)}`)
       ? Array.from(document.querySelectorAll("#nav-lighten-tab td:last-child"))
       : Array.from(document.querySelectorAll("#nav-darken-tab td:last-child"));
   hours = hours === 0 ? 12 : hours;
@@ -634,13 +634,13 @@ function getSunriseTime() {
     latAndLong.longitude
   );
   let sunsetStr = suncalc.sunset.getHours() + ":" + suncalc.sunset.getMinutes();
-  let sunset = sunsetStr.split(":").join("");
+  let sunset = sunsetStr.split(":");
   let date = new Date();
   let hours = date.getHours();
   let minutes = date.getMinutes();
   if (
     `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >
-    parseInt(sunset)
+    parseInt(`${sunset[0].toString().padStart(2,0)}${sunset[1].toString().padStart(2,0)}`)
   ) {
     let tomorrow = date.setDate(date.getDate() + 1);
     latAndLong.dayDate = new Date(tomorrow)

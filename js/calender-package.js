@@ -9,16 +9,7 @@ import SunCalc from "./suncalc.js";
 // Let storage
 let bigCenturyName = ["1", "2", "3", "4", "5", "6", "7"];
 
-export let storeEvents = {
-  fetchEvents() {
-    let events = JSON.parse(localStorage.getItem("events"));
-    return events && events.length ? events : [];
-  },
-  saveEvents(events) {
-    localStorage.setItem("events", JSON.stringify(events));
-  },
-};
-let events = storeEvents.fetchEvents();
+let events = storageLocation.fetchEvents();
 const eventsExists = events.filter((event) => event.deletable === false);
 if (eventsExists.length < 1) {
   globalEvents.forEach((event) => {
@@ -29,7 +20,7 @@ if (eventsExists.length < 1) {
       color: "#ffc107",
     });
   });
-  storeEvents.saveEvents(events);
+  storageLocation.saveEvents(events);
 }
 
 function displayCalenderGrid(
@@ -341,7 +332,7 @@ function addEvent() {
   // Check If Event date > the current date
 
   events.push(event);
-  storeEvents.saveEvents(events);
+  storageLocation.saveEvents(events);
   if (title.value !== "")
     document.querySelector(".modal-events").classList.add("close");
   theDateEvent.value = "";
@@ -402,7 +393,7 @@ function checkIfDateHasEvents(theEventDate) {
 
 function deleteEvent(title) {
   let newEvents = events.filter((event) => event.title !== title);
-  storeEvents.saveEvents(newEvents);
+  storageLocation.saveEvents(newEvents);
 }
 
 function getSunriseTime() {
@@ -412,13 +403,13 @@ function getSunriseTime() {
     latAndLong.longitude
   );
   let sunsetStr = suncalc.sunset.getHours() + ":" + suncalc.sunset.getMinutes();
-  let sunset = sunsetStr.split(":").join("");
+  let sunset = sunsetStr.split(":");
   let date = new Date();
   let hours = date.getHours();
   let minutes = date.getMinutes();
   if (
     `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >
-    parseInt(sunset)
+    parseInt(`${sunset[0].toString().padStart(2,0)}${sunset[1].toString().padStart(2,0)}`)
   ) {
     let tomorrow = date.setDate(date.getDate() + 1);
     Calender.theCurrentDate.gregorianDate = new Date(tomorrow);

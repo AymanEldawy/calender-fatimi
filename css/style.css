@@ -123,6 +123,7 @@ span#nextDay {
 .nav-list-item > .d-flex i:not(.gg-chevron-right) {
   margin-left: 6px;
 }
+#displayDate,
 #displayDateHigry,
 .nav-list-item > span:last-of-type:not(.arrow) ,
 .nav-list-item > span:last-of-type:not(#closeCalender) {
