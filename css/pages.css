@@ -57,6 +57,16 @@ div#planetMessage:not(:empty) {
   font-size: 1.3rem;
   line-height: 1.8;
 }
+@media (max-width: 767px) {
+  .envelope {
+    padding: 0;
+  }
+  .envelope .content {
+    padding:0;
+    font-size:1rem;
+  }
+}
+
 .content:after,
 .content:before {
   content: "";

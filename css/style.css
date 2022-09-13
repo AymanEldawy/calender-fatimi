@@ -49,12 +49,6 @@ button.navbar-toggler[aria-expanded="true"] {
   justify-content: center;
   max-width: 250px;
 }
-.navbar .container,
-footer .container {
-  max-width: 800px;
-  margin: 0 auto;
-  width: 90%;
-}
 .main-container {
   max-width: 800px;
   margin: 0 auto;
@@ -165,8 +159,8 @@ button#backToDate.show {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   border-radius: 0;
+  white-space:pre
 }
 .nav-tabs .nav-item.active {
   box-shadow: -2px 3px 5px #00000047 inset;

@@ -143,6 +143,18 @@ ul.events.text-center {
   left: 0;
   width: 100%;
 }
+@media(max-width: 767px) {
+  .navbar-dark .navbar-brand{
+    font-size: 1rem;
+    margin-left: 0;
+  }
+  .manual-location .d-flex {
+    flex-wrap: wrap;
+  }
+  .form-group.cities {
+    flex: 1
+  }
+}
 
 .navbar-dark .navbar-nav .nav-item {
   margin-bottom: 0.5rem;
@@ -304,6 +316,7 @@ button.navbar-toggler[aria-expanded="true"] {
 
 .events-item.__counter {
   padding-right: 40px;
+  margin-bottom: 1rem
 }
 .__counter:before {
   counter-increment: section;
@@ -321,6 +334,23 @@ button.navbar-toggler[aria-expanded="true"] {
   width: 40px;
   font-size: 1.5rem;
   border: 1px solid #ccc8;
+}
+@media(max-width: 767px) {
+  .__counter:before {
+    right: -50px;
+    
+  }
+  .events-item.__counter {
+    overflow: hidden;
+    padding: .5rem;
+  }
+  .events-item.__counter:hover:before {
+    right:0;
+  }
+  .events-item p {
+    font-size: .9rem;
+    padding: .25rem;
+  }  
 }
 
 #timeNow.border-ex {
@@ -368,9 +398,12 @@ button.navbar-toggler[aria-expanded="true"] {
   padding: 0.75rem;
 }
 
-.mini-container {
-  max-width: 600px !important;
-  padding: 0;
+@media(min-width: 768px) {
+  
+  .mini-container {
+    max-width: 600px !important;
+    padding: 0;
+  }
 }
 
 /* Locations */
@@ -542,7 +575,7 @@ themes li[data-theme="اسم المود"] {
   cursor: pointer
 }
 .table-style-item {
-  flex: 1;
+  flex: 1 0 auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -555,7 +588,7 @@ themes li[data-theme="اسم المود"] {
 
 .table-style-item span.table-style-label {
   font-size: 0.8rem;
-  /* background: #c6c6c6; */
+  white-space: nowrap;
   width: fit-content;
   padding: 0.1rem 0.5rem;
   color: #504b4b;

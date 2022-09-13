@@ -108,6 +108,8 @@ li.link {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-bottom: 1rem;
+
 }
 
 .prayer-grid-item {
@@ -117,7 +119,6 @@ li.link {
   justify-content: space-between;
   padding: 1rem;
   border-radius: 0.25rem;
-  margin-bottom: 1rem;
   box-shadow: 0 4px 2px #9e9e9e;
   display: flex;
   flex-direction: column;

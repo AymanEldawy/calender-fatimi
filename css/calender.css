@@ -1,6 +1,10 @@
 html,
 body {
   direction: rtl;
+  
+}
+body {
+  overflow-x: hidden;
 }
 
 /* Modal Event */
@@ -175,7 +179,7 @@ td {
   margin: 1rem 0;
   border-radius: 0.25rem;
   align-items: center;
-  padding:.5rem;
+  padding: 0.5rem;
 }
 
 /* Calender page */
@@ -215,9 +219,15 @@ td {
   margin-bottom: 1rem;
   background-color: #fff;
 }
+
 .calender-page-display p {
   margin: 0;
   font-size: 1.3rem;
+}
+#goNext,
+#goPrev,
+button#goPrevYear, button#goNextYear {
+  white-space: pre;
 }
 #goNext,
 #goPrev,
@@ -259,13 +269,17 @@ td {
   width: 100px;
 }
 div#listOfMonth {
-  /* display: flex;
-  flex-wrap: wrap; */
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   width: 100%;
   margin-bottom: 1rem;
   gap: 0.5rem;
+}
+@media(max-width: 767px) {
+  div#listOfMonth {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
 }
 #listOfMonth button {
   padding: 0.5rem;
@@ -290,6 +304,7 @@ div#listOfMonth {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
+  overflow: hidden;
 }
 
 .calender-list .calender-list-grid-head {
@@ -478,18 +493,12 @@ span.delete-event {
     width: 51px;
     padding-top: 16px;
   }
-  .calender-page .calender-page-display,
-  .calender-page .calender-page-controls {
+  .calender-page .calender-page-display {
     gap: 2px;
     flex-wrap: wrap;
   }
   .calender-page .controls-by-month.d-flex {
     justify-content: space-between;
-    width: 100%;
-  }
-  .calender-page .controls-by.d-flex.align-items-center {
-    order: 2;
-    margin: 1rem auto 0;
     width: 100%;
   }
   .calender-page select#listOfControls {
@@ -534,6 +543,11 @@ span.empty {
     text-align: center;
     font-size: 2.2rem;
   }
+  .table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+  }
   .table > :not(caption) > * > * {
     padding: 0.1rem 0.5rem;
   }
@@ -566,7 +580,8 @@ span.empty {
 .calender-year h2 {
   font-weight: bold;
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
+  white-space: pre;
 }
 .calender-year-grid {
   display: flex;
