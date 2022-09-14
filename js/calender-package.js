@@ -62,7 +62,9 @@ function displayCalenderGrid(
       HijriConfiguration.hijriMonth,
       i
     );
-    let hijri_day = `${_hijri._date} ${Calender.months[_hijri._month]} ${_hijri._year}` 
+    let hijri_day = `${_hijri._date} ${Calender.months[_hijri._month]} ${
+      _hijri._year
+    }`;
 
     let gregorian = _hijri.toGregorian();
     let GregorianDateIncrement = new Date(gregorian);
@@ -123,9 +125,11 @@ function displayYearInfo(year) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  displayCalenderGrid()
-  displayCalenderYear()
-  document.getElementById('theYear').textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
+  displayCalenderGrid();
+  displayCalenderYear();
+  document.getElementById(
+    "theYear"
+  ).textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
   document.getElementById("btnChangeByYear").addEventListener("click", () => {
     enterYear();
   }); // change by years
@@ -166,20 +170,30 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("goPrev").addEventListener("click", goPrev);
   document.getElementById("goNextYear").addEventListener("click", goNextYear);
   document.getElementById("goPrevYear").addEventListener("click", goPrevYear);
+  document
+    .querySelector("span .gg-printer")
+    .addEventListener("click", () => window.print());
+  document
+    .getElementById("thisYear")
+    .addEventListener("click", __thisYear);
 });
 
 window.addEventListener("click", (e) => {
   if (e.target.matches(".tab-control button:first-child")) {
-    document.getElementById('calenderTabs').classList.remove('__month')
-    document.getElementById('calenderTabs').classList.add('__year')
-    document.querySelector(".tab-control button:last-child").classList.remove('active')
-    e.target.classList.add('active')
+    document.getElementById("calenderTabs").classList.remove("__month");
+    document.getElementById("calenderTabs").classList.add("__year");
+    document
+      .querySelector(".tab-control button:last-child")
+      .classList.remove("active");
+    e.target.classList.add("active");
   }
   if (e.target.matches(".tab-control button:last-child")) {
-    document.getElementById('calenderTabs').classList.remove('__year')
-    document.getElementById('calenderTabs').classList.add('__month')
-    document.querySelector(".tab-control button:first-child").classList.remove('active')
-    e.target.classList.add('active')
+    document.getElementById("calenderTabs").classList.remove("__year");
+    document.getElementById("calenderTabs").classList.add("__month");
+    document
+      .querySelector(".tab-control button:first-child")
+      .classList.remove("active");
+    e.target.classList.add("active");
   }
   if (e.target.matches("#closeEventsBox .gg-close")) {
     document.getElementById("eventsGrid").innerHTML = "";
@@ -194,7 +208,7 @@ window.addEventListener("click", (e) => {
       e.target.parentElement.dataset.display_hijri;
     document.getElementById("datePicker").dataset.date =
       e.target.parentElement.dataset.current_date;
-    
+
     document.querySelector(".modal-events").classList.remove("close");
   }
 
@@ -387,7 +401,7 @@ function displayEvents(theEventDate) {
 function checkIfDateHasEvents(theEventDate) {
   let listOfEvents = events.filter(
     (event) => Date.parse(event.date) == Date.parse(theEventDate)
-    );
+  );
   return listOfEvents.length > 0;
 }
 
@@ -409,7 +423,11 @@ function getSunriseTime() {
   let minutes = date.getMinutes();
   if (
     `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >
-    parseInt(`${sunset[0].toString().padStart(2,0)}${sunset[1].toString().padStart(2,0)}`)
+    parseInt(
+      `${sunset[0].toString().padStart(2, 0)}${sunset[1]
+        .toString()
+        .padStart(2, 0)}`
+    )
   ) {
     let tomorrow = date.setDate(date.getDate() + 1);
     Calender.theCurrentDate.gregorianDate = new Date(tomorrow);
@@ -421,10 +439,7 @@ function getSunriseTime() {
 }
 getSunriseTime();
 
-function displayCalenderGridYear(
-  date = new Date(),
-  display
-) {
+function displayCalenderGridYear(date = new Date(), display) {
   // check events by this day
   let HijriConfiguration = returnHijriConfiguration(date);
   const yearNumber = HijriConfiguration.hijriYear % 210;
@@ -437,7 +452,9 @@ function displayCalenderGridYear(
     7; // calculate the first weekDay of month
   // Display information about date
   let dyesGrid = display;
-  dyesGrid.innerHTML = `<h4>${Calender.months[HijriConfiguration.hijriMonth]}</h4>`;
+  dyesGrid.innerHTML = `<h4>${
+    Calender.months[HijriConfiguration.hijriMonth]
+  }</h4>`;
   dyesGrid.innerHTML += `<span class="text-primary">اح</span>`;
   dyesGrid.innerHTML += `<span class="text-primary">اث</span>`;
   dyesGrid.innerHTML += `<span class="text-primary">ث</span>`;
@@ -481,32 +498,54 @@ function displayCalenderGridYear(
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
 }
-let item = ""
+let item = "";
 
-function displayCalenderYear (year) {
-
+function displayCalenderYear(year) {
   let theYear = year ? year : Calender.theCurrentDate.yearHijri;
   for (let i = 0; i < 12; i++) {
-    let _hijri = new HijriDate(
-      theYear,
-      i + 1,
-      1
-    );
+    let _hijri = new HijriDate(theYear, i + 1, 1);
     let gregorian = _hijri.toGregorian();
-    item = document.getElementById(`month-box-${i+ 1}`)
-    displayCalenderGridYear(gregorian,item)
+    item = document.getElementById(`month-box-${i + 1}`);
+    displayCalenderGridYear(gregorian, item);
   }
-  document.getElementById('theYear').textContent = `${Calender.theCurrentDate.yearHijri} هـ`
+  document.getElementById(
+    "theYear"
+  ).textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
 }
-
-
-
 
 function goNextYear() {
-  Calender.theCurrentDate.yearHijri += 1
-  displayCalenderYear(Calender.theCurrentDate.yearHijri )
+  let year = parseInt(
+    Calender.a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
+  );
+
+  let thisYear = document.getElementById("thisYear");
+  Calender.theCurrentDate.yearHijri += 1;
+  displayCalenderYear(Calender.theCurrentDate.yearHijri);
+  if (Calender.theCurrentDate.yearHijri !== year)
+    thisYear.classList.remove("hide");
+  else thisYear.classList.add("hide");
+  console.log(Calender.theCurrentDate.yearHijri, year);
 }
 function goPrevYear() {
-  Calender.theCurrentDate.yearHijri -= 1
-  displayCalenderYear(Calender.theCurrentDate.yearHijri )
+  let year = parseInt(
+    Calender.a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
+  );
+  let thisYear = document.getElementById("thisYear");
+
+  Calender.theCurrentDate.yearHijri -= 1;
+  displayCalenderYear(Calender.theCurrentDate.yearHijri);
+  console.log(Calender.theCurrentDate.yearHijri, year);
+  if (Calender.theCurrentDate.yearHijri !== year)
+    thisYear.classList.remove("hide");
+  else thisYear.classList.add("hide");
+}
+
+function __thisYear(e) {
+  let year = parseInt(
+    Calender.a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
+  );
+  Calender.theCurrentDate.yearHijri = year;
+  displayCalenderYear(year);
+  e.target.classList.add("hide");
+
 }

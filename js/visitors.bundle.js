@@ -9,14 +9,14 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./js/visitors.js":
+/***/ "./js/visitors.bundle.js":
 /*!************************!*\
-  !*** ./js/visitors.js ***!
+  !*** ./js/visitors.bundle.js ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var countapi_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! countapi-js */ \"./node_modules/countapi-js/index.js\");\n\ncountapi_js__WEBPACK_IMPORTED_MODULE_0__.visits(\"global\").then(function (result) {\n  var displayCounter = \"\";\n  var spratedCount = result.value.toString().split(\"\");\n\n  for (var i = spratedCount.length - 1; i >= 0; i--) {\n    displayCounter += \"<span class=\\\"counter-item\\\">\".concat(spratedCount[i], \"</span>\");\n  }\n\n  document.getElementById(\"visitors\").innerHTML = displayCounter;\n});\n\n//# sourceURL=webpack://fatimi-cal/./js/visitors.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var countapi_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! countapi-js */ \"./node_modules/countapi-js/index.js\");\n\ncountapi_js__WEBPACK_IMPORTED_MODULE_0__.visits(\"global\").then(function (result) {\n  var displayCounter = \"\";\n  var spratedCount = result.value.toString().split(\"\");\n\n  for (var i = spratedCount.length - 1; i >= 0; i--) {\n    displayCounter += \"<span class=\\\"counter-item\\\">\".concat(spratedCount[i], \"</span>\");\n  }\n\n  document.getElementById(\"visitors\").innerHTML = displayCounter;\n});\n\n//# sourceURL=webpack://fatimi-cal/./js/visitors.bundle.js?");
 
 /***/ }),
 
@@ -93,7 +93,7 @@ eval("var global = typeof self !== 'undefined' ? self : this;\nvar __self__ = (f
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./js/visitors.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./js/visitors.bundle.js");
 /******/ 	
 /******/ })()
 ;

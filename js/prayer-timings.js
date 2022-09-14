@@ -42,12 +42,12 @@ export function prayerTimings(selectedDate = new Date()) {
   let fajrMinutes = Math.round(parseFloat(`.${fajrCalcMinutes}`) * 60)
   let fajrTime = resetTime(fajrHours, fajrMinutes)
   let sunriseTime = resetTime(sunrise[0], sunrise[1])
-  let duherHours = parseInt(sunrise[0]) + parseInt(((dayLenLight / 12) * 7) / 60);
-  let duherMinutes = parseInt(sunrise[1])  + ((dayLenLight / 12) * 7) % 60;
+  let duherHours = parseInt(sunrise[0]) + parseInt(((dayLenLight / 12) * 6) / 60);
+  let duherMinutes = parseInt(sunrise[1])  + ((dayLenLight / 12) * 6) % 60;
   let duherTime = resetTime(parseInt(duherHours), parseInt(duherMinutes))
 
-  let aserHours =  parseInt(sunrise[0])  +  parseInt(((dayLenLight / 12) * 9) / 60);
-  let aserMinutes =  parseInt(sunrise[1])  +  ((dayLenLight / 12) * 9) % 60;
+  let aserHours =  parseInt(sunrise[0])  +  parseInt(((dayLenLight / 12) * 8) / 60);
+  let aserMinutes =  parseInt(sunrise[1])  +  ((dayLenLight / 12) * 8) % 60;
   let aserTime = resetTime(parseInt(aserHours), parseInt(aserMinutes))
 
 
