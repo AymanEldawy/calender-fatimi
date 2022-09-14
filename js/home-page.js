@@ -18,6 +18,7 @@ import {
 } from "./global.js";
 import { weeks } from "./weeks.js";
 import SunCalc from "./suncalc.js";
+import { prayerTimings } from "./prayer-timings.js";
 
 const PrayerTimeDefault = {
   month: 0, //current month
@@ -86,6 +87,8 @@ function resetDate(theNewDate) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  prayerTimings()
+
   displayRowFirstDayOfMonth();
   let theHours = new Date().getHours();
   document.getElementById("date").textContent = `${resetDate(
@@ -181,36 +184,33 @@ async function getPrayTimeByDate(month, year) {
 
 async function prayerTimingDay(date = new Date()) {
   // let prayerTime = await getPrayTimeByDate(date);
-  let prayerTime = await getPrayTimeByDate(
-    theCurrentDate.getCurrentMonthHijri(),
-    theCurrentDate.getCurrentYearHijri()
-  );
+  let prayerTime = prayerTimings()
   if (!prayerTime) return;
   let prayGrid = document.querySelector(".prayer-grid");
   prayGrid.innerHTML = `
   <div class="prayer-grid-item">
       <span>الفجر</span>
-      <span>${prayerTime.data.timings.Fajr} </span>
+      <span>${prayerTime.Fajr} </span>
   </div>
   <div class="prayer-grid-item">
       <span>الشروق</span>
-      <span>${prayerTime.data.timings.Sunrise}</span>
+      <span>${prayerTime.Sunrise}</span>
   </div>
   <div class="prayer-grid-item">
       <span>الظهر</span>
-      <span>${prayerTime.data.timings.Dhuhr}</span>
+      <span>${prayerTime.Duher}</span>
   </div>
   <div class="prayer-grid-item">
       <span>العصر</span>
-      <span>${getAserTime(prayerTime.data.timings.Dhuhr)}</span>
+      <span>${prayerTime.Asr}</span>
   </div>
   <div class="prayer-grid-item">
       <span>المغرب</span>
-      <span>${prayerTime.data.timings.Maghrib}</span>
+      <span>${prayerTime.Maghrib}</span>
   </div>
   <div class="prayer-grid-item">
       <span>العشاء</span>
-      <span>${prayerTime.data.timings.Isha}</span>
+      <span>${prayerTime.Isha}</span>
   </div>
   `;
 }
