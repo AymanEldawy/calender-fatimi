@@ -1,7 +1,6 @@
 
 import { weeks, daysInfo } from "./weeks.js";
-import { storageLocation, latAndLong } from "./global.js";
-// const SunCalc = require("suncalc2");
+import { latAndLong } from "./global.js";
 import SunCalc from './suncalc.js';
 let days = [
   "الاحد",
@@ -217,8 +216,11 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
     /*Number*/ latitude,
     /*Number*/ longitude
   );
+  
+  console.log(longitude, latitude);
+  console.log(sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes());
   let sunriseStr =
-    sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
+  sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
   let theDay =
     selectedDate === "today"

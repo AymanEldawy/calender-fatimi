@@ -39,13 +39,17 @@ export let storageLocation = {
 };
 
 let theme = storageLocation.fetchTheme();
+
+let LOCATION = storageLocation.fetchLocation();
+
+
 export let latAndLong = {
-  latitude: "17.5065",
-  longitude: "44.1316",
-  city: 'Najran',
-  country: 'Saudi Arabia',
+  latitude: LOCATION.latitude || "17.5065",
+  longitude: LOCATION.longitude || "44.1316",
+  city: LOCATION.city ||'Najran',
+  country: LOCATION.country ||'Saudi Arabia',
   day: "today",
-  code: "SA",
+  code: LOCATION.code || "SA",
   dayDate: new Date()
     .toLocaleDateString("en-UK")
     .replace(/\//g, "-")
@@ -53,6 +57,8 @@ export let latAndLong = {
     .reverse()
     .join("-"),
 };
+
+
 
 let links = [
   { fileName: "index.html", title: "الصفحة الرئيسية" },

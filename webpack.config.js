@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   entry: {
     visitors: './js/visitors.js',
+    sunrise: './js/sunrise-time.js',
   },
   output: {
     path: path.resolve(__dirname, 'js'),

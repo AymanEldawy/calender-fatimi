@@ -13,21 +13,21 @@ const PrayerTimeDefault = {
 let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault;
 
 // Fetch Prayer Time
-async function getPrayTimeByMonth(city, country, month, year) {
-  let prayerTime = await fetch(
-    // `http://api.aladhan.com/v1/calendarByCity?city=${city}&country=${country}&method=8&month=${month}&year=${year}`
-    // `http://api.aladhan.com/v1/calendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=8&month=${month}&year=${year}`
-    `http://api.aladhan.com/v1/hijriCalendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=4&month=${month}&year=${year}`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
-  return prayerTime;
-}
+// async function getPrayTimeByMonth(city, country, month, year) {
+//   let prayerTime = await fetch(
+//     // `http://api.aladhan.com/v1/calendarByCity?city=${city}&country=${country}&method=8&month=${month}&year=${year}`
+//     // `http://api.aladhan.com/v1/calendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=8&month=${month}&year=${year}`
+//     `http://api.aladhan.com/v1/hijriCalendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=4&month=${month}&year=${year}`
+//   )
+//     .then((res) => res.json())
+//     .then((data) => {
+//       return data;
+//     });
+//   return prayerTime;
+// }
 
 // Display Time Prayer
-export async function displayPryerTime(date = new Date()) {
+async function displayPryerTime(date = new Date()) {
   // PryerTime Page
   let HijriConfiguration = returnHijriConfiguration(date);
   let monthName = Calender.months[HijriConfiguration.hijriMonth];
