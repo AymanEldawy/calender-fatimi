@@ -4,7 +4,6 @@ import { storageLocation, latAndLong } from "./global.js";
 import SunCalc from "./suncalc.js";
 
 export function prayerTimings(selectedDate = new Date()) {
-  let allHours = [];
   let sunCalc = SunCalc.getTimes(new Date(selectedDate), latAndLong.latitude, latAndLong.longitude);
 
   let sunriseStr =

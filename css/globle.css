@@ -316,7 +316,7 @@ button.navbar-toggler[aria-expanded="true"] {
 
 .events-item.__counter {
   padding-right: 40px;
-  margin-bottom: 1rem
+  margin-bottom: 1rem !important;
 }
 .__counter:before {
   counter-increment: section;
@@ -572,8 +572,12 @@ themes li[data-theme="اسم المود"] {
   margin-bottom: 1rem;
 }
 .table-style:first-of-type .table-style-item {
-  cursor: pointer
+  cursor: pointer;
 }
+.table-style:first-of-type .table-style-item:hover { 
+  background: #f2f2f2
+}
+
 .table-style-item {
   flex: 1 0 auto;
   display: flex;

@@ -42,12 +42,11 @@ let theme = storageLocation.fetchTheme();
 
 let LOCATION = storageLocation.fetchLocation();
 
-
 export let latAndLong = {
   latitude: LOCATION.latitude || "17.5065",
   longitude: LOCATION.longitude || "44.1316",
-  city: LOCATION.city ||'Najran',
-  country: LOCATION.country ||'Saudi Arabia',
+  city: LOCATION.city || "Najran",
+  country: LOCATION.country || "Saudi Arabia",
   day: "today",
   code: LOCATION.code || "SA",
   dayDate: new Date()
@@ -57,8 +56,6 @@ export let latAndLong = {
     .reverse()
     .join("-"),
 };
-
-
 
 let links = [
   { fileName: "index.html", title: "الصفحة الرئيسية" },
@@ -259,8 +256,8 @@ window.addEventListener("DOMContentLoaded", () => {
         ${calculateDate(event.date)}
       `;
     });
-    let events = storageLocation.fetchEvents()
-    let specificEvents = events.filter(event => event.deletable === true)
+    let events = storageLocation.fetchEvents();
+    let specificEvents = events.filter((event) => event.deletable === true);
     specificEvents.forEach((event) => {
       let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
         year: "numeric",
@@ -338,7 +335,7 @@ openChooseLocation();
 createEventModal();
 displayCountry();
 document.querySelector("#country").addEventListener("change", (e) => {
-  changeCountry(e.target.value.split('%')[1]);
+  changeCountry(e.target.value.split("%")[1]);
 });
 
 function openChooseLocation() {
@@ -393,8 +390,7 @@ function createEventModal() {
         <button id="tab-days-btn">المناسبات الخاصة</button>
       </div>
       <div class="tab-toggler open-events-tab">
-        <ul id="tab-events" class="events text-center">
-        </ul>
+        <ul id="tab-events" class="events text-center"></ul>
         <ul id="tab-days" class="events text-center"><ul>
       </div>
   </div>
@@ -403,7 +399,7 @@ function createEventModal() {
 }
 
 function setLocation() {
-  let country = document.getElementById("country").value.split('%');
+  let country = document.getElementById("country").value.split("%");
   let cityInfo = document.getElementById("city").value;
   let cityLocation = cityInfo.split("__");
   let latitude = cityLocation[0];
@@ -414,9 +410,9 @@ function setLocation() {
     city,
     latitude,
     longitude,
-    code: country[1]
+    code: country[1],
   };
-  latAndLong = {...latAndLong, ...currentLocation}
+  latAndLong = { ...latAndLong, ...currentLocation };
   storageLocation.saveLocation(currentLocation);
   window.location.reload();
   document.getElementById("overlayPopup").classList.remove("open");
@@ -428,16 +424,22 @@ function getLocation() {
   }
 }
 async function showPosition(position) {
-  let countryInfo = await fetch(`https://api.db-ip.com/v2/free/self`).then(data=> data.json()).then(d => d)
+  let countryInfo = await fetch(`https://api.db-ip.com/v2/free/self`)
+    .then((data) => data.json())
+    .then((d) => d);
   let currentLocation = {
     latitude: position.coords.latitude,
     longitude: position.coords.longitude,
     city: countryInfo.city,
     country: countryInfo.countryName,
-    code: countryInfo.countryCode
+    code: countryInfo.countryCode,
   };
-  latAndLong = {...latAndLong, ...currentLocation}
-  if(window.location.pathname == '/prayer-time.html' || window.location.pathname == '/times.html' || window.location.pathname == '/index.html') {
+  latAndLong = { ...latAndLong, ...currentLocation };
+  if (
+    window.location.pathname == "/prayer-time.html" ||
+    window.location.pathname == "/times.html" ||
+    window.location.pathname == "/index.html"
+  ) {
     window.location.reload();
   }
   storageLocation.saveLocation(currentLocation);
