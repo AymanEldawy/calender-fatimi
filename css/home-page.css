@@ -109,7 +109,6 @@ li.link {
   gap: 1rem;
   flex-wrap: wrap;
   margin-bottom: 1rem;
-
 }
 
 .prayer-grid-item {
@@ -222,4 +221,26 @@ span.status-bad ~ #timeNowTimer .dot {
 }
 span.status-bad ~ #timeNowTimer .flex-column span:first-child {
   background-color: #f44336;
+}
+
+.fasting-grid {
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 1px 4px #0005;
+  border-radius: 0.25rem;
+}
+.fasting-item {
+  position: relative;
+  overflow: hidden;
+  min-width: 250px;
+  background: #f6f6f6;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc5;
+}
+.fasting-item p {
+  font-size: 1.2rem;
+  color: #111;
+  font-weight: 500;
 }

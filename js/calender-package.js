@@ -54,7 +54,7 @@ function displayCalenderGrid(
   }
   for (
     let i = 1;
-    i <= Calender.countDayOfMoth(HijriConfiguration.hijriMonth, yearNumber);
+    i <= Calender.countDayOfMonth(HijriConfiguration.hijriMonth, yearNumber);
     i++
   ) {
     let _hijri = new HijriDate(
@@ -99,7 +99,7 @@ function displayCalenderGrid(
     i <=
     35 -
       (firstDayNumOfMonth +
-        Calender.countDayOfMoth(HijriConfiguration.hijriMonth, yearNumber));
+        Calender.countDayOfMonth(HijriConfiguration.hijriMonth, yearNumber));
     i++
   ) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
@@ -236,7 +236,7 @@ export function goPrev() {
   HIJRI_CONFIGURATION.hijriMonth -= 1;
   theNewDate = date.setDate(
     date.getDate() -
-      Calender.countDayOfMoth(
+      Calender.countDayOfMonth(
         HIJRI_CONFIGURATION.hijriMonth + 1,
         Calender.theCurrentDate.getCurrentYearHijri()
       )
@@ -261,7 +261,7 @@ export function goNext() {
   HIJRI_CONFIGURATION.hijriMonth += 1;
   theNewDate = date.setDate(
     date.getDate() +
-      Calender.countDayOfMoth(
+      Calender.countDayOfMonth(
         HIJRI_CONFIGURATION.hijriMonth,
         Calender.theCurrentDate.getCurrentYearHijri()
       )
@@ -467,7 +467,7 @@ function displayCalenderGridYear(date = new Date(), display) {
   }
   for (
     let i = 1;
-    i <= Calender.countDayOfMoth(HijriConfiguration.hijriMonth, yearNumber);
+    i <= Calender.countDayOfMonth(HijriConfiguration.hijriMonth, yearNumber);
     i++
   ) {
     let _hijri = new HijriDate(
@@ -492,7 +492,7 @@ function displayCalenderGridYear(date = new Date(), display) {
     i <=
     35 -
       (firstDayNumOfMonth +
-        Calender.countDayOfMoth(HijriConfiguration.hijriMonth, yearNumber));
+        Calender.countDayOfMonth(HijriConfiguration.hijriMonth, yearNumber));
     i++
   ) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;

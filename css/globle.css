@@ -38,6 +38,7 @@ body {
   border-radius: 0.25rem;
   cursor: pointer;
 }
+._modal-fasting,
 ._modal-days,
 ._modal {
   position: fixed;
@@ -52,6 +53,13 @@ body {
   align-items: center;
   transition: opacity 0.3s ease-out;
 }
+@media (max-width: 767px) {
+  ._modal-fasting,
+  ._modal-days,
+  ._modal {
+    font-size: 0.8rem;
+  }
+}
 
 ._modal .modal-tabs {
   justify-content: space-around;
@@ -61,10 +69,11 @@ body {
 ._modal button {
   flex: 1;
   border: none;
+  white-space: nowrap;
 }
 ._modal button.active {
   color: #ff9800;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
   border-bottom: 4px solid #ff9800 !important;
   background: #ff98004a;
@@ -79,6 +88,7 @@ body {
 }
 ._modal .tab-toggler.open-events-tab #tab-events {
   display: block;
+  background: #efefef;
 }
 ._modal .tab-toggler.open-events-tab #tab-days {
   display: none;
@@ -88,6 +98,7 @@ body {
 }
 ._modal .tab-toggler.open-days-tab #tab-days {
   display: block;
+  background: #efefef;
 }
 
 @media (min-width: 991px) {
@@ -97,17 +108,16 @@ body {
 }
 .events-page {
   overflow: hidden;
-  max-height: 80%;
   max-width: 500px;
   background: #fff;
-  padding: 2rem;
+  padding: 1rem;
   box-shadow: 0 2px 4px #0005;
+  border-radius: 0.25rem;
 }
 @media (max-width: 767px) {
   .events-page {
     overflow: hidden;
-    height: 90%;
-    width: 90%;
+    width: 80%;
     max-height: unset;
   }
 }
@@ -143,8 +153,8 @@ ul.events.text-center {
   left: 0;
   width: 100%;
 }
-@media(max-width: 767px) {
-  .navbar-dark .navbar-brand{
+@media (max-width: 767px) {
+  .navbar-dark .navbar-brand {
     font-size: 1rem;
     margin-left: 0;
   }
@@ -152,7 +162,7 @@ ul.events.text-center {
     flex-wrap: wrap;
   }
   .form-group.cities {
-    flex: 1
+    flex: 1;
   }
 }
 
@@ -299,6 +309,7 @@ button.navbar-toggler[aria-expanded="true"] {
   font-size: 1rem;
   border-top: 1px solid #ccc5;
 }
+.fasting-grid .timerDays,
 .events-item .timerDays {
   position: absolute;
   top: 8px;
@@ -309,6 +320,7 @@ button.navbar-toggler[aria-expanded="true"] {
   border-radius: 0 5px 5px 0;
   font-size: 0.8rem;
 }
+.fasting-grid .timerDays.completed,
 .events-item .timerDays.completed {
   background: #9e9e9e;
   color: #f3efef;
@@ -335,22 +347,30 @@ button.navbar-toggler[aria-expanded="true"] {
   font-size: 1.5rem;
   border: 1px solid #ccc8;
 }
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .__counter:before {
-    right: -50px;
-    
+    height: fit-content;
+    padding: 0;
+    font-size: 1rem;
+    top: 10px;
   }
   .events-item.__counter {
     overflow: hidden;
-    padding: .5rem;
+    padding: 0.5rem;
   }
   .events-item.__counter:hover:before {
-    right:0;
+    right: 0;
   }
   .events-item p {
-    font-size: .9rem;
-    padding: .25rem;
-  }  
+    font-size: 0.8rem;
+    padding: 0.25rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center !important;
+  }
+  .events-item h4 {
+    padding-top: 3rem;
+  }
 }
 
 #timeNow.border-ex {
@@ -382,6 +402,15 @@ button.navbar-toggler[aria-expanded="true"] {
   color: #fff !important;
 }
 
+@media only screen and (max-width: 575px) {
+  
+  .table:not(.tab-content .table) {
+    background-color: #fff;
+    display: block;
+    max-width: 100%;
+    overflow: auto;
+  }
+}
 .table {
   background-color: #fff;
 }
@@ -398,13 +427,78 @@ button.navbar-toggler[aria-expanded="true"] {
   padding: 0.75rem;
 }
 
-@media(min-width: 768px) {
-  
+@media (min-width: 768px) {
   .mini-container {
     max-width: 600px !important;
     padding: 0;
   }
 }
+
+@media print {
+  body {
+    padding: 0;
+  }
+  .table {
+    display: inline-table !important
+  }
+  .tab-control,
+  .year-controls button,
+  title,
+  #visitors,
+  footer,
+  .prayer-controls button,
+  .navbar,
+  .print {
+    display: none;
+  }
+  body {
+    background-color: #d7dee1;
+    padding-top: 0;
+  }
+  .year-controls {
+    all: unset !important;
+    /* margin: 0 0 0.5rem 0  !important;
+    justify-content: center !important; */
+  }
+  .calender-year .year-controls h2 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+  .calender-year-grid > div {
+    padding: 0.25rem 0.5rem !important;
+    padding-top: 30px !important;
+  }
+  .calender-year-grid > div h4 {
+    top: 2px;
+    font-size: 1.1rem;
+  }
+  .prayer-title {
+    margin: 0;
+  }
+  .prayer-controls {
+    justify-content: center;
+  }
+  p.dateInsideList {
+    text-align: center;
+    font-size: 2.2rem;
+  }
+  .table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+  }
+  .table > :not(caption) > * > * {
+    padding: 0.1rem 0.5rem;
+  }
+
+  .table tbody tr:nth-child(odd) {
+    background: #f2f2fa;
+  }
+  .table tbody tr:nth-child(even) {
+    background: #e9e9ef;
+  }
+}
+
 
 /* Locations */
 
@@ -511,13 +605,13 @@ button.navbar-toggler[aria-expanded="true"] {
   padding: 1rem;
   box-shadow: 0 1px 4px #2226;
   border-radius: 0.25rem;
-  transition: opacity .2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 }
 .themes li {
   width: 30px;
   height: 30px;
   background-color: #000;
-  cursor: pointer
+  cursor: pointer;
 }
 .themes li[data-theme="dark"] {
   background-color: rgb(71 69 69);
@@ -540,7 +634,7 @@ button.navbar-toggler[aria-expanded="true"] {
   /* background-color: #4caf50; */
 }
 .themes li[data-theme="blue"] {
-  background-color: hwb(198deg 59% 3%);;
+  background-color: hwb(198deg 59% 3%);
   /* background-color: #03a9f4; */
 }
 .themes li[data-theme="yellow"] {
@@ -559,9 +653,6 @@ themes li[data-theme="اسم المود"] {
   cursor: not-allowed;
 }
 
-
-
-
 .table-style:first-child {
   margin-top: 2rem;
 }
@@ -571,11 +662,16 @@ themes li[data-theme="اسم المود"] {
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
+.table-style:last-of-type {
+  gap: 1rem;
+}
 .table-style:first-of-type .table-style-item {
   cursor: pointer;
 }
-.table-style:first-of-type .table-style-item:hover { 
-  background: #f2f2f2
+#closestFasting:hover,
+.table-style:first-of-type .table-style-item:hover {
+  background: #f2f2f2;
+  cursor: pointer;
 }
 
 .table-style-item {
@@ -607,17 +703,34 @@ themes li[data-theme="اسم المود"] {
   background: #2b2b2b;
   cursor: pointer;
 }
-
+.table-style span.table-style-type {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  margin-left: auto;
+  background: #00897b;
+  font-size: 0.8rem;
+  border-radius: 0.25rem 0 0 0.25rem;
+  color: #fff;
+  padding: 0.25rem;
+}
+#closestEvent,
+#closestFasting {
+  padding-top: 1.5rem;
+  min-width: 300px;
+}
+#closestFasting * {
+  pointer-events: none;
+}
 #closeLocation i,
 #addLocation i,
-#changeTheme i, 
+#changeTheme i,
 #autoLocation i,
 #chooseLocation i {
-  pointer-events: none
+  pointer-events: none;
 }
 
-
-.custom_tooltip{
+.custom_tooltip {
   position: relative;
 }
 .custom_tooltip::before {
@@ -629,11 +742,11 @@ themes li[data-theme="اسم المود"] {
   border-radius: 0.25rem;
   background: #000;
   color: #fff;
-  font-size: .8rem;
+  font-size: 0.8rem;
   white-space: nowrap;
   padding: 0.25rem;
   opacity: 0;
-  z-index:99
+  z-index: 99;
 }
 .custom_tooltip:hover::before {
   opacity: 1;

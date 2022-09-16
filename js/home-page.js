@@ -6,7 +6,7 @@ import {
   leapYears,
   a2e,
   theCurrentDate,
-  countDayOfMoth,
+  countDayOfMonth,
   countOfMonthDays,
 } from "./calender-setup.js";
 
@@ -87,7 +87,7 @@ function resetDate(theNewDate) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  prayerTimings()
+  prayerTimings();
 
   displayRowFirstDayOfMonth();
   let theHours = new Date().getHours();
@@ -121,17 +121,15 @@ window.addEventListener("DOMContentLoaded", () => {
   prayerTimingDay();
 });
 function displayClosestEvent(event) {
-  document.getElementById("closestEvent").innerHTML = `
-    <span>${event.title}</span>
-    <div class="timer">
+  document.querySelector("#closestEvent h4").innerHTML = event.title;
+  document.querySelector("#closestEvent .timer").innerHTML = `
       باقي من الوقت
       <span class="timer-style">${calculateDate(event.date)}</span>
-    </div>
   `;
 }
 function testMonthDays() {
   const yearNumber = theCurrentDate.getCurrentYearHijri() % 210;
-  let theMonth = countDayOfMoth(
+  let theMonth = countDayOfMonth(
     theCurrentDate.getCurrentMonthHijri(),
     yearNumber
   );
@@ -149,42 +147,20 @@ window.addEventListener("click", (e) => {
   if (e.target.matches("._modal-days")) {
     e.target.classList.add("hide");
   }
-  if (
-    e.target.matches(
-      ".table-style:first-of-type .table-style-item"
-    )
-  ) {
+  if (e.target.matches(".table-style:first-of-type .table-style-item")) {
     document.querySelector("._modal-days").classList.remove("hide");
+  }
+  if (e.target.matches("._modal-fasting")) {
+    e.target.classList.add("hide");
+  }
+  if (e.target.matches(".table-style .table-style-item#closestFasting")) {
+    document.querySelector("._modal-fasting").classList.remove("hide");
   }
 });
 
-function getAserTime(timeDhuhr) {
-
-  let timeAsr = timeDhuhr.split(':') 
-  timeAsr[0] = parseInt(timeAsr[0]) + 2  
-
-  return timeAsr.join(":");
-}
-
-// // Fetch Prayer Time
-async function getPrayTimeByDate(month, year) {
-
-  // // `https://api.aladhan.com/v1/calendarByCity?city=${latAndLong.city}&country=${latAndLong.country}%20Kingdom&method=2&month=${month}&year=${year}`
-  // `http://api.aladhan.com/v1/timings/1398332113?latitude=${latitude}&longitude=${longitude}&method=2`
-  let prayerTime = await fetch(
-    `http://api.aladhan.com/v1/timings/${1662997324305 / 1000}?latitude=${latAndLong.latitude}&longitude=${latAndLong.longitude}&method=4`
-    // `http://api.aladhan.com/v1/timingsByCity?city=${latAndLong.city}&country=${latAndLong.country}&method=8`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      return data;
-    });
-  return prayerTime;
-}
-
 async function prayerTimingDay(date = new Date()) {
   // let prayerTime = await getPrayTimeByDate(date);
-  let prayerTime = prayerTimings()
+  let prayerTime = prayerTimings();
   if (!prayerTime) return;
   let prayGrid = document.querySelector(".prayer-grid");
   prayGrid.innerHTML = `

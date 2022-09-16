@@ -291,7 +291,7 @@ export function getCentury(year) {
   }
 }
 // CountOfMonthDays
-export function countDayOfMoth(month, yearNumber) {
+export function countDayOfMonth(month, yearNumber) {
   if (month % 2 == 0) {
     if (month == 12 && leapYears.includes(yearNumber))
       return 30; // Year Is Leap

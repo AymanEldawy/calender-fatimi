@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
 
     <title>Calender</title>
     <link
@@ -18,6 +21,9 @@
     <link rel="stylesheet" href="css/home-page.css" />
   </head>
   <body>
+    <div class="_modal-fasting hide">
+      
+    </div>
     <div class="_modal-days hide">
       <div class="row-first-days"></div>
     </div>
@@ -27,14 +33,28 @@
 
         <!-- Themes -->
         <div id="theme">
-          <button id="changeTheme" data-title="تغيير الثيم" class="btn custom_tooltip"><i class="gg-color-picker"></i></button>
+          <button
+            id="changeTheme"
+            data-title="تغيير الثيم"
+            class="btn custom_tooltip"
+          >
+            <i class="gg-color-picker"></i>
+          </button>
           <ul class="themes hide"></ul>
         </div>
         <!-- Themes -->
-        <button id="autoLocation" data-title="تحديد الموقع تلقائيا" class="custom_tooltip btn d-flex align-items-center">
+        <button
+          id="autoLocation"
+          data-title="تحديد الموقع تلقائيا"
+          class="custom_tooltip btn d-flex align-items-center"
+        >
           <i class="gg-data"></i>
         </button>
-        <button id="chooseLocation" data-title="اختيار الموقع يدويا" class="custom_tooltip btn d-flex align-items-center">
+        <button
+          id="chooseLocation"
+          data-title="اختيار الموقع يدويا"
+          class="custom_tooltip btn d-flex align-items-center"
+        >
           <i class="gg-track"></i>
         </button>
 
@@ -44,7 +64,9 @@
           data-toggle="collapse"
           data-target="#collapsibleNavId"
           aria-controls="collapsibleNavId"
-          aria-expanded="false" data-title="القائمة" class="custom_tooltip"
+          aria-expanded="false"
+          data-title="القائمة"
+          class="custom_tooltip"
           aria-label="Toggle navigation"
         >
           <i class="gg-menu"></i>
@@ -58,10 +80,8 @@
       <div class="container">
         <div class="page-info text-center">
           <div class="table-style">
-            <div class="table-style-item display-6" id="dayWeek">
-            </div>
-            <div class="table-style-item display-6"  id="date">
-            </div>
+            <div class="table-style-item display-6" id="dayWeek"></div>
+            <div class="table-style-item display-6" id="date"></div>
           </div>
           <div class="table-style">
             <div class="table-style-item">
@@ -91,9 +111,7 @@
               <span class="table-style-value" id="timeNow"></span>
             </div>
             <div class="table-style-item">
-              <span class="table-style-label"
-                >باقي من الوقت علي الساعة التالية</span
-              >
+              <span class="table-style-label"> تنتهي بعد </span>
               <span id="timeNowTimer"></span>
             </div>
             <div class="table-style-item">
@@ -101,8 +119,19 @@
               <span class="table-style-value" id="timeNext"></span>
             </div>
           </div>
+          <div class="table-style">
+            <div class="table-style-item" id="closestEvent">
+              <span class="table-style-type">المناسبات</span>
+              <h4 class="table-style-title"></h4>
+              <div class="timer"></div>
+            </div>
+            <div class="table-style-item" id="closestFasting">
+              <span class="table-style-type">صيام السنة</span>
+              <h4 class="table-style-title"></h4>
+              <span class="timer"></span>
+            </div>
+          </div>
         </div>
-        <div id="closestEvent" class="event"></div>
       </div>
     </div>
     <div class="visitors" id="visitors"></div>
@@ -137,5 +166,6 @@
     <script src="js/global.js" type="module"></script>
     <script src="js/visitors.bundle.js" type="module"></script>
     <script src="js/home-page.js" type="module"></script>
+    <script src="js/fasting.js" type="module"></script>
   </body>
 </html>

@@ -59,7 +59,7 @@ async function displayPryerTime(date = new Date()) {
   dyesGrid.innerHTML = "";
   for (
     let i = 1;
-    i <= Calender.countDayOfMoth(HijriConfiguration.hijriMonth, yearNumber);
+    i <= Calender.countDayOfMonth(HijriConfiguration.hijriMonth, yearNumber);
     i++
   ) {
     let _hijri = new HijriDate(
@@ -101,7 +101,7 @@ async function displayPryerTime(date = new Date()) {
     i <=
     35 -
       (firstDayNumOfMonth +
-        Calender.countDayOfMoth(HijriConfiguration.hijriMonth, yearNumber));
+        Calender.countDayOfMonth(HijriConfiguration.hijriMonth, yearNumber));
     i++
   ) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
