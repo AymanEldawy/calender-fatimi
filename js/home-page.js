@@ -123,7 +123,6 @@ window.addEventListener("DOMContentLoaded", () => {
 function displayClosestEvent(event) {
   document.querySelector("#closestEvent h4").innerHTML = event.title;
   document.querySelector("#closestEvent .timer").innerHTML = `
-      باقي من الوقت
       <span class="timer-style">${calculateDate(event.date)}</span>
   `;
 }

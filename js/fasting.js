@@ -6,6 +6,12 @@ function getFastingDays(nextMonth) {
   let currentMonth = Calender.theCurrentDate.getCurrentMonthHijri();
   let theMonth = nextMonth ? currentMonth + 1 : currentMonth;
   let theYear = Calender.theCurrentDate.getCurrentYearHijri();
+  if (nextMonth > 12) {
+    theYear++;
+    nextMonth = 1;
+  } else if (nextMonth == 8) {
+    nextMonth = 9;
+  }
   const yearNumber = theYear % 210;
   let monthCount = Calender.countDayOfMonth(theMonth, yearNumber);
   // Loop of month days
@@ -49,7 +55,6 @@ function displayClosestFasting() {
   console.log(fast);
   document.querySelector("#closestFasting h4").textContent = fast.title;
   document.querySelector("#closestFasting .timer").innerHTML = `
-      باقي من الوقت
       <span class="timer-style">${calculateDate(fast.date)}</span>
   `;
 }
@@ -60,7 +65,11 @@ function displayGridFasting() {
   fastGrid.className = "fasting-grid";
 
   for (let fast of fastingList) {
-    let date = new Date(fast.date).toLocaleDateString('ar-SA', {day: "numeric", month: "long", year: "numeric"})
+    let date = new Date(fast.date).toLocaleDateString("ar-SA", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
     fastGrid.innerHTML += `
       <div class="fasting-item">
         <span>${calculateDate(fast.date)}</span>
@@ -70,10 +79,10 @@ function displayGridFasting() {
       
     `;
   }
-  document.querySelector('._modal-fasting').appendChild(fastGrid);
+  document.querySelector("._modal-fasting").appendChild(fastGrid);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
   displayClosestFasting();
-  displayGridFasting()
+  displayGridFasting();
 });
