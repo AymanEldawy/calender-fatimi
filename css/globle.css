@@ -13,6 +13,11 @@
     url("//db.onlinewebfonts.com/t/2e6ae3642c879522873a28ede1eaac69.svg#Helvetica Neue W23 for SKY Reg")
       format("svg");
 }
+@font-face {
+  font-family: 'Qahiri';
+  src: url("Qahiri-Regular.ttf");
+}
+
 body {
   font-family: "Helvetica Neue W23 for SKY Reg";
   padding-top: 55px;
@@ -30,6 +35,10 @@ body {
 
 ::-webkit-scrollbar-track {
   background: #fff;
+}
+footer a ,
+a.navbar-brand {
+  font-family: Qahiri;
 }
 
 ._modal-fasting,
@@ -434,8 +443,12 @@ button.navbar-toggler[aria-expanded="true"] {
   .table {
     display: inline-table !important;
   }
+
+  .calender-year-grid {
+    page-break-after: always;
+  }
   .calender-year-grid > div {
-    gap: 0 0.5rem !important;
+    gap: 0 0.15rem !important;
   }
   .tab-control,
   .year-controls button,
@@ -467,6 +480,9 @@ button.navbar-toggler[aria-expanded="true"] {
   .calender-year-grid > div h4 {
     top: 2px;
     font-size: 1.1rem;
+  }
+  .calender-year-grid > div span {
+    font-size: 0.8rem;
   }
   .prayer-title {
     margin: 0;
@@ -732,9 +748,9 @@ themes li[data-theme="اسم المود"] {
   margin: 0;
 }
 .table-style-grid h4 small {
-  font-size: .8rem;
-    color: #6a1b9a;
-    font-weight: 500;
+  font-size: 0.8rem;
+  color: #6a1b9a;
+  font-weight: 500;
 }
 .timer {
   background: #ffc107;

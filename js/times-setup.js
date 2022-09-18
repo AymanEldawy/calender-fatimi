@@ -12,7 +12,6 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
 
-  
   let sunrise = sunriseStr.split(":");
   let sunset = sunsetStr.split(":");
 
@@ -117,7 +116,8 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
         start,
         end,
         planet: weeks[`${new Date(selectedDate).getDay()}light`][i],
-        nextPlanet: weeks[`${(new Date(selectedDate).getDay() + 1) % 7}night`][0],
+        nextPlanet:
+          weeks[`${(new Date(selectedDate).getDay() + 1) % 7}night`][0],
       });
     else
       allHours.push({
@@ -299,7 +299,11 @@ function getSunriseTime() {
   let minutes = date.getMinutes();
   if (
     `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >
-    parseInt(sunset)
+    parseInt(
+      `${sunset[0].toString().padStart(2, 0)}${sunset[1]
+        .toString()
+        .padStart(2, 0)}`
+    )
   ) {
     let tomorrow = date.setDate(date.getDate() + 1);
     latAndLong.dayDate = new Date(tomorrow)
