@@ -43,7 +43,7 @@ function getFastingDays(month) {
 function closestFast(all = false) {
   let fastingListYear = [];
   for (let i = 1; i <= 12; i++) {
-    if (i === 10) continue;
+    if (i === 9) continue;
     fastingListYear.push(...getFastingDays(i));
     console.log(i);
   }

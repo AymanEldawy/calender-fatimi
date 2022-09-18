@@ -140,6 +140,7 @@
             السنة السابق
           </button>
           <h2 id="theYear" class="mb-0"></h2>
+          <span id="yearIsLeap" class="text-success"></span>
           <button class="btn btn-primary" id="goNextYear" data-next="Year">
             السنة التالي
           </button>
@@ -165,32 +166,32 @@
           <p id="theDateGer" class="lead"></p>
         </div>
         <div
-          class="calender-page-controls d-flex align-items-center justify-content-between"
+          class="calender-page-controls d-flex align-items-center justify-content-center"
         >
           <div class="controls-by d-flex align-items-center">
-            <span id="goPrev">
-              <i class="gg-chevron-right"></i>
-            </span>
             <button class="btn btn-sm btn-primary hide mx-2" id="today">
               اليوم
             </button>
+            <span id="goPrev" class="mx-2">
+              <i class="gg-chevron-right"></i>
+            </span>
+            <div class="controls-by-month d-flex">
+              <div class="change-by-year d-flex align-items-center">
+                <input
+                  type="text"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                  class="form-control"
+                  id="changeByYear"
+                  placeholder="أدخل السنة"
+                />
+                <button id="btnChangeByYear" class="btn btn-primary mx-2">
+                  أبحث
+                </button>
+              </div>
+            </div>
             <span id="goNext">
               <i class="gg-chevron-right __left"></i>
             </span>
-          </div>
-          <div class="controls-by-month d-flex">
-            <div class="change-by-year d-flex align-items-center">
-              <input
-                type="text"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                class="form-control"
-                id="changeByYear"
-                placeholder="أدخل السنة"
-              />
-              <button id="btnChangeByYear" class="btn btn-primary mx-2">
-                أبحث
-              </button>
-            </div>
           </div>
         </div>
         <div class="table-style">

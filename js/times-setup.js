@@ -7,7 +7,6 @@ let elActive = null;
 function planetTimings(latitude, longitude, selectedDate = new Date()) {
   let allHours = [];
   let sunCalc = SunCalc.getTimes(new Date(selectedDate), latitude, longitude);
-
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
@@ -111,7 +110,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       "sunrise",
       parseInt(valuePlusLight)
     );
-    if (i == 11)
+    if (i == 11) {
       allHours.push({
         start,
         end,
@@ -119,7 +118,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
         nextPlanet:
           weeks[`${(new Date(selectedDate).getDay() + 1) % 7}night`][0],
       });
-    else
+    } else
       allHours.push({
         start,
         end,
@@ -143,20 +142,21 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       "sunset",
       parseInt(valuePlusNight)
     );
-    if (i == 11)
+    if (i == 11) {
       allHours.push({
         start,
         end,
         planet: weeks[`${new Date(selectedDate).getDay()}night`][i],
         nextPlanet: weeks[`${new Date(selectedDate).getDay()}light`][0],
       });
-    else
+    } else {
       allHours.push({
         start,
         end,
         planet: weeks[`${new Date(selectedDate).getDay()}night`][i],
         nextPlanet: weeks[`${new Date(selectedDate).getDay()}night`][i + 1],
       });
+    }
   }
 
   let date = new Date();
@@ -176,7 +176,6 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
     let isBig = parseInt(timeCheckBig) < parseInt(`${hours}${minutes}`);
     let isLess = parseInt(timeCheckLess) >= parseInt(`${hours}${minutes}`);
     let MatchPmOrAm = allHours[i].start.match(/AM|PM/);
-    let thePlanetNow = {};
     if (
       allHours[i].end.indexOf(MatchPmOrAm[0]) === -1 &&
       parseInt(allHours[i].start.split(":").join("")) <= `${hours}${minutes}`
@@ -205,12 +204,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       isBig = parseInt(timeCheckBig) < parseInt(`${hours}3${minutes}`);
     }
     if (check && isBig && isLess) {
-      thePlanetNow = {
-        start: allHours[i].start,
-        end: allHours[i].end,
-      };
       elActive = allHours[i];
-      break;
     }
   }
 
@@ -285,15 +279,13 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 function getSunriseTime() {
-  planetTimings(latAndLong.latitude, latAndLong.longitude);
-
   let suncalc = SunCalc.getTimes(
     new Date(),
     latAndLong.latitude,
     latAndLong.longitude
   );
   let sunsetStr = suncalc.sunset.getHours() + ":" + suncalc.sunset.getMinutes();
-  let sunset = sunsetStr.split(":").join("");
+  let sunset = sunsetStr.split(":");
   let date = new Date();
   let hours = date.getHours();
   let minutes = date.getMinutes();
@@ -306,12 +298,12 @@ function getSunriseTime() {
     )
   ) {
     let tomorrow = date.setDate(date.getDate() + 1);
-    latAndLong.dayDate = new Date(tomorrow)
-      .toLocaleDateString("en-UK")
-      .replace(/\//g, "-")
-      .split("-")
-      .reverse()
-      .join("-");
+    planetTimings(
+      latAndLong.latitude,
+      latAndLong.longitude,
+      new Date(tomorrow)
+    );
+  } else {
     planetTimings(
       latAndLong.latitude,
       latAndLong.longitude,
@@ -319,4 +311,5 @@ function getSunriseTime() {
     );
   }
 }
+
 getSunriseTime();

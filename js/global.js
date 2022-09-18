@@ -99,22 +99,22 @@ export const globalEvents = [
     deletable: false,
   },
   {
-    title: "الاول من رمضان",
+    title: "الاول من شهر رمضان",
     date: toDateGregorian({ month: 9, day: 1 }),
     deletable: false,
   },
   {
-    title: "السابع عشر من رمضان",
+    title: "السابع عشر من شهر رمضان",
     date: toDateGregorian({ month: 9, day: 17 }),
     deletable: false,
   },
   {
-    title: "التاسع عشر من رمضان",
+    title: "التاسع عشر من شهر رمضان",
     date: toDateGregorian({ month: 9, day: 19 }),
     deletable: false,
   },
   {
-    title: "الواحد و العشرون من رمضان",
+    title: "الواحد و العشرون من شهر رمضان",
     date: toDateGregorian({ month: 9, day: 21 }),
     deletable: false,
   },
@@ -383,6 +383,7 @@ function createEventModal() {
   eventModal.className = "_modal hide";
   eventModal.innerHTML = `
     <div class="events-page">
+    <p class="alert alert-danger mb-3"><b>تنبيه:</b> المناسبات الخاصة التي تتم اضافتها سوف  تحذف عند ازالة المعلومات التي بالمتصفح</p>
       <div class="modal-tabs">
         <button id="tab-events-btn" class="active">المناسبات</button>
         <button id="tab-days-btn">المناسبات الخاصة</button>

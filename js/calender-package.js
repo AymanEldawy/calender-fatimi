@@ -127,6 +127,7 @@ function displayYearInfo(year) {
 window.addEventListener("DOMContentLoaded", () => {
   displayCalenderGrid();
   displayCalenderYear();
+
   document.getElementById(
     "theYear"
   ).textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
@@ -173,9 +174,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector("span .gg-printer")
     .addEventListener("click", () => window.print());
-  document
-    .getElementById("thisYear")
-    .addEventListener("click", __thisYear);
+  document.getElementById("thisYear").addEventListener("click", __thisYear);
 });
 
 window.addEventListener("click", (e) => {
@@ -508,9 +507,15 @@ function displayCalenderYear(year) {
     item = document.getElementById(`month-box-${i + 1}`);
     displayCalenderGridYear(gregorian, item);
   }
-  document.getElementById(
-    "theYear"
-  ).textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
+  let yearIsLeap = Calender.leapYears.includes(
+    Calender.theCurrentDate.yearHijri % 210
+  )
+    ? true
+    : false;
+
+  document.getElementById("theYear").innerHTML = `${
+    Calender.theCurrentDate.yearHijri
+  } هـ  ${yearIsLeap ? `<small class="text-danger">كبيسة</small>` : ""} `;
 }
 
 function goNextYear() {
@@ -547,5 +552,4 @@ function __thisYear(e) {
   Calender.theCurrentDate.yearHijri = year;
   displayCalenderYear(year);
   e.target.classList.add("hide");
-
 }

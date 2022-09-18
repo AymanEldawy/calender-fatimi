@@ -1,25 +1,20 @@
-@import url(//db.onlinewebfonts.com/c/2e6ae3642c879522873a28ede1eaac69?family=Helvetica+Neue+W23+for+SKY+Reg);
 @font-face {
-  font-family: "Helvetica Neue W23 for SKY Reg";
-  src: url("//db.onlinewebfonts.com/t/2e6ae3642c879522873a28ede1eaac69.eot");
-  src: url("//db.onlinewebfonts.com/t/2e6ae3642c879522873a28ede1eaac69.eot?#iefix")
-      format("embedded-opentype"),
-    url("//db.onlinewebfonts.com/t/2e6ae3642c879522873a28ede1eaac69.woff2")
-      format("woff2"),
-    url("//db.onlinewebfonts.com/t/2e6ae3642c879522873a28ede1eaac69.woff")
-      format("woff"),
-    url("//db.onlinewebfonts.com/t/2e6ae3642c879522873a28ede1eaac69.ttf")
-      format("truetype"),
-    url("//db.onlinewebfonts.com/t/2e6ae3642c879522873a28ede1eaac69.svg#Helvetica Neue W23 for SKY Reg")
-      format("svg");
+  font-family: "Qahiri";
+  src: url("fonts/Qahiri-Regular.ttf");
 }
 @font-face {
-  font-family: 'Qahiri';
-  src: url("Qahiri-Regular.ttf");
+  font-family: "tajawal";
+  src: url("fonts/Tajawal-Black.ttf");
+  src: url("fonts/Tajawal-Bold.ttf");
+  src: url("fonts/Tajawal-ExtraBold.ttf");
+  src: url("fonts/Tajawal-ExtraLight.ttf");
+  src: url("fonts/Tajawal-Light.ttf");
+  src: url("fonts/Tajawal-Medium.ttf");
+  src: url("fonts/Tajawal-Regular.ttf");
 }
 
 body {
-  font-family: "Helvetica Neue W23 for SKY Reg";
+  font-family: tajawal, Arial, Helvetica, sans-serif;
   padding-top: 55px;
   counter-reset: section;
   background: #d7dee1;
@@ -36,7 +31,7 @@ body {
 ::-webkit-scrollbar-track {
   background: #fff;
 }
-footer a ,
+footer a,
 a.navbar-brand {
   font-family: Qahiri;
 }
@@ -156,6 +151,10 @@ ul.events.text-center {
   left: 0;
   width: 100%;
 }
+.navbar-dark .navbar-brand {
+  font-size: 1.5rem;
+  margin-top: -5px;
+}
 @media (max-width: 767px) {
   .navbar-dark .navbar-brand {
     font-size: 1rem;
@@ -185,6 +184,10 @@ ul.events.text-center {
 footer .container {
   position: relative;
   /* max-width: 900px !important; */
+}
+.container {
+  max-width: 700px;
+  min-width: 300px;
 }
 div#collapsibleNavId {
   position: absolute;
@@ -715,12 +718,9 @@ themes li[data-theme="اسم المود"] {
   margin: 2rem auto 0;
   padding: 0.2rem 1rem;
   white-space: nowrap;
-  color: #2b2b2b;
+  background: #2b2b2b;
   cursor: pointer;
-}
-.table-style:nth-of-type(2) span.table-style-value {
-  font-weight: bold;
-  font-size: 1.5rem;
+  color: #fff;
 }
 .table-style span.table-style-type {
   position: absolute;
