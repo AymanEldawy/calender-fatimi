@@ -32,12 +32,6 @@ body {
   background: #fff;
 }
 
-.open-events-modal {
-  background: #fff;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
 ._modal-fasting,
 ._modal-days,
 ._modal {
@@ -403,7 +397,6 @@ button.navbar-toggler[aria-expanded="true"] {
 }
 
 @media only screen and (max-width: 575px) {
-  
   .table:not(.tab-content .table) {
     background-color: #fff;
     display: block;
@@ -439,10 +432,10 @@ button.navbar-toggler[aria-expanded="true"] {
     padding: 0;
   }
   .table {
-    display: inline-table !important
+    display: inline-table !important;
   }
   .calender-year-grid > div {
-    gap: 0 .5rem !important;
+    gap: 0 0.5rem !important;
   }
   .tab-control,
   .year-controls button,
@@ -504,7 +497,6 @@ button.navbar-toggler[aria-expanded="true"] {
     background: #e9e9ef;
   }
 }
-
 
 /* Locations */
 
@@ -670,10 +662,12 @@ themes li[data-theme="اسم المود"] {
 }
 .table-style:last-of-type {
   gap: 1rem;
+  align-items: flex-start;
 }
 .table-style:first-of-type .table-style-item {
   cursor: pointer;
 }
+#closestEvent:hover,
 #closestFasting:hover,
 .table-style:first-of-type .table-style-item:hover {
   background: #f2f2f2;
@@ -702,12 +696,15 @@ themes li[data-theme="اسم المود"] {
 }
 .table-style-item span.table-style-value {
   width: fit-content;
-  margin: 0.5rem auto 0;
+  margin: 2rem auto 0;
   padding: 0.2rem 1rem;
   white-space: nowrap;
-  color: #fff;
-  background: #2b2b2b;
+  color: #2b2b2b;
   cursor: pointer;
+}
+.table-style:nth-of-type(2) span.table-style-value {
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 .table-style span.table-style-type {
   position: absolute;
@@ -720,6 +717,36 @@ themes li[data-theme="اسم المود"] {
   color: #fff;
   padding: 0.25rem;
 }
+.table-style-grid {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  width: 100%;
+  align-items: center;
+}
+.table-style-grid:first-of-type {
+  margin-top: 1.5rem;
+}
+.table-style-grid h4 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+.table-style-grid h4 small {
+  font-size: .8rem;
+    color: #6a1b9a;
+    font-weight: 500;
+}
+.timer {
+  background: #ffc107;
+  max-width: fit-content;
+  padding: 0.25rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+}
+.timer.completed {
+  background: #e2e2e2;
+}
+
 #closestEvent,
 #closestFasting {
   padding-top: 1.5rem;

@@ -120,11 +120,18 @@ window.addEventListener("DOMContentLoaded", () => {
     bigCenturyName[parseInt(yearCalc / 210)];
   prayerTimingDay();
 });
-function displayClosestEvent(event) {
-  document.querySelector("#closestEvent h4").innerHTML = event.title;
-  document.querySelector("#closestEvent .timer").innerHTML = `
-      <span class="timer-style">${calculateDate(event.date)}</span>
-  `;
+function displayClosestEvent(events) {
+  let eventsContainer = document.getElementById("closestEvent");
+  let count = events.length > 3 ? 3 : events.length;
+  for (let i = 0; i < count; i++) {
+    let grid = document.createElement("div");
+    grid.className = "table-style-grid";
+    grid.innerHTML = `
+      <h4>${events[i].title}</h4>
+      <span class="timer-style timer">${calculateDate(events[i].date)}</span>
+    `;
+    eventsContainer.append(grid);
+  }
 }
 function testMonthDays() {
   const yearNumber = theCurrentDate.getCurrentYearHijri() % 210;
@@ -132,12 +139,13 @@ function testMonthDays() {
     theCurrentDate.getCurrentMonthHijri(),
     yearNumber
   );
+  let list = [];
   for (let eventDate of globalEvents) {
     if (!(Date.parse(new Date()) > Date.parse(eventDate.date))) {
-      displayClosestEvent(eventDate);
-      break;
+      list.push(eventDate);
     }
   }
+  displayClosestEvent(list);
 }
 
 testMonthDays();

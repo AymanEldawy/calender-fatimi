@@ -232,8 +232,6 @@ window.addEventListener("DOMContentLoaded", () => {
     </li>
     `;
   });
-  menu.innerHTML += `<span class="open-events-modal">المناسبات</span>`;
-
   if (document.querySelector(".events-page .events")) {
     let eventsContainer = document.querySelector(".events-page .events");
     let daysContainer = document.getElementById("tab-days");

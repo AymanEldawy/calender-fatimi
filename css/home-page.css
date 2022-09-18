@@ -91,14 +91,6 @@ li.link {
   border: 1px solid #ccc8;
   border-radius: 0 0 0 20px;
 }
-.timer {
-  background: #ffc107;
-  max-width: fit-content;
-  margin: 0 auto;
-  padding: 0.25rem 1rem;
-  border-radius: 0.25rem;
-  font-size: 1rem;
-}
 
 .prayer-single h4 {
   margin: 0;
@@ -180,9 +172,9 @@ li.link {
   justify-content: center;
   border: 1px solid #ccc5;
   width: fit-content;
-  margin: 0.5rem auto 0;
+  margin: 2rem auto 0;
   /* box-shadow: 0 1px 5px #0000002b inset; */
-  background: #d3d1d1;
+  background: #d3d1d157;
   padding-top: 2px;
 }
 #timeNowTimer span:first-child {
@@ -227,14 +219,26 @@ span.status-bad ~ #timeNowTimer .flex-column span:first-child {
   background: #fff;
   padding: 1rem;
   box-shadow: 0 1px 4px #0005;
-  border-radius: 0.25rem;
+  gap: 1rem;
+  max-width: 400px;
+  max-height: 75vh;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .fasting-grid {
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 .fasting-item {
   position: relative;
   overflow: hidden;
   min-width: 250px;
   background: #f6f6f6;
-  margin-bottom: 1rem;
   padding: 0.5rem;
   border-radius: 0.25rem;
   border: 1px solid #ccc5;
@@ -243,4 +247,7 @@ span.status-bad ~ #timeNowTimer .flex-column span:first-child {
   font-size: 1.2rem;
   color: #111;
   font-weight: 500;
+}
+.open-events-modal * {
+  pointer-events: none;
 }
