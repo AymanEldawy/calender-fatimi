@@ -438,6 +438,12 @@ button.navbar-toggler[aria-expanded="true"] {
     padding: 0;
   }
 }
+.only-print {
+  display: none !important;
+}
+.only-print img {
+  mix-blend-mode: multiply;
+}
 
 @media print {
   body {
@@ -446,9 +452,8 @@ button.navbar-toggler[aria-expanded="true"] {
   .table {
     display: inline-table !important;
   }
-
-  .calender-year-grid {
-    page-break-after: always;
+  .table {
+    page-break-inside: avoid !important;
   }
   .calender-year-grid > div {
     gap: 0 0.15rem !important;
@@ -458,10 +463,13 @@ button.navbar-toggler[aria-expanded="true"] {
   title,
   #visitors,
   footer,
-  .prayer-controls button,
+  .prayer-controls,
   .navbar,
   .print {
-    display: none;
+    display: none !important;
+  }
+  .only-print {
+    display: flex !important; 
   }
   body {
     background-color: #d7dee1;
@@ -488,13 +496,7 @@ button.navbar-toggler[aria-expanded="true"] {
     font-size: 0.8rem;
   }
   .prayer-title {
-    margin: 0;
-  }
-  .prayer-controls {
-    justify-content: center !important;
-  }
-  .mini-container h2.prayer-title {
-    text-align: center !important;
+    display: none !important;
   }
   p.dateInsideList {
     text-align: center;

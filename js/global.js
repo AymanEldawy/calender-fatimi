@@ -59,12 +59,12 @@ export let latAndLong = {
 
 let links = [
   { fileName: "index.html", title: "الصفحة الرئيسية" },
-  { fileName: "times.html", title: "ساعات الليل و النهار" },
-  { fileName: "towers.html", title: "اعرف برجك" },
-  { fileName: "compare.html", title: "مقارنة بين الابراج" },
+  { fileName: "calender.html", title: "التقويم" },
+  { fileName: "times.html", title: "ساعات الليل" },
+  { fileName: "prayer-time.html", title: "أوقات الصلاة" },
   { fileName: "smath.html", title: "حساب الجمل" },
-  { fileName: "calender.html", title: "التقويم الفاطمي" },
-  { fileName: "prayer-time.html", title: "مواقيت الصلاة" },
+  { fileName: "towers.html", title: "اعرف برجك" },
+  { fileName: "compare.html", title: "المقارنة" },
 ];
 
 export const globalEvents = [
@@ -278,6 +278,12 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 window.addEventListener("click", (e) => {
+  if (
+    document.getElementById("collapsibleNavId").classList.contains("show") &&
+    !e.target.matches("#collapsibleNavId")
+  ) {
+    document.getElementById("collapsibleNavId").classList.remove("show");
+  }
   if (e.target.classList.contains("theme-color")) {
     let siblings = [...e.target.parentElement.children];
     siblings.forEach((sibling) => sibling.classList.remove("active"));
@@ -383,7 +389,6 @@ function createEventModal() {
   eventModal.className = "_modal hide";
   eventModal.innerHTML = `
     <div class="events-page">
-    <p class="alert alert-danger mb-3"><b>تنبيه:</b> المناسبات الخاصة التي تتم اضافتها سوف  تحذف عند ازالة المعلومات التي بالمتصفح</p>
       <div class="modal-tabs">
         <button id="tab-events-btn" class="active">المناسبات</button>
         <button id="tab-days-btn">المناسبات الخاصة</button>

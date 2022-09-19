@@ -127,9 +127,10 @@ input[type="color"] {
   padding-right: 50px;
   background: #fff;
 }
+
+
 .prayer-title img {
   max-width: 62px;
-  mix-blend-mode: multiply;
 }
 @media (max-width: 767px) {
   h2.prayer-title {
@@ -530,7 +531,7 @@ span.empty {
 }
 .tab-control button {
   border: none;
-  border-bottom: 2px solid;
+  border-bottom: 2px solid #ccc;
   transition: background 0.1s, color 0.2s ease-out;
 }
 .tab-control button.active {

@@ -42,7 +42,7 @@ async function displayPryerTime(date = new Date()) {
     document.querySelector(
       ".prayer-list .dateInsideList"
     ).textContent = `${monthName} ${HijriConfiguration.hijriYear}`;
-
+    document.getElementById('monthPrayer').textContent = `${monthName} ${HijriConfiguration.hijriYear}`;
   const yearNumber = HijriConfiguration.hijriYear % 210;
   let firstDayOfYear = Calender.daysFormat[Calender.century[yearNumber]];
   let firstWeekDayOfYear = firstDayOfYear.day; // weekday not used

@@ -3,10 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
 
-
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
     <title>مواقيت الصلاة</title>
     <link
       rel="stylesheet"
@@ -22,24 +28,23 @@
     <nav class="navbar navbar-dark bg-primary">
       <div class="container d-flex">
         <a class="navbar-brand" href="/">الفتح السليماني الأسماعيلي</a>
-        
+
         <!-- Themes -->
         <div id="theme">
-          <button id="changeTheme" data-title="تغيير الثيم" class="btn custom_tooltip"><i class="gg-color-picker"></i></button>
-          <ul class="themes hide">
-          </ul>
+          <button
+            id="changeTheme"
+            data-title="تغيير الثيم"
+            class="btn custom_tooltip"
+          >
+            <i class="gg-color-picker"></i>
+          </button>
+          <ul class="themes hide"></ul>
         </div>
         <!-- Themes -->
-        <button
-          id="autoLocation"
-          class="btn d-flex align-items-center"
-        >
+        <button id="autoLocation" class="btn d-flex align-items-center">
           <i class="gg-data"></i>
         </button>
-        <button
-          id="chooseLocation"
-          class="btn d-flex align-items-center"
-        >
+        <button id="chooseLocation" class="btn d-flex align-items-center">
           <i class="gg-track"></i>
         </button>
 
@@ -49,7 +54,9 @@
           data-toggle="collapse"
           data-target="#collapsibleNavId"
           aria-controls="collapsibleNavId"
-          aria-expanded="false" data-title="القائمة" class="custom_tooltip"
+          aria-expanded="false"
+          data-title="القائمة"
+          class="custom_tooltip"
           aria-label="Toggle navigation"
         >
           <i class="gg-menu"></i>
@@ -61,17 +68,26 @@
     </nav>
 
     <div class="container mini-container">
-        <h2 class="text-center prayer-title">
-          <img src="istockphoto-953738536-612x612.jpg" alt="" /> مواقيت الصلاة
-          <span class="print"><i class="gg-printer"></i></span>       
-
-        </h2>
+      <p class="only-print lead pt-2 d-flex align-items-center justify-content-between">
+        <span class="d-flex align-items-center">
+          <img style="max-width:40px; margin-right:.5rem" src="istockphoto-953738536-612x612.jpg" alt="" /> مواقيت الصلاة
+        </span>
+        <span id="monthPrayer">شهر رمضان</span>
+      </p>
+      <h2 class="text-center prayer-title">
+        <img src="istockphoto-953738536-612x612.jpg" alt="" /> مواقيت الصلاة
+        <span class="print"><i class="gg-printer"></i></span>
+      </h2>
       <div class="prayer-content open-single">
         <div class="prayer-list">
           <div class="prayer-controls">
-            <button class="btn btn-primary" id="goPrevMonth" data-prev="month">الشهر السابق</button>
+            <button class="btn btn-primary" id="goPrevMonth" data-prev="month">
+              الشهر السابق
+            </button>
             <p class="dateInsideList"></p>
-            <button class="btn btn-primary" id="goNextMonth" data-next="month">الشهر التالي</button>
+            <button class="btn btn-primary" id="goNextMonth" data-next="month">
+              الشهر التالي
+            </button>
           </div>
           <table class="table">
             <thead class="thead-style">
@@ -88,28 +104,33 @@
             </thead>
             <tbody></tbody>
           </table>
-         
         </div>
       </div>
     </div>
     <div class="visitors" id="visitors"></div>
     <footer>
-      <div class="container mini-container  text-center bg-light p-1">
+      <div class="container mini-container text-center bg-light p-1">
         <p class="m-0">
           جميع الحقوق محفوظة @ 2021
           <a class="text-info text-bold" href="/">الفتح السليماني الأسماعيلي</a>
         </p>
       </div>
     </footer>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
     <script
       src="https://rawgit.com/abdennour/hijri-date/master/cdn/hijri-date-latest.js"
       type="text/javascript"
@@ -117,7 +138,6 @@
     <script src="js/global.js" type="module"></script>
     <script src="js/visitors.bundle.js" type="module"></script>
     <script src="js/prayer-time.js" type="module"></script>
-    <script type="module">
-    </script>
+    <script type="module"></script>
   </body>
 </html>
