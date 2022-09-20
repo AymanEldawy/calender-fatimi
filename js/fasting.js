@@ -45,7 +45,6 @@ function closestFast(all = false) {
   for (let i = 1; i <= 12; i++) {
     if (i === 9) continue;
     fastingListYear.push(...getFastingDays(i));
-    console.log(i);
   }
   let storage = [];
   let stepOfCondition = 0;

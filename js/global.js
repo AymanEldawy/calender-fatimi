@@ -59,12 +59,12 @@ export let latAndLong = {
 
 let links = [
   { fileName: "index.html", title: "الصفحة الرئيسية" },
-  { fileName: "calender.html", title: "التقويم" },
-  { fileName: "times.html", title: "ساعات الليل" },
-  { fileName: "prayer-time.html", title: "أوقات الصلاة" },
+  { fileName: "calender.html", title: "التقويم السليماني" },
+  { fileName: "times.html", title: "ساعات الليل و النهار" },
+  { fileName: "prayer-time.html", title: "مواقيت الصلاة" },
   { fileName: "smath.html", title: "حساب الجمل" },
   { fileName: "towers.html", title: "اعرف برجك" },
-  { fileName: "compare.html", title: "المقارنة" },
+  { fileName: "compare.html", title: "المقارنة بين الابراج" },
 ];
 
 export const globalEvents = [

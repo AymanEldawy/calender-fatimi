@@ -210,7 +210,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
     /*Number*/ longitude
   );
 
-  console.log(selectedDate);
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();

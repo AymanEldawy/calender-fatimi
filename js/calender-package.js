@@ -41,9 +41,13 @@ function displayCalenderGrid(
     7; // calculate the first weekDay of month
   // Display information about date
   if (document.getElementById("theDate")) {
-    document.getElementById("theDate").textContent = `${
+    document.getElementById("theDate").innerHTML = `${
       Calender.months[HijriConfiguration.hijriMonth]
-    } ${HijriConfiguration.hijriYear}`;
+    } ${HijriConfiguration.hijriYear} ${
+      Calender.leapYears.includes(HijriConfiguration.hijriYear % 210)
+        ? "<small class='text-danger'>كبيسة</small>"
+        : ""
+    }`;
   }
   let setMonth = new Set();
   // Loop of month days
@@ -529,7 +533,6 @@ function goNextYear() {
   if (Calender.theCurrentDate.yearHijri !== year)
     thisYear.classList.remove("hide");
   else thisYear.classList.add("hide");
-  console.log(Calender.theCurrentDate.yearHijri, year);
 }
 function goPrevYear() {
   let year = parseInt(
@@ -539,7 +542,6 @@ function goPrevYear() {
 
   Calender.theCurrentDate.yearHijri -= 1;
   displayCalenderYear(Calender.theCurrentDate.yearHijri);
-  console.log(Calender.theCurrentDate.yearHijri, year);
   if (Calender.theCurrentDate.yearHijri !== year)
     thisYear.classList.remove("hide");
   else thisYear.classList.add("hide");
