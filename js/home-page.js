@@ -56,11 +56,6 @@ window.addEventListener("DOMContentLoaded", () => {
   );
   document.getElementById("bigCentury").innerHTML =
     bigCenturyName[parseInt(yearCalc / 210)];
-  prayerTimingDay();
-  displayGridFasting();
-  displayClosestFasting(); // now show
-  getAllFastingDays(); // now show
-  displayRowFirstDayOfMonth(); // now show
 });
 
 window.addEventListener("click", (e) => {
@@ -184,7 +179,6 @@ async function prayerTimingDay(date = new Date()) {
 }
 
 // Fasting
-
 function getFastingDays(month) {
   let FastingDays = [];
   let theYear = theCurrentDate.getCurrentYearHijri();
@@ -278,3 +272,9 @@ function displayGridFasting() {
     `;
   }
 }
+
+prayerTimingDay();
+displayGridFasting();
+displayClosestFasting(); // now show
+getAllFastingDays(); // now show
+displayRowFirstDayOfMonth(); // now show
