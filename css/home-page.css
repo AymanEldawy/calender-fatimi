@@ -125,13 +125,18 @@ li.link {
   padding: 0.2rem 0.5rem;
 }
 
-.row-first-days {
-  display: flex;
-  justify-content: space-between;
+._modal-content {
   background: #fff;
   padding: 0.5rem;
   border-radius: 0.25rem;
+}
+.row-first-days {
   flex-direction: column;
+  justify-content: space-between;
+  display: flex;
+  max-height: 75vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .row-first-days div {
   display: flex;
@@ -215,15 +220,17 @@ span.status-bad ~ #timeNowTimer .flex-column span:first-child {
   background-color: #f44336;
 }
 
-.fasting-grid {
+.fasting-modal {
   background: #fff;
   padding: 1rem;
   box-shadow: 0 1px 4px #0005;
-  gap: 1rem;
+  border-radius: 0.5rem;
+}
+.fasting-grid {
   max-width: 400px;
   max-height: 75vh;
   overflow-y: auto;
-  border-radius: 0.5rem;
+  gap: 1rem;
   display: grid;
   grid-template-columns: 1fr;
 }

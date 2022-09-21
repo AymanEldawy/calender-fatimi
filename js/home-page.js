@@ -9,11 +9,7 @@ import {
   countDayOfMonth,
 } from "./calender-setup.js";
 
-import {
-  calculateDate,
-  globalEvents,
-  storageLocation,
-} from "./global.js";
+import { calculateDate, globalEvents, storageLocation } from "./global.js";
 import SunCalc from "./suncalc.js";
 import { prayerTimings } from "./prayer-timings.js";
 
@@ -88,7 +84,6 @@ window.addEventListener("DOMContentLoaded", () => {
   displayGridFasting();
   prayerTimingDay();
   getAllFastingDays();
-
 
   displayRowFirstDayOfMonth();
   let theHours = new Date().getHours();
@@ -192,10 +187,7 @@ async function prayerTimingDay(date = new Date()) {
   `;
 }
 
-
-
-// Fasting 
-
+// Fasting
 
 function getFastingDays(month) {
   let FastingDays = [];
@@ -276,9 +268,11 @@ function displayClosestFasting() {
 
 function displayGridFasting() {
   let fastingList = closestFast(true);
+  let fastModal = document.createElement("div");
   let fastGrid = document.createElement("div");
+  fastModal.className = "fasting-modal";
   fastGrid.className = "fasting-grid";
-
+  fastModal.innerHTML = `<div class="modal-tabs"><h4 class="_modal-title">الصيام</h4></div>`;
   for (let fast of fastingList) {
     let date = new Date(fast.date).toLocaleDateString("ar-SA", {
       day: "numeric",
@@ -294,5 +288,6 @@ function displayGridFasting() {
       
     `;
   }
-  document.querySelector("._modal-fasting").appendChild(fastGrid);
+  fastModal.appendChild(fastGrid);
+  document.querySelector("._modal-fasting").appendChild(fastModal);
 }

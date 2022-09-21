@@ -64,11 +64,13 @@ a.navbar-brand {
   display: flex;
   border-bottom: 2px solid #ccc;
 }
-._modal button {
+._modal-title,
+button {
   flex: 1;
   border: none;
   white-space: nowrap;
 }
+._modal-title,
 ._modal button.active {
   color: #ff9800;
   font-size: 1.2rem;
@@ -79,6 +81,10 @@ a.navbar-brand {
   transform: translateY(2px);
   pointer-events: none;
 }
+._modal-title {
+  margin-bottom: .5rem;
+}
+
 ._modal .events {
   display: grid;
   grid-template-columns: 1fr;
