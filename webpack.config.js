@@ -10,7 +10,6 @@ module.exports = {
     homePage: "./js/home-page.js",
     calenderBox: "./js/calender-box.js",
     calenderPackage: "./js/calender-package.js",
-    fasting: "./js/fasting.js",
     visitors: "./js/visitors.js",
   },
   output: {
