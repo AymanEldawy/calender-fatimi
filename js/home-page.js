@@ -80,12 +80,6 @@ function resetDate(theNewDate) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  displayClosestFasting();
-  displayGridFasting();
-  prayerTimingDay();
-  getAllFastingDays();
-
-  displayRowFirstDayOfMonth();
   let theHours = new Date().getHours();
   document.getElementById("date").textContent = `${resetDate(
     new Date()
@@ -114,6 +108,11 @@ window.addEventListener("DOMContentLoaded", () => {
   );
   document.getElementById("bigCentury").innerHTML =
     bigCenturyName[parseInt(yearCalc / 210)];
+  prayerTimingDay();
+  displayGridFasting();
+  displayClosestFasting();
+  displayRowFirstDayOfMonth();
+  getAllFastingDays();
 });
 
 function displayClosestEvent(events) {
