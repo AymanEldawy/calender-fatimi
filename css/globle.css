@@ -65,13 +65,13 @@ a.navbar-brand {
   border-bottom: 2px solid #ccc;
 }
 ._modal-title,
-button {
+.modal-tabs button {
   flex: 1;
   border: none;
   white-space: nowrap;
 }
 ._modal-title,
-._modal button.active {
+.modal-tabs button.active {
   color: #ff9800;
   font-size: 1.2rem;
   font-weight: bold;

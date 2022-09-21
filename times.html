@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
 
     <link
       rel="stylesheet"
@@ -42,15 +45,28 @@
 
         <!-- Themes -->
         <div id="theme">
-          <button id="changeTheme" data-title="تغيير الثيم" class="btn custom_tooltip"><i class="gg-color-picker"></i></button>
-          <ul class="themes hide">
-          </ul>
+          <button
+            id="changeTheme"
+            data-title="تغيير الثيم"
+            class="btn custom_tooltip"
+          >
+            <i class="gg-color-picker"></i>
+          </button>
+          <ul class="themes hide"></ul>
         </div>
         <!-- Themes -->
-        <button id="autoLocation" data-title="تحديد الموقع تلقائيا" class="custom_tooltip btn d-flex align-items-center">
+        <button
+          id="autoLocation"
+          data-title="تحديد الموقع تلقائيا"
+          class="custom_tooltip btn d-flex align-items-center"
+        >
           <i class="gg-data"></i>
         </button>
-        <button id="chooseLocation" data-title="اختيار الموقع يدويا" class="custom_tooltip btn d-flex align-items-center">
+        <button
+          id="chooseLocation"
+          data-title="اختيار الموقع يدويا"
+          class="custom_tooltip btn d-flex align-items-center"
+        >
           <i class="gg-track"></i>
         </button>
 
@@ -60,12 +76,13 @@
           data-toggle="collapse"
           data-target="#collapsibleNavId"
           aria-controls="collapsibleNavId"
-          aria-expanded="false" data-title="القائمة" class="custom_tooltip"
+          aria-expanded="false"
+          data-title="القائمة"
+          class="custom_tooltip"
           aria-label="Toggle navigation"
         >
           <i class="gg-menu"></i>
         </button>
-
 
         <div class="collapse" id="collapsibleNavId">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0"></ul>
@@ -347,9 +364,9 @@
       src="https://rawgit.com/abdennour/hijri-date/master/cdn/hijri-date-latest.js"
       type="text/javascript"
     ></script>
-    <script src="dist/global.bundle.js"></script>
-    <script src="dist/visitors.bundle.js"></script>
-    <script src="dist/calenderBox.bundle.js"></script>
-    <script src="dist/sunriseTime.bundle.js"></script>
+    <script src="js/global.js" type="module"></script>
+    <script src="js/visitors.bundle.js"></script>
+    <script src="js/calender-box.js" type="module"></script>
+    <script src="js/sunrise-time.js" type="module"></script>
   </body>
 </html>
