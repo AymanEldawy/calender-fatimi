@@ -232,6 +232,7 @@ window.addEventListener("DOMContentLoaded", () => {
     </li>
     `;
   });
+
   if (document.querySelector(".events-page .events")) {
     let eventsContainer = document.querySelector(".events-page .events");
     let daysContainer = document.getElementById("tab-days");

@@ -21,7 +21,12 @@
     <link rel="stylesheet" href="css/home-page.css" />
   </head>
   <body>
-    <div class="_modal-fasting hide"></div>
+    <div class="_modal-fasting hide">
+      <div class="fasting-modal">
+        <div class="modal-tabs"><h4 class="_modal-title">الصيام</h4></div>
+        <div class="fasting-grid"></div>
+      </div>
+    </div>
     <div class="_modal-days hide">
       <div class="_modal-content">
         <h4 class="_modal-title">بداية الشهور</h4>
@@ -123,9 +128,11 @@
           <div class="table-style">
             <div class="table-style-item open-events-modal" id="closestEvent">
               <span class="table-style-type">المناسبات</span>
+              <div class="table-grid"></div>
             </div>
             <div class="table-style-item" id="closestFasting">
               <span class="table-style-type">الصيام </span>
+              <div class="table-grid"></div>
             </div>
           </div>
         </div>
@@ -161,7 +168,7 @@
     ></script>
     <script src="js/times-setup.js" type="module"></script>
     <script src="js/global.js" type="module"></script>
-    <script src="js/visitors.bundle.js"></script>
     <script src="js/home-page.js" type="module"></script>
+    <script src="js/visitors.bundle.js"></script>
   </body>
 </html>
