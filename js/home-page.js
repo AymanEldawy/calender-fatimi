@@ -121,48 +121,43 @@ window.addEventListener("DOMContentLoaded", () => {
   let theYear = theCurrentDate.getCurrentYearHijri();
   const yearNumber = theYear % 210;
   // Loop of month days
-  function getDaysMonth(month) {
-    let FastingDays = [];
-    let monthCount = countDayOfMonth(month, yearNumber);
-
+  let fastingListYear = [];
+  for (let index = 1; index <= 12; index++) {
+    if (index === 9) continue;
+    let monthCount = countDayOfMonth(index, yearNumber);
     for (let i = 1; i <= monthCount; i++) {
       let startLastThr = monthCount > 29 ? 24 : 23;
-      let _hijri = new HijriDate(theYear, month, i);
+      let _hijri = new HijriDate(theYear, index, i);
       let gregorian = _hijri.toGregorian();
       let GregorianDateIncrement = new Date(gregorian);
       let weekDay = GregorianDateIncrement.toLocaleDateString("ar-SA", {
         weekday: "long",
       });
       if (weekDay === "الخميس" && i <= 7) {
-        FastingDays.push({
+        fastingListYear.push({
           title: "اول خميس",
           date: GregorianDateIncrement,
-          month: months[month],
+          month: months[index],
         });
       }
       if (weekDay === "الأربعاء" && i >= 12 && i <= 18) {
-        FastingDays.push({
+        fastingListYear.push({
           title: "اوسط أربعاء",
           date: GregorianDateIncrement,
-          month: months[month],
+          month: months[index],
         });
       }
       if (weekDay === "الخميس" && i >= startLastThr && i <= monthCount) {
-        FastingDays.push({
+        fastingListYear.push({
           title: "أخر خميس",
           date: GregorianDateIncrement,
-          month: months[month],
+          month: months[index],
         });
       }
     }
-    return FastingDays;
-  }
-  let fastingListYear = [];
-  for (let i = 1; i <= 12; i++) {
-    if (i === 9) continue;
-    fastingListYear.push(...getDaysMonth(i));
-  }
 
+
+  }
   let stepOfCondition = 0;
   let fastGrid = document.querySelector(".fasting-grid");
   let fastingContainer = document.querySelector("#closestFasting .table-grid");
