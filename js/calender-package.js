@@ -309,6 +309,7 @@ function enterYear() {
   let hijri = new HijriDate(+year.value, 1, 1);
   let gregorian = hijri.toGregorian();
   displayCalenderGrid(gregorian);
+  changeMonthActive(1)
   Calender.theCurrentDate.gregorianDate = gregorian;
   let thisYear = Calender.a2e(
     new Date().toLocaleDateString("ar-SA", { year: "numeric" })
