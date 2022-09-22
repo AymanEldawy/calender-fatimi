@@ -263,8 +263,8 @@ window.addEventListener("DOMContentLoaded", () => {
     });
     let events = storageLocation.fetchEvents();
     let specificEvents = events.filter((event) => event.deletable === true);
-    if(specificEvents.length < 1)
-      daysContainer.innerHTML = `<div class="alert alert-info">لاضافة اي مناسبة خاصة عن طريق التقويم الفاطمي</div>`
+    if (specificEvents.length < 1)
+      daysContainer.innerHTML = `<div class="alert alert-info">لاضافة اي مناسبة خاصة عن طريق التقويم الفاطمي</div>`;
     specificEvents.forEach((event) => {
       let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
         year: "numeric",
@@ -284,6 +284,52 @@ window.addEventListener("DOMContentLoaded", () => {
         ${calculateDate(event.date)}
       `;
     });
+  }
+
+  if (document.querySelector(".fasting-grid")) {
+    // Fasting
+    let stepOfCondition = 0;
+    let fastings = storageLocation.fetchFastings();
+    document.getElementById('closestFasting').style.background = '#fff022'
+    let fastingContainer = document.querySelector(
+      "#closestFasting .table-grid"
+    );
+    for (let index = 0; index < fastings.length; index++) {
+      // three closest fasting days
+      if (
+        Date.parse(fastings[index].date) > Date.parse(new Date()) &&
+        stepOfCondition < 3
+      ) {
+        stepOfCondition++;
+        fastingContainer.innerHTML += `<div class= "table-style-grid">
+         <h4>${fastings[index].title} <small>${
+          fastings[index].month
+        }</small> </h4>
+         <span class="timer-style timer ${
+           Date.parse(fastings[index].date) > Date.parse(new Date())
+             ? ""
+             : "completed"
+         } ">${calculateDate(fastings[index].date)}</span>
+       </div>`;
+      }
+    }
+    let fastGrid = document.querySelector(".fasting-grid");
+    for (let fasting of fastings) {
+      // All fasting days in year
+      let date = new Date(fasting.date).toLocaleDateString("ar-SA", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      fastGrid.innerHTML += `
+     <div class="fasting-item">
+       <span>${calculateDate(fasting.date)}</span>
+       <p>${fasting.title}</p>
+       <span>${date}</span>
+     </div>
+     
+   `;
+    }
   }
 });
 window.addEventListener("click", (e) => {
