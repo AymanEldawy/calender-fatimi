@@ -101,7 +101,7 @@ window.addEventListener("DOMContentLoaded", () => {
     `;
   }
   // display the closest events
-  let eventsContainer = document.querySelector(".table-grid");
+  let eventsContainer = document.querySelector("#closestEvent .table-grid");
   let MAX_STEPS = 0;
   for (let index = 0; index < globalEvents.length; index++) {
     if (

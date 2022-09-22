@@ -1,7 +1,9 @@
 import { countDayOfMonth, theCurrentDate, months } from "./calender-setup.js";
-import { calculateDate } from "./global.js";
+import { calculateDate, storageLocation } from "./global.js";
 
-const getAllFastingDays = new Promise((resolve, reject) => {
+(function () {
+  let fastings = storageLocation.fetchFastings();
+  if (fastings.length > 0) return;
   let theYear = theCurrentDate.getCurrentYearHijri();
   const yearNumber = theYear % 210;
   // Loop of month days
@@ -18,21 +20,21 @@ const getAllFastingDays = new Promise((resolve, reject) => {
         weekday: "long",
       });
       if (weekDay === "الخميس" && i <= 7) {
-        fastingListYear.push({
+        fastings.push({
           title: "اول خميس",
           date: GregorianDateIncrement,
           month: months[index],
         });
       }
       if (weekDay === "الأربعاء" && i >= 12 && i <= 18) {
-        fastingListYear.push({
+        fastings.push({
           title: "اوسط أربعاء",
           date: GregorianDateIncrement,
           month: months[index],
         });
       }
       if (weekDay === "الخميس" && i >= startLastThr && i <= monthCount) {
-        fastingListYear.push({
+        fastings.push({
           title: "أخر خميس",
           date: GregorianDateIncrement,
           month: months[index],
@@ -40,47 +42,46 @@ const getAllFastingDays = new Promise((resolve, reject) => {
       }
     }
   }
-  resolve(fastingListYear);
-});
-// Fasting
-getAllFastingDays.then((fastingListYear) => {
+  storageLocation.saveFastings(fastings);
+})();
+window.addEventListener("DOMContentLoaded", () => {
+  let fastings = storageLocation.fetchFastings();
   let stepOfCondition = 0;
   let fastGrid = document.querySelector(".fasting-grid");
-  let fastingContainer = document.querySelector("#closestFasting .table-grid");
-  for (let index = 0; index < fastingListYear.length; index++) {
-    // three closest fasting days
-    if (
-      Date.parse(fastingListYear[index].date) > Date.parse(new Date()) &&
-      stepOfCondition < 3
-    ) {
-      stepOfCondition++;
-      fastingContainer.innerHTML += `<div class= "table-style-grid">
-         <h4>${fastingListYear[index].title} <small>${
-        fastingListYear[index].month
-      }</small> </h4>
-         <span class="timer-style timer ${
-           Date.parse(fastingListYear[index].date) > Date.parse(new Date())
-             ? ""
-             : "completed"
-         } ">${calculateDate(fastingListYear[index].date)}</span>
-       </div>`;
-    }
+  for (let fasting of fastings) {
     // All fasting days in year
-    let date = new Date(fastingListYear[index].date).toLocaleDateString(
-      "ar-SA",
-      {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }
-    );
+    let date = new Date(fasting.date).toLocaleDateString("ar-SA", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
     fastGrid.innerHTML += `
      <div class="fasting-item">
-       <span>${calculateDate(fastingListYear[index].date)}</span>
-       <p>${fastingListYear[index].title}</p>
+       <span>${calculateDate(fasting.date)}</span>
+       <p>${fasting.title}</p>
        <span>${date}</span>
      </div>
      
    `;
+  }
+  let fastingContainer = document.querySelector("#closestFasting .table-grid");
+  for (let index = 0; index < fastings.length; index++) {
+    // three closest fasting days
+    if (
+      Date.parse(fastings[index].date) > Date.parse(new Date()) &&
+      stepOfCondition < 3
+    ) {
+      stepOfCondition++;
+      fastingContainer.innerHTML += `<div class= "table-style-grid">
+         <h4>${fastings[index].title} <small>${
+        fastings[index].month
+      }</small> </h4>
+         <span class="timer-style timer ${
+           Date.parse(fastings[index].date) > Date.parse(new Date())
+             ? ""
+             : "completed"
+         } ">${calculateDate(fastings[index].date)}</span>
+       </div>`;
+    }
   }
 });

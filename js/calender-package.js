@@ -113,7 +113,6 @@ function displayCalenderGrid(
 }
 function displayYearInfo(year) {
   // Info year
-  console.log(year);
   document.getElementById("yearLeap").innerHTML = Calender.leapYears.includes(
     year % 210
   )
@@ -252,7 +251,6 @@ export function goPrev() {
         Calender.theCurrentDate.getCurrentYearHijri()
       )
   );
-  console.log(HIJRI_CONFIGURATION.hijriMonth)
   changeMonthActive(HIJRI_CONFIGURATION.hijriMonth % 12);
   displayCalenderGrid(theNewDate);
   Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
@@ -279,7 +277,6 @@ export function goNext() {
         Calender.theCurrentDate.getCurrentYearHijri()
       )
   );
-  console.log(HIJRI_CONFIGURATION.hijriMonth)
 
   changeMonthActive(HIJRI_CONFIGURATION.hijriMonth % 12);
 
@@ -314,11 +311,6 @@ function enterYear() {
   let thisYear = Calender.a2e(
     new Date().toLocaleDateString("ar-SA", { year: "numeric" })
   );
-  let thisYearEnter = Calender.a2e(
-    new Date(gregorian).toLocaleDateString("ar-SA", { year: "numeric" })
-  );
-  console.log(thisYear, thisYearEnter, hijri);
-
   if (parseInt(thisYear) === hijri._year) {
     document.getElementById("today").classList.add("hide");
   } else {

@@ -36,6 +36,13 @@ export let storageLocation = {
   saveEvents(events) {
     localStorage.setItem("events", JSON.stringify(events));
   },
+  fetchFastings() {
+    let fastings = JSON.parse(localStorage.getItem("fastings"));
+    return fastings && fastings.length ? fastings : [];
+  },
+  saveFastings(fastings) {
+    localStorage.setItem("fastings", JSON.stringify(fastings));
+  },
 };
 
 let theme = storageLocation.fetchTheme();
@@ -256,6 +263,8 @@ window.addEventListener("DOMContentLoaded", () => {
     });
     let events = storageLocation.fetchEvents();
     let specificEvents = events.filter((event) => event.deletable === true);
+    if(specificEvents.length < 1)
+      daysContainer.innerHTML = `<div class="alert alert-info">لاضافة اي مناسبة خاصة عن طريق التقويم الفاطمي</div>`
     specificEvents.forEach((event) => {
       let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
         year: "numeric",
