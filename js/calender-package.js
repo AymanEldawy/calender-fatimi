@@ -7,7 +7,6 @@ import {
 } from "./global.js";
 import SunCalc from "./suncalc.js";
 // Let storage
-let bigCenturyName = ["1", "2", "3", "4", "5", "6", "7"];
 
 let events = storageLocation.fetchEvents();
 const eventsExists = events.filter((event) => event.deletable === false);
@@ -114,18 +113,19 @@ function displayCalenderGrid(
 }
 function displayYearInfo(year) {
   // Info year
+  console.log(year);
   document.getElementById("yearLeap").innerHTML = Calender.leapYears.includes(
     year % 210
   )
     ? "نعم"
     : "لا";
+
   document.getElementById("firstDayOfYear").innerHTML =
     Calender.daysFormat[Calender.century[year % 210]].count + 1;
   document.getElementById("smallCentury").innerHTML = Calender.getCentury(
     parseInt(year % 210)
   );
-  document.getElementById("bigCentury").innerHTML =
-    bigCenturyName[parseInt(year / 210)];
+  document.getElementById("bigCentury").innerHTML = parseInt(year / 210);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -180,7 +180,15 @@ window.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", () => window.print());
   document.getElementById("thisYear").addEventListener("click", __thisYear);
 });
-
+function changeMonthActive(currentMonth) {
+  currentMonth = currentMonth == 0 ? 12 : currentMonth
+  Array.from(document.querySelectorAll("#listOfMonth button")).forEach(
+    (month, index) => {
+      if (currentMonth == index + 1) month.classList.add("active");
+      else month.classList.remove("active");
+    }
+  );
+}
 window.addEventListener("click", (e) => {
   if (e.target.matches(".tab-control button:first-child")) {
     document.getElementById("calenderTabs").classList.remove("__month");
@@ -244,6 +252,8 @@ export function goPrev() {
         Calender.theCurrentDate.getCurrentYearHijri()
       )
   );
+  console.log(HIJRI_CONFIGURATION.hijriMonth)
+  changeMonthActive(HIJRI_CONFIGURATION.hijriMonth % 12);
   displayCalenderGrid(theNewDate);
   Calender.theCurrentDate.gregorianDate = new Date(theNewDate);
   if (
@@ -269,6 +279,9 @@ export function goNext() {
         Calender.theCurrentDate.getCurrentYearHijri()
       )
   );
+  console.log(HIJRI_CONFIGURATION.hijriMonth)
+
+  changeMonthActive(HIJRI_CONFIGURATION.hijriMonth % 12);
 
   displayCalenderGrid(theNewDate);
   if (
@@ -297,6 +310,19 @@ function enterYear() {
   let gregorian = hijri.toGregorian();
   displayCalenderGrid(gregorian);
   Calender.theCurrentDate.gregorianDate = gregorian;
+  let thisYear = Calender.a2e(
+    new Date().toLocaleDateString("ar-SA", { year: "numeric" })
+  );
+  let thisYearEnter = Calender.a2e(
+    new Date(gregorian).toLocaleDateString("ar-SA", { year: "numeric" })
+  );
+  console.log(thisYear, thisYearEnter, hijri);
+
+  if (parseInt(thisYear) === hijri._year) {
+    document.getElementById("today").classList.add("hide");
+  } else {
+    document.getElementById("today").classList.remove("hide");
+  }
 }
 function changeMonth(e) {
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
@@ -323,6 +349,7 @@ export function __today() {
   document.getElementById("today").classList.add("hide");
   displayCalenderGrid();
   Calender.theCurrentDate.gregorianDate = new Date();
+  changeMonthActive(Calender.theCurrentDate.getCurrentMonthHijri());
 }
 
 function checkInputTitle(inputTitle) {
