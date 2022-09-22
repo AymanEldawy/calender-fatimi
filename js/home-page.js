@@ -79,10 +79,9 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("smallCentury").innerHTML = getCentury(
     parseInt(yearCalc % 210)
   );
-  document.getElementById("bigCentury").innerHTML = yearCalc / 210;
+  document.getElementById("bigCentury").innerHTML = parseInt(yearCalc / 210);
   prayerTimingDay();
 });
-
 
 window.addEventListener("click", (e) => {
   if (e.target.matches("._modal-days")) {

@@ -804,6 +804,7 @@ themes li[data-theme="اسم المود"] {
   padding: 0.25rem;
   opacity: 0;
   z-index: 99;
+  pointer-events: none
 }
 .custom_tooltip:hover::before {
   opacity: 1;
