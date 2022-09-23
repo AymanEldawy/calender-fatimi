@@ -13,7 +13,6 @@ import { calculateDate, globalEvents, storageLocation } from "./global.js";
 import SunCalc from "./suncalc.js";
 import { prayerTimings } from "./prayer-timings.js";
 
-
 const PrayerTimeDefault = {
   month: 0, //current month
   year: 0, //current year
@@ -22,6 +21,77 @@ const PrayerTimeDefault = {
 };
 let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault;
 
+const fastings = [
+  { title: "اول خميس", date: "2022-08-03T22:00:00.000Z", month: "محرم" },
+  { title: "اوسط أربعاء", date: "2022-08-09T22:00:00.000Z", month: "محرم" },
+  { title: "أخر خميس", date: "2022-08-24T22:00:00.000Z", month: "محرم" },
+  { title: "اول خميس", date: "2022-08-31T22:00:00.000Z", month: "صفر" },
+  { title: "اوسط أربعاء", date: "2022-09-13T22:00:00.000Z", month: "صفر" },
+  { title: "أخر خميس", date: "2022-09-21T22:00:00.000Z", month: "صفر" },
+  { title: "اول خميس", date: "2022-09-28T22:00:00.000Z", month: "ربيع الاول" },
+  {
+    title: "اوسط أربعاء",
+    date: "2022-10-11T22:00:00.000Z",
+    month: "ربيع الاول",
+  },
+  { title: "أخر خميس", date: "2022-10-19T22:00:00.000Z", month: "ربيع الاول" },
+  { title: "اول خميس", date: "2022-10-26T22:00:00.000Z", month: "ربيع الثاني" },
+  {
+    title: "اوسط أربعاء",
+    date: "2022-11-08T22:00:00.000Z",
+    month: "ربيع الثاني",
+  },
+  { title: "أخر خميس", date: "2022-11-16T22:00:00.000Z", month: "ربيع الثاني" },
+  {
+    title: "اول خميس",
+    date: "2022-11-23T22:00:00.000Z",
+    month: "جمادي الاولي",
+  },
+  {
+    title: "اوسط أربعاء",
+    date: "2022-12-06T22:00:00.000Z",
+    month: "جمادي الاولي",
+  },
+  {
+    title: "أخر خميس",
+    date: "2022-12-21T22:00:00.000Z",
+    month: "جمادي الاولي",
+  },
+  {
+    title: "اول خميس",
+    date: "2022-12-28T22:00:00.000Z",
+    month: "جمادي الثاني",
+  },
+  {
+    title: "اوسط أربعاء",
+    date: "2023-01-03T22:00:00.000Z",
+    month: "جمادي الثاني",
+  },
+  {
+    title: "أخر خميس",
+    date: "2023-01-18T22:00:00.000Z",
+    month: "جمادي الثاني",
+  },
+  { title: "اول خميس", date: "2023-01-25T22:00:00.000Z", month: "رجب" },
+  { title: "اوسط أربعاء", date: "2023-02-07T22:00:00.000Z", month: "رجب" },
+  { title: "أخر خميس", date: "2023-02-15T22:00:00.000Z", month: "رجب" },
+  { title: "اول خميس", date: "2023-02-22T22:00:00.000Z", month: "شبعان" },
+  { title: "اوسط أربعاء", date: "2023-03-07T22:00:00.000Z", month: "شبعان" },
+  { title: "أخر خميس", date: "2023-03-15T22:00:00.000Z", month: "شبعان" },
+  { title: "اول خميس", date: "2023-04-26T22:00:00.000Z", month: "شوال" },
+  { title: "اوسط أربعاء", date: "2023-05-02T22:00:00.000Z", month: "شوال" },
+  { title: "أخر خميس", date: "2023-05-17T22:00:00.000Z", month: "شوال" },
+  { title: "اول خميس", date: "2023-05-24T22:00:00.000Z", month: "ذو القعده" },
+  {
+    title: "اوسط أربعاء",
+    date: "2023-05-30T22:00:00.000Z",
+    month: "ذو القعده",
+  },
+  { title: "أخر خميس", date: "2023-06-14T22:00:00.000Z", month: "ذو القعده" },
+  { title: "اول خميس", date: "2023-06-21T22:00:00.000Z", month: "ذو الحجة" },
+  { title: "اوسط أربعاء", date: "2023-07-04T22:00:00.000Z", month: "ذو الحجة" },
+  { title: "أخر خميس", date: "2023-07-12T22:00:00.000Z", month: "ذو الحجة" },
+];
 function resetDate(theNewDate) {
   let sunCalc = SunCalc.getTimes(
     new Date(),
@@ -119,7 +189,53 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
- 
+  // Fastings
+  let fastGrid = document.getElementById("fastingGrid");
+  if (fastings.length > 0) {
+    for (let fasting of fastings) {
+      // All fasting days in year
+      let date = new Date(fasting.date).toLocaleDateString("ar-SA", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      fastGrid.innerHTML += `
+      <div class="fasting-item">
+        <span>${calculateDate(fasting.date)}</span>
+        <p>${fasting.title}</p>
+        <span>${date}</span>
+      </div>
+      
+    `;
+    }
+  } else {
+    fastGrid.style.background = "#f00";
+  }
+  let stepOfCondition = 0;
+  let fastingContainer = document.getElementById("closestFastingGrid");
+  if (fastings.length > 0) {
+    for (let index = 0; index < fastings.length; index++) {
+      // three closest fasting days
+      if (
+        Date.parse(fastings[index].date) > Date.parse(new Date()) &&
+        stepOfCondition < 3
+      ) {
+        stepOfCondition++;
+        fastingContainer.innerHTML += `<div class= "table-style-grid">
+        <h4>${fastings[index].title} <small>${
+          fastings[index].month
+        }</small> </h4>
+        <span class="timer-style timer ${
+          Date.parse(fastings[index].date) > Date.parse(new Date())
+            ? ""
+            : "completed"
+        } ">${calculateDate(fastings[index].date)}</span>
+      </div>`;
+      }
+    }
+  } else {
+    document.getElementById("closestFasting").style.background = "#fff022";
+  }
 });
 
 window.addEventListener("click", (e) => {
