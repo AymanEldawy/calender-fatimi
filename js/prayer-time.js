@@ -18,7 +18,6 @@ window.addEventListener("DOMContentLoaded", () => {
       .querySelector(".print")
       .addEventListener("click", () => window.print());
   }
-  displayPryerTime(); // display calender
 });
 
 // Go Prev [ Month - year - day]
@@ -104,12 +103,9 @@ function displayPryerTime(date = new Date()) {
     dyesGrid.innerHTML += `
       <tr class="${activeStyle ? "active" : ""}">
         <th scope="row">${i}</th>
-        <td>${
-          GregorianDateIncrement.toLocaleDateString("ar-EG", {
-            weekday: "long",
-          })
-          // Calender.daysFormat[Object.keys(Calender.daysFormat)[dayWeek]].day
-        }</td>
+        <td>${GregorianDateIncrement.toLocaleDateString("ar-EG", {
+          weekday: "long",
+        })}</td>
         
         <td>${timePrayerByMonth.Fajr}</td>
         <td>${timePrayerByMonth.Sunrise}</td>
@@ -131,3 +127,4 @@ function displayPryerTime(date = new Date()) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
 }
+displayPryerTime(); // display calender
