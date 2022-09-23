@@ -1,9 +1,18 @@
 import { months, theCurrentDate, countDayOfMonth } from "./calender-setup.js";
+import { calculateDate } from "./global.js";
 
-import { calculateDate, storageLocation } from "./global.js";
+let storageFasting = {
+  fetchFastings() {
+    let fastings = JSON.parse(localStorage.getItem("fastings"));
+    return fastings && fastings.length ? fastings : [];
+  },
+  saveFastings(fastings) {
+    localStorage.setItem("fastings", JSON.stringify(fastings));
+  },
+};
 
 (function () {
-  let fastings = storageLocation.fetchFastings();
+  let fastings = storageFasting.fetchFastings();
   if (fastings.length > 0) return;
   let theYear = theCurrentDate.getCurrentYearHijri();
   const yearNumber = theYear % 210;
@@ -42,11 +51,11 @@ import { calculateDate, storageLocation } from "./global.js";
       }
     }
   }
-  storageLocation.saveFastings(fastings);
+  storageFasting.saveFastings(fastings);
 })();
 
 window.addEventListener("DOMContentLoaded", () => {
-  let fastings = storageLocation.fetchFastings();
+  let fastings = storageFasting.fetchFastings();
 
   // Fasting
   let fastGrid = document.getElementById("fastingGrid");
