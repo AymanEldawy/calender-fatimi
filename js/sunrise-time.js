@@ -71,10 +71,11 @@ window.addEventListener("DOMContentLoaded", () => {
   loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
 
   document.getElementById("displayDay").addEventListener("click", (e) => {
-    let value = e.target.textContent;
-    let dayInfo = daysInfo[days.indexOf(value)];
-    let planetNight = weeks[days.indexOf(value) + "night"];
-    let planetLight = weeks[days.indexOf(value) + "light"];
+    let value = e.target.dataset.day;
+    let dayInfo = daysInfo[value];
+    let planetLight = weeks[value + "light"];
+    let planetNight = weeks[value + "night"];
+    console.log(dayInfo, planetLight, planetNight)
     let contentNight = "";
     let contentLight = "";
     for (let i = 0; i < planetNight.length; i++) {
@@ -249,6 +250,7 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
         : "pm";
     let thead = document.querySelector("thead");
     if (timeCheckAmOrPm === "am") {
+      document.getElementById("displayDay").setAttribute('data-day', theDay);
       document.getElementById("displayDay").innerHTML = days[theDay];
       document.body.classList.add("light");
       thead.className = "thead-light";
@@ -261,6 +263,7 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
         .getElementById("nav-darken-tab")
         .classList.remove("active", "show");
     } else {
+      document.getElementById("displayDay").setAttribute('data-day', theDay);
       document.getElementById("displayDay").innerHTML = `ليلة ${days[theDay]}`;
       document.getElementById("nav-lighten").classList.remove("active");
       document

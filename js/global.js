@@ -38,7 +38,6 @@ export let storageLocation = {
   },
 };
 
-
 let theme = storageLocation.fetchTheme();
 
 let LOCATION = storageLocation.fetchLocation();
@@ -145,6 +144,19 @@ export const globalEvents = [
     deletable: false,
   },
 ];
+let events = storageLocation.fetchEvents();
+const eventsExists = events.filter((event) => event.deletable === false);
+if (eventsExists.length < 1) {
+  globalEvents.forEach((event) => {
+    events.push({
+      title: event.title,
+      date: event.date,
+      deletable: event.deletable,
+      color: "#ffc107",
+    });
+  });
+  storageLocation.saveEvents(events);
+}
 
 function toDateGregorian(dateList) {
   let date = new Date();
@@ -279,7 +291,6 @@ window.addEventListener("DOMContentLoaded", () => {
       `;
     });
   }
-
 });
 window.addEventListener("click", (e) => {
   if (

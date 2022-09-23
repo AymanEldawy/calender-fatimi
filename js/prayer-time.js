@@ -1,33 +1,58 @@
-import SunCalc from "./suncalc.js";
 import * as Calender from "./calender-setup.js";
-import { latAndLong, storageLocation } from "./global.js";
 import { prayerTimings } from "./prayer-timings.js";
-// import { repeatPrayerTime } from "./home-page.js";
 
-const PrayerTimeDefault = {
-  month: 0, //current month
-  year: 0, //current year
-  latitude: "17.5065",
-  longitude: "44.1316",
-};
-let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault;
+window.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".display button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".display button")
+        .forEach((_) => _.classList.remove("active"));
+      showControl(btn.dataset.open);
+      btn.classList.add("active");
+    });
+  });
+  if (document.getElementById("goNextMonth")) {
+    document.getElementById("goNextMonth").addEventListener("click", goNext);
+    document.getElementById("goPrevMonth").addEventListener("click", goPrev);
+    document
+      .querySelector(".print")
+      .addEventListener("click", () => window.print());
+  }
+  displayPryerTime(); // display calender
+});
 
-// Fetch Prayer Time
-// async function getPrayTimeByMonth(city, country, month, year) {
-//   let prayerTime = await fetch(
-//     // `http://api.aladhan.com/v1/calendarByCity?city=${city}&country=${country}&method=8&month=${month}&year=${year}`
-//     // `http://api.aladhan.com/v1/calendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=8&month=${month}&year=${year}`
-//     `http://api.aladhan.com/v1/hijriCalendar?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}&method=4&month=${month}&year=${year}`
-//   )
-//     .then((res) => res.json())
-//     .then((data) => {
-//       return data;
-//     });
-//   return prayerTime;
-// }
+// Go Prev [ Month - year - day]
+function goPrev() {
+  let date = new Date(Calender.theCurrentDate.gregorianDate);
+  let hijri = date.toHijri();
+  let dateGregorian = hijri.toGregorian();
+  hijri.subtractDays(30);
+  dateGregorian = hijri.toGregorian();
+  displayPryerTime(dateGregorian);
+  Calender.theCurrentDate.gregorianDate = new Date(dateGregorian);
+}
+
+function goNext() {
+  let date = new Date(Calender.theCurrentDate.gregorianDate);
+  let hijri = date.toHijri();
+  let dateGregorian = hijri.toGregorian();
+  hijri.addDays(30);
+  dateGregorian = hijri.toGregorian();
+  displayPryerTime(dateGregorian);
+  Calender.theCurrentDate.gregorianDate = new Date(dateGregorian);
+}
+function returnHijriConfiguration(date) {
+  let gregorianDate = new Date(date);
+  let hijri = gregorianDate.toHijri();
+  return {
+    hijriMonth: hijri._month,
+    hijriDayNum: hijri._date,
+    hijriYear: hijri._year,
+  };
+}
 
 // Display Time Prayer
-async function displayPryerTime(date = new Date()) {
+function displayPryerTime(date = new Date()) {
   // PryerTime Page
   let HijriConfiguration = returnHijriConfiguration(date);
   let monthName = Calender.months[HijriConfiguration.hijriMonth];
@@ -42,13 +67,12 @@ async function displayPryerTime(date = new Date()) {
     document.querySelector(
       ".prayer-list .dateInsideList"
     ).textContent = `${monthName} ${HijriConfiguration.hijriYear}`;
-    document.getElementById('monthPrayer').textContent = `${monthName} ${HijriConfiguration.hijriYear}`;
+  document.getElementById(
+    "monthPrayer"
+  ).textContent = `${monthName} ${HijriConfiguration.hijriYear}`;
   const yearNumber = HijriConfiguration.hijriYear % 210;
   let firstDayOfYear = Calender.daysFormat[Calender.century[yearNumber]];
-  let firstWeekDayOfYear = firstDayOfYear.day; // weekday not used
-  let currentYearHijri = Calender.theCurrentDate.getCurrentYearHijri();
   let currentMonthHijri = Calender.theCurrentDate.getCurrentMonthHijri();
-  let currentDayNumHijri = Calender.theCurrentDate.getCurrentDateHijri();
   let firstDayNumOfMonth =
     (Calender.countOfMonthDays(HijriConfiguration.hijriMonth - 1, yearNumber) +
       parseInt(firstDayOfYear.count)) %
@@ -106,54 +130,4 @@ async function displayPryerTime(date = new Date()) {
   ) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
-}
-
-displayPryerTime(); // display calender
-window.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".display button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document
-        .querySelectorAll(".display button")
-        .forEach((_) => _.classList.remove("active"));
-      showControl(btn.dataset.open);
-      btn.classList.add("active");
-    });
-  });
-  if (document.getElementById("goNextMonth")) {
-    document.getElementById("goNextMonth").addEventListener("click", goNext);
-    document.getElementById("goPrevMonth").addEventListener("click", goPrev);
-    document
-      .querySelector(".print")
-      .addEventListener("click", () => window.print());
-  }
-});
-
-// Go Prev [ Month - year - day]
-function goPrev() {
-  let date = new Date(Calender.theCurrentDate.gregorianDate);
-  let hijri = date.toHijri();
-  let dateGregorian = hijri.toGregorian();
-  hijri.subtractDays(30);
-  dateGregorian = hijri.toGregorian();
-  displayPryerTime(dateGregorian);
-  Calender.theCurrentDate.gregorianDate = new Date(dateGregorian);
-}
-
-function goNext() {
-  let date = new Date(Calender.theCurrentDate.gregorianDate);
-  let hijri = date.toHijri();
-  let dateGregorian = hijri.toGregorian();
-  hijri.addDays(30);
-  dateGregorian = hijri.toGregorian();
-  displayPryerTime(dateGregorian);
-  Calender.theCurrentDate.gregorianDate = new Date(dateGregorian);
-}
-function returnHijriConfiguration(date) {
-  let gregorianDate = new Date(date);
-  let hijri = gregorianDate.toHijri();
-  return {
-    hijriMonth: hijri._month,
-    hijriDayNum: hijri._date,
-    hijriYear: hijri._year,
-  };
 }

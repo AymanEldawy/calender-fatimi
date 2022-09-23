@@ -1,27 +1,58 @@
 import * as Calender from "./calender-setup.js";
-import {
-  calculateDate,
-  globalEvents,
-  latAndLong,
-  storageLocation,
-} from "./global.js";
+import { calculateDate, latAndLong, storageLocation } from "./global.js";
 import SunCalc from "./suncalc.js";
 // Let storage
 
 let events = storageLocation.fetchEvents();
-const eventsExists = events.filter((event) => event.deletable === false);
-if (eventsExists.length < 1) {
-  globalEvents.forEach((event) => {
-    events.push({
-      title: event.title,
-      date: event.date,
-      deletable: event.deletable,
-      color: "#ffc107",
-    });
-  });
-  storageLocation.saveEvents(events);
-}
 
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById(
+    "theYear"
+  ).textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
+  document.getElementById("btnChangeByYear").addEventListener("click", () => {
+    enterYear();
+  }); // change by years
+  Object.keys(Calender.months).forEach((month) => {
+    document.getElementById("listOfMonth").innerHTML += `
+      <button data-month="${month}" class="${
+      month == Calender.theCurrentDate.getCurrentMonthHijri() ? "active" : ""
+    }" >${Calender.months[month]}</button>
+    `;
+  });
+  // Events Actions
+  document
+    .getElementById("eventTitle")
+    .addEventListener("blur", (e) => checkInputTitle(e.target));
+  document
+    .getElementById("eventTitle")
+    .addEventListener("keyup", (e) => checkInputTitle(e.target));
+  document.getElementById("btnSubmitEvent").addEventListener("click", addEvent);
+  // Add Event
+  Array.from(document.querySelectorAll("#listOfMonth button")).forEach(
+    (btn) => {
+      btn.addEventListener("click", (e) => {
+        Array.from(document.querySelectorAll("#listOfMonth button")).forEach(
+          (_) => _.classList.remove("active")
+        );
+        changeMonth(e);
+        btn.classList.add("active");
+      });
+    }
+  );
+
+  document.getElementById("today").addEventListener("click", __today); // Back to today
+  // invoke go next and go prev
+  document.getElementById("goNext").addEventListener("click", goNext);
+  document.getElementById("goPrev").addEventListener("click", goPrev);
+  document.getElementById("goNextYear").addEventListener("click", goNextYear);
+  document.getElementById("goPrevYear").addEventListener("click", goPrevYear);
+  document
+    .querySelector("span .gg-printer")
+    .addEventListener("click", () => window.print());
+  document.getElementById("thisYear").addEventListener("click", __thisYear);
+  displayCalenderGrid();
+  displayCalenderYear();
+});
 function displayCalenderGrid(
   date = new Date(),
   display = ".calender-list-grid-body"
@@ -127,60 +158,8 @@ function displayYearInfo(year) {
   document.getElementById("bigCentury").innerHTML = parseInt(year / 210);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  displayCalenderGrid();
-  displayCalenderYear();
-
-  document.getElementById(
-    "theYear"
-  ).textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
-  document.getElementById("btnChangeByYear").addEventListener("click", () => {
-    enterYear();
-  }); // change by years
-  if (document.querySelector(".calender-page")) {
-    Object.keys(Calender.months).forEach((month) => {
-      document.getElementById("listOfMonth").innerHTML += `
-      <button data-month="${month}" class="${
-        month == Calender.theCurrentDate.getCurrentMonthHijri() ? "active" : ""
-      }" >${Calender.months[month]}</button>
-    `;
-    });
-    // Events Actions
-    document
-      .getElementById("eventTitle")
-      .addEventListener("blur", (e) => checkInputTitle(e.target));
-    document
-      .getElementById("eventTitle")
-      .addEventListener("keyup", (e) => checkInputTitle(e.target));
-    document
-      .getElementById("btnSubmitEvent")
-      .addEventListener("click", addEvent);
-    // Add Event
-    Array.from(document.querySelectorAll("#listOfMonth button")).forEach(
-      (btn) => {
-        btn.addEventListener("click", (e) => {
-          Array.from(document.querySelectorAll("#listOfMonth button")).forEach(
-            (_) => _.classList.remove("active")
-          );
-          changeMonth(e);
-          btn.classList.add("active");
-        });
-      }
-    );
-  }
-  document.getElementById("today").addEventListener("click", __today); // Back to today
-  // invoke go next and go prev
-  document.getElementById("goNext").addEventListener("click", goNext);
-  document.getElementById("goPrev").addEventListener("click", goPrev);
-  document.getElementById("goNextYear").addEventListener("click", goNextYear);
-  document.getElementById("goPrevYear").addEventListener("click", goPrevYear);
-  document
-    .querySelector("span .gg-printer")
-    .addEventListener("click", () => window.print());
-  document.getElementById("thisYear").addEventListener("click", __thisYear);
-});
 function changeMonthActive(currentMonth) {
-  currentMonth = currentMonth == 0 ? 12 : currentMonth
+  currentMonth = currentMonth == 0 ? 12 : currentMonth;
   Array.from(document.querySelectorAll("#listOfMonth button")).forEach(
     (month, index) => {
       if (currentMonth == index + 1) month.classList.add("active");
@@ -237,7 +216,7 @@ window.addEventListener("click", (e) => {
 });
 
 // Go Prev [ Month - year - day]
-export function goPrev() {
+function goPrev() {
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
     Calender.theCurrentDate.gregorianDate
   );
@@ -263,7 +242,7 @@ export function goPrev() {
     document.getElementById("today").classList.remove("hide");
   }
 }
-export function goNext() {
+function goNext() {
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
     Calender.theCurrentDate.gregorianDate
   );
@@ -306,7 +285,7 @@ function enterYear() {
   let hijri = new HijriDate(+year.value, 1, 1);
   let gregorian = hijri.toGregorian();
   displayCalenderGrid(gregorian);
-  changeMonthActive(1)
+  changeMonthActive(1);
   Calender.theCurrentDate.gregorianDate = gregorian;
   let thisYear = Calender.a2e(
     new Date().toLocaleDateString("ar-SA", { year: "numeric" })
@@ -338,7 +317,7 @@ function changeMonth(e) {
     document.getElementById("today").classList.remove("hide");
   }
 }
-export function __today() {
+function __today() {
   document.getElementById("today").classList.add("hide");
   displayCalenderGrid();
   Calender.theCurrentDate.gregorianDate = new Date();
@@ -432,35 +411,6 @@ function deleteEvent(title) {
   let newEvents = events.filter((event) => event.title !== title);
   storageLocation.saveEvents(newEvents);
 }
-
-function getSunriseTime() {
-  let suncalc = SunCalc.getTimes(
-    new Date(),
-    latAndLong.latitude,
-    latAndLong.longitude
-  );
-  let sunsetStr = suncalc.sunset.getHours() + ":" + suncalc.sunset.getMinutes();
-  let sunset = sunsetStr.split(":");
-  let date = new Date();
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  if (
-    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >
-    parseInt(
-      `${sunset[0].toString().padStart(2, 0)}${sunset[1]
-        .toString()
-        .padStart(2, 0)}`
-    )
-  ) {
-    let tomorrow = date.setDate(date.getDate() + 1);
-    Calender.theCurrentDate.gregorianDate = new Date(tomorrow);
-    Calender.theCurrentDate.currentHijriDate = new Date(
-      tomorrow
-    ).toLocaleDateString("ar-SA");
-    displayCalenderGrid(tomorrow);
-  }
-}
-getSunriseTime();
 
 function displayCalenderGridYear(date = new Date(), display) {
   // check events by this day
@@ -575,3 +525,32 @@ function __thisYear(e) {
   displayCalenderYear(year);
   e.target.classList.add("hide");
 }
+
+function getSunriseTime() {
+  let suncalc = SunCalc.getTimes(
+    new Date(),
+    latAndLong.latitude,
+    latAndLong.longitude
+  );
+  let sunsetStr = suncalc.sunset.getHours() + ":" + suncalc.sunset.getMinutes();
+  let sunset = sunsetStr.split(":");
+  let date = new Date();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  if (
+    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >
+    parseInt(
+      `${sunset[0].toString().padStart(2, 0)}${sunset[1]
+        .toString()
+        .padStart(2, 0)}`
+    )
+  ) {
+    let tomorrow = date.setDate(date.getDate() + 1);
+    Calender.theCurrentDate.gregorianDate = new Date(tomorrow);
+    Calender.theCurrentDate.currentHijriDate = new Date(
+      tomorrow
+    ).toLocaleDateString("ar-SA");
+    displayCalenderGrid(tomorrow);
+  }
+}
+getSunriseTime();
