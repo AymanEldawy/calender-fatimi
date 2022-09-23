@@ -36,13 +36,6 @@ export let storageLocation = {
   saveEvents(events) {
     localStorage.setItem("events", JSON.stringify(events));
   },
-  fetchFastings() {
-    let fastings = JSON.parse(localStorage.getItem("fastings"));
-    return fastings && fastings.length ? fastings : [];
-  },
-  saveFastings(fastings) {
-    localStorage.setItem("fastings", JSON.stringify(fastings));
-  },
 };
 
 
