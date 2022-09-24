@@ -10,10 +10,11 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btnChangeByYear").addEventListener("click", () => {
     enterYear();
   }); // change by years
+  let currentMonth = Calender.theCurrentDate.getCurrentMonthHijri();
   Object.keys(Calender.months).forEach((month) => {
     document.getElementById("listOfMonth").innerHTML += `
       <button data-month="${month}" class="${
-      month == Calender.theCurrentDate.getCurrentMonthHijri() ? "active" : ""
+      month == currentMonth ? "active" : ""
     }" >${Calender.months[month]}</button>
     `;
   });
@@ -283,9 +284,7 @@ function enterYear() {
   displayCalenderGrid(gregorian);
   changeMonthActive(1);
   Calender.theCurrentDate.gregorianDate = gregorian;
-  let thisYear = Calender.a2e(
-    new Date().toLocaleDateString("ar-SA", { year: "numeric" })
-  );
+  let thisYear = gregorian.toHijri()._year;
   if (parseInt(thisYear) === hijri._year) {
     document.getElementById("today").classList.add("hide");
   } else {
@@ -495,9 +494,8 @@ function displayCalenderYear(year) {
 }
 
 function goNextYear() {
-  let year = parseInt(
-    Calender.a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
-  );
+  let gregorian = new Date();
+  let year = gregorian.toHijri()._year;
 
   let thisYear = document.getElementById("thisYear");
   Calender.theCurrentDate.yearHijri += 1;
@@ -507,9 +505,8 @@ function goNextYear() {
   else thisYear.classList.add("hide");
 }
 function goPrevYear() {
-  let year = parseInt(
-    Calender.a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
-  );
+  let gregorian = new Date();
+  let year = gregorian.toHijri()._year;
   let thisYear = document.getElementById("thisYear");
 
   Calender.theCurrentDate.yearHijri -= 1;
@@ -520,9 +517,8 @@ function goPrevYear() {
 }
 
 function __thisYear(e) {
-  let year = parseInt(
-    Calender.a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
-  );
+  let gregorian = new Date();
+  let year = gregorian.toHijri()._year;
   Calender.theCurrentDate.yearHijri = year;
   displayCalenderYear(year);
   e.target.classList.add("hide");

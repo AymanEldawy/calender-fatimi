@@ -229,22 +229,6 @@ export const daysFormat = {
   ز: { day: "السبت", count: 6 },
 };
 
-export function a2e(str) {
-  console.log(str)
-  // convert persian digits [۰۱۲۳۴۵۶۷۸۹]
-  var e = "۰".charCodeAt(0);
-  str = str.replace(/[۰-۹]/g, function (t) {
-    return t.charCodeAt(0) - e;
-  });
-
-  // convert arabic indic digits [٠١٢٣٤٥٦٧٨٩]
-  e = "٠".charCodeAt(0);
-  str = str.replace(/[٠-٩]/g, function (t) {
-    return t.charCodeAt(0) - e;
-  });
-  return str;
-}
-// export const a2e = (s) => s.replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
 export const oddMonth = 30;
 export const evenMonth = 29;
 
@@ -262,22 +246,21 @@ export const months = {
   11: "ذو القعده",
   12: "ذو الحجة",
 };
-
+let theCurrent = new Date()
 export let theCurrentDate = {
   gregorianDate: new Date(),
-  currentHijriDate: new Date().toLocaleDateString("ar-SA"),
+  currentHijriDate: theCurrent.toHijri(),
   getCurrentDateHijri() {
-    return parseInt(a2e(this.currentHijriDate.split("/")[0]));
+    console.log(this)
+    return this.currentHijriDate._date
   },
   getCurrentMonthHijri() {
-    return parseInt(a2e(this.currentHijriDate.split("/")[1]));
+    return this.currentHijriDate._month
   },
   getCurrentYearHijri() {
-    return parseInt(a2e(this.currentHijriDate.split("/")[2]));
+    return this.currentHijriDate._year
   },
-  yearHijri: parseInt(
-    a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
-  ),
+  yearHijri:theCurrent.toHijri()._year,
 };
 // Get the century for year
 export function getCentury(year) {

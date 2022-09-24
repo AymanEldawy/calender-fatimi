@@ -1,5 +1,5 @@
 import { countries, cities, getCitiesByCountryCode } from "./cities.js";
-import { a2e, months } from "./calender-setup.js";
+import { months } from "./calender-setup.js";
 
 // مجموع ساعات النهار / 12
 // مجموع وقت الشروق + (رقم الساعة * الباقي من القسمة)
@@ -160,13 +160,8 @@ if (eventsExists.length < 1) {
 
 function toDateGregorian(dateList) {
   let date = new Date();
-  const hijri = new HijriDate(
-    parseInt(
-      a2e(new Date(date).toLocaleDateString("ar-SA", { year: "numeric" }))
-    ),
-    dateList.month,
-    dateList.day
-  );
+  let year = date.toHijri()._year;
+  const hijri = new HijriDate(year, dateList.month, dateList.day);
   // check date
   const gregorian = hijri.toGregorian();
   return gregorian;

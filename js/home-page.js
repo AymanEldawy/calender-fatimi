@@ -4,9 +4,6 @@ import {
   century,
   getCentury,
   leapYears,
-  a2e,
-  theCurrentDate,
-  countDayOfMonth,
 } from "./calender-setup.js";
 
 import { calculateDate, globalEvents, storageLocation } from "./global.js";
@@ -20,7 +17,6 @@ const PrayerTimeDefault = {
   longitude: "44.1316",
 };
 let LOCATION = storageLocation.fetchLocation() || PrayerTimeDefault;
-
 
 function resetDate(theNewDate) {
   let sunCalc = SunCalc.getTimes(
@@ -50,9 +46,9 @@ function resetDate(theNewDate) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  let yearCalc = parseInt(
-    a2e(new Date().toLocaleDateString("ar-SA", { year: "numeric" }))
-  );
+  let date = new Date();
+  let yearCalc = date.toHijri()._year;
+
   let theHours = new Date().getHours();
   document.getElementById("date").textContent = `${resetDate(
     new Date()
@@ -118,8 +114,6 @@ window.addEventListener("DOMContentLoaded", () => {
       </div>`;
     }
   }
-
-  
 });
 
 window.addEventListener("click", (e) => {
