@@ -95,7 +95,8 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
   let dayLenNight = 1440 - dayLenLight;
   let valuePlusLight = Math.floor((dayLenLight / 12) * 1 - 60);
   let valuePlusNight = Math.floor((dayLenNight / 12) * 1 - 60);
-
+  let objectLight = weeks[`${theSelectedDay}light`];
+  console.log(objectLight);
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenLight / 12) * i) / 60);
     let theMinutes = ((dayLenLight / 12) * i) % 60;
@@ -111,20 +112,19 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       "sunrise",
       parseInt(valuePlusLight)
     );
-    let objectLight = weeks[`${theSelectedDay}light`];
     if (i == 11) {
       console.log();
       allHours.push({
         start,
         end,
-        planet: objectLight.at(i),
+        planet: objectLight[i],
         nextPlanet: weeks[`${(theSelectedDay + 1) % 7}night`][0],
       });
     } else {
       allHours.push({
         start,
         end,
-        planet: objectLight.at(i),
+        planet: objectLight[i],
         nextPlanet: weeks[`${theSelectedDay}light`][i][i + 1],
       });
     }
