@@ -7,7 +7,7 @@ let elActive = null;
 function planetTimings(latitude, longitude, selectedDate = new Date()) {
   let allHours = [];
   let sunCalc = SunCalc.getTimes(new Date(selectedDate), latitude, longitude);
-  let theSelectedDay = new Date(selectedDate).getDay();
+  let theSelectedDay = new Date(selectedDate);
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
@@ -95,8 +95,8 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
   let dayLenNight = 1440 - dayLenLight;
   let valuePlusLight = Math.floor((dayLenLight / 12) * 1 - 60);
   let valuePlusNight = Math.floor((dayLenNight / 12) * 1 - 60);
-  let objectLight = weeks[`light${theSelectedDay}`];
-  console.log(objectLight);
+  console.log(theSelectedDay, theSelectedDay.getDay(), weeks, weeks['6night'], weeks['6light'],  weeks['6night'][0], weeks['6light'][1])
+
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenLight / 12) * i) / 60);
     let theMinutes = ((dayLenLight / 12) * i) % 60;
@@ -113,19 +113,19 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       parseInt(valuePlusLight)
     );
     if (i == 11) {
-      console.log();
+      console.log()
       allHours.push({
         start,
         end,
-        planet: objectLight[i],
-        nextPlanet: weeks[`night${(theSelectedDay + 1) % 7}`][0],
+        planet: weeks[`${theSelectedDay.getDay()}light`][i],
+        nextPlanet: weeks[`${(theSelectedDay.getDay() + 1) % 7}night`][0],
       });
     } else {
       allHours.push({
         start,
         end,
-        planet: objectLight[i],
-        nextPlanet: weeks[`light${theSelectedDay}`][i][i + 1],
+        planet:  weeks[`${theSelectedDay.getDay()}light`][i],
+        nextPlanet:  weeks[`${theSelectedDay.getDay()}light`][i + 1],
       });
     }
   }
@@ -146,21 +146,18 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       parseInt(valuePlusNight)
     );
     if (i == 11) {
-      let select = "night" + theSelectedDay;
-      let select2 = "light" + theSelectedDay;
       allHours.push({
         start,
         end,
-        planet: weeks[select][i],
-        nextPlanet: weeks[select2][0],
+        planet: weeks[`${theSelectedDay.getDay()}night`][i],
+        nextPlanet: weeks[`${theSelectedDay.getDay()}light`][0],
       });
     } else {
-      let select = "night" + theSelectedDay;
       allHours.push({
         start,
         end,
-        planet: weeks[select][i],
-        nextPlanet: weeks[select][i + 1],
+        planet: weeks[`${theSelectedDay.getDay()}night`][i],
+        nextPlanet: weeks[`${theSelectedDay.getDay()}night`][i + 1],
       });
     }
   }
@@ -215,7 +212,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
   }
 
   if (elActive) {
-    console.log(elActive);
+    console.log(elActive)
     let timeNow = document.getElementById("timeNow");
     let timeNext = document.getElementById("timeNext");
     timeNow.innerHTML = elActive.planet.planet;
