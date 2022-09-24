@@ -270,13 +270,14 @@ function startTimer(duration, display) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  getSunriseTime();
+
   let timeNow = document.getElementById("timeNow");
   let timeNext = document.getElementById("timeNext");
   timeNow.innerHTML = elActive.planet.planet;
   timeNow.classList.add(`status-${elActive.planet.status}`);
   timeNext.innerHTML = elActive.nextPlanet.planet;
   timeNext.classList.add(`status-${elActive.nextPlanet.status}`);
-  getSunriseTime();
 });
 
 function getSunriseTime() {
