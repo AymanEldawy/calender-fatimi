@@ -118,13 +118,15 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
         planet: weeks[`${theSelectedDay.getDay()}light`][i],
         nextPlanet: weeks[`${(theSelectedDay.getDay() + 1) % 7}night`][0],
       });
-    } else
+    } else {
+      let select1 = theSelectedDay.getDay() + "light";
       allHours.push({
         start,
         end,
-        planet: weeks[`${theSelectedDay.getDay()}light`][i],
-        nextPlanet: weeks[`${theSelectedDay.getDay()}light`][i + 1],
+        planet: weeks[select1][i],
+        nextPlanet: weeks[select1][i + 1],
       });
+    }
   }
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenNight / 12) * i) / 60);
@@ -143,18 +145,21 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       parseInt(valuePlusNight)
     );
     if (i == 11) {
+      let select = theSelectedDay.getDay() + "night";
+      let select2 = theSelectedDay.getDay() + "light";
       allHours.push({
         start,
         end,
-        planet: weeks[`${theSelectedDay.getDay()}night`][i],
-        nextPlanet: weeks[`${theSelectedDay.getDay()}light`][0],
+        planet: weeks[select][i],
+        nextPlanet: weeks[select2][0],
       });
     } else {
+      let select = theSelectedDay.getDay() + "night";
       allHours.push({
         start,
         end,
-        planet: weeks[`${theSelectedDay.getDay()}night`][i],
-        nextPlanet: weeks[`${theSelectedDay.getDay()}night`][i + 1],
+        planet: weeks[select][i],
+        nextPlanet: weeks[select][i + 1],
       });
     }
   }
@@ -209,6 +214,14 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
   }
 
   if (elActive) {
+    console.log(elActive)
+    let timeNow = document.getElementById("timeNow");
+    let timeNext = document.getElementById("timeNext");
+    timeNow.innerHTML = elActive.planet.planet;
+    timeNow.classList.add(`status-${elActive.planet.status}`);
+    timeNext.innerHTML = elActive.nextPlanet.planet;
+    timeNext.classList.add(`status-${elActive.nextPlanet.status}`);
+
     let minuteStart = elActive.start.split(":");
     let minuteEnd = elActive.end.split(":");
     let hours = date.getHours();
@@ -271,16 +284,6 @@ function startTimer(duration, display) {
 
 window.addEventListener("DOMContentLoaded", () => {
   getSunriseTime();
-  setTimeout(() => {
-    if (elActive) {
-      let timeNow = document.getElementById("timeNow");
-      let timeNext = document.getElementById("timeNext");
-      timeNow.innerHTML = elActive.planet.planet;
-      timeNow.classList.add(`status-${elActive.planet.status}`);
-      timeNext.innerHTML = elActive.nextPlanet.planet;
-      timeNext.classList.add(`status-${elActive.nextPlanet.status}`);
-    }
-  }, 500);
 });
 
 function getSunriseTime() {

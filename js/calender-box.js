@@ -116,9 +116,6 @@ function returnHijriConfiguration(date) {
   let gregorianDate = new Date(date);
   let hijri = gregorianDate.toHijri();
   return {
-    // hijriMonth: parseInt(Calender.a2e(dateHijri.split("/")[1])),
-    // hijriDayNum: parseInt(Calender.a2e(dateHijri.split("/")[0])),
-    // hijriYear: parseInt(Calender.a2e(dateHijri.split("/")[2])),
     hijriMonth: hijri._month,
     hijriDayNum: hijri._date,
     hijriYear: hijri._year,
