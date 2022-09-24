@@ -276,6 +276,7 @@ window.addEventListener("DOMContentLoaded", () => {
   timeNow.classList.add(`status-${elActive.planet.status}`);
   timeNext.innerHTML = elActive.nextPlanet.planet;
   timeNext.classList.add(`status-${elActive.nextPlanet.status}`);
+  getSunriseTime();
 });
 
 function getSunriseTime() {
@@ -311,5 +312,3 @@ function getSunriseTime() {
     );
   }
 }
-
-getSunriseTime();

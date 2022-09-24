@@ -49,6 +49,10 @@ window.addEventListener("DOMContentLoaded", () => {
     .querySelector("span .gg-printer")
     .addEventListener("click", () => window.print());
   document.getElementById("thisYear").addEventListener("click", __thisYear);
+  displayCalenderYear();
+  displayCalenderGrid();
+  getSunriseTime();
+
 });
 function displayCalenderGrid(
   date = new Date(),
@@ -551,8 +555,3 @@ function getSunriseTime() {
     displayCalenderGrid(tomorrow);
   }
 }
-setTimeout(() => {
-  displayCalenderYear();
-  displayCalenderGrid();
-  getSunriseTime();
-}, 5000);

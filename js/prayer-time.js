@@ -18,6 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
       .querySelector(".print")
       .addEventListener("click", () => window.print());
   }
+  displayPryerTime(); // display calender
 });
 
 // Go Prev [ Month - year - day]
@@ -127,6 +128,3 @@ function displayPryerTime(date = new Date()) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
 }
-setTimeout(() => {
-  displayPryerTime(); // display calender
-}, 5000);
