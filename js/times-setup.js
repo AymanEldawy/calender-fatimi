@@ -95,7 +95,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
   let dayLenNight = 1440 - dayLenLight;
   let valuePlusLight = Math.floor((dayLenLight / 12) * 1 - 60);
   let valuePlusNight = Math.floor((dayLenNight / 12) * 1 - 60);
-  let objectLight = weeks[`${theSelectedDay}light`];
+  let objectLight = weeks[`light${theSelectedDay}`];
   console.log(objectLight);
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenLight / 12) * i) / 60);
@@ -118,14 +118,14 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
         start,
         end,
         planet: objectLight[i],
-        nextPlanet: weeks[`${(theSelectedDay + 1) % 7}night`][0],
+        nextPlanet: weeks[`night${(theSelectedDay + 1) % 7}`][0],
       });
     } else {
       allHours.push({
         start,
         end,
         planet: objectLight[i],
-        nextPlanet: weeks[`${theSelectedDay}light`][i][i + 1],
+        nextPlanet: weeks[`light${theSelectedDay}`][i][i + 1],
       });
     }
   }
@@ -146,8 +146,8 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       parseInt(valuePlusNight)
     );
     if (i == 11) {
-      let select = theSelectedDay + "night";
-      let select2 = theSelectedDay + "light";
+      let select = "night" + theSelectedDay;
+      let select2 = "light" + theSelectedDay;
       allHours.push({
         start,
         end,
@@ -155,7 +155,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
         nextPlanet: weeks[select2][0],
       });
     } else {
-      let select = theSelectedDay + "night";
+      let select = "night" + theSelectedDay;
       allHours.push({
         start,
         end,
