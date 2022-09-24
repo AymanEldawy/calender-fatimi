@@ -7,7 +7,7 @@ let elActive = null;
 function planetTimings(latitude, longitude, selectedDate = new Date()) {
   let allHours = [];
   let sunCalc = SunCalc.getTimes(new Date(selectedDate), latitude, longitude);
-  let theSelectedDay = new Date(selectedDate);
+  let theSelectedDay = new Date(selectedDate).getDay();
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
@@ -111,22 +111,21 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       "sunrise",
       parseInt(valuePlusLight)
     );
+    let objectLight = weeks[`${theSelectedDay}light`];
     if (i == 11) {
       console.log();
       allHours.push({
         start,
         end,
-        planet: weeks[`${theSelectedDay.getDay()}light`][i],
-        nextPlanet: weeks[`${(theSelectedDay.getDay() + 1) % 7}night`][0],
+        planet: objectLight.at(i),
+        nextPlanet: weeks[`${(theSelectedDay + 1) % 7}night`][0],
       });
     } else {
-      let select1 = theSelectedDay.getDay() + "light";
-      console.log(weeks[select1][`${i}`])
       allHours.push({
         start,
         end,
-        planet: weeks[`${theSelectedDay.getDay()}light`][`${i}`],
-        nextPlanet: weeks[`${theSelectedDay.getDay()}light`][`${i + 1}`],
+        planet: objectLight.at(i),
+        nextPlanet: weeks[`${theSelectedDay}light`][i][i + 1],
       });
     }
   }
@@ -147,8 +146,8 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       parseInt(valuePlusNight)
     );
     if (i == 11) {
-      let select = theSelectedDay.getDay() + "night";
-      let select2 = theSelectedDay.getDay() + "light";
+      let select = theSelectedDay + "night";
+      let select2 = theSelectedDay + "light";
       allHours.push({
         start,
         end,
@@ -156,7 +155,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
         nextPlanet: weeks[select2][0],
       });
     } else {
-      let select = theSelectedDay.getDay() + "night";
+      let select = theSelectedDay + "night";
       allHours.push({
         start,
         end,
