@@ -112,6 +112,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       parseInt(valuePlusLight)
     );
     if (i == 11) {
+      console.log()
       allHours.push({
         start,
         end,
@@ -120,10 +121,12 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       });
     } else {
       let select1 = theSelectedDay.getDay() + "light";
+      let p = weeks[select1][i]
+      console.log(p)
       allHours.push({
         start,
         end,
-        planet: weeks[select1][i],
+        planet: p,
         nextPlanet: weeks[select1][i + 1],
       });
     }
