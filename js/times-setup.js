@@ -4,10 +4,10 @@ import { storageLocation, latAndLong } from "./global.js";
 import SunCalc from "./suncalc.js";
 
 let elActive = null;
-function planetTimings(latitude, longitude, selectedDate = new Date()) {
+function planetTimings(latitude, longitude, selectedDate) {
   let allHours = [];
   let sunCalc = SunCalc.getTimes(new Date(selectedDate), latitude, longitude);
-  let theSelectedDay = new Date(selectedDate);
+  let theSelectedDay = new Date(selectedDate).getDay();
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
@@ -95,7 +95,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
   let dayLenNight = 1440 - dayLenLight;
   let valuePlusLight = Math.floor((dayLenLight / 12) * 1 - 60);
   let valuePlusNight = Math.floor((dayLenNight / 12) * 1 - 60);
-  console.log(theSelectedDay, theSelectedDay.getDay(), weeks, weeks['6night'], weeks['6light'],  weeks['6night'][0], weeks['6light'][1])
+  console.log(new Date(selectedDate), theSelectedDay, weeks, weeks['6night'], weeks['6light'],  weeks['6night'][0], weeks['6light'][1])
 
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenLight / 12) * i) / 60);
