@@ -52,9 +52,9 @@ function insertFasting() {
   }
   storageFasting.saveFastings(fastings);
 }
-insertFasting();
 
 window.addEventListener("DOMContentLoaded", () => {
+  insertFasting();
   setTimeout(() => {
     let fastings = storageFasting.fetchFastings();
     // Fastings
