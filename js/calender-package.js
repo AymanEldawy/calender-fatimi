@@ -555,6 +555,8 @@ function getSunriseTime() {
     displayCalenderGrid(tomorrow);
   }
 }
-displayCalenderYear();
-displayCalenderGrid();
-getSunriseTime();
+setTimeout(() => {
+  displayCalenderYear();
+  displayCalenderGrid();
+  getSunriseTime();
+}, 5000);

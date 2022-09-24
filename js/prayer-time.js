@@ -127,4 +127,6 @@ function displayPryerTime(date = new Date()) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
 }
-displayPryerTime(); // display calender
+setTimeout(() => {
+  displayPryerTime(); // display calender
+}, 5000);

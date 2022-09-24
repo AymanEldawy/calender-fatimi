@@ -51,22 +51,23 @@ function insertFasting() {
     }
   }
   storageFasting.saveFastings(fastings);
-};
-insertFasting()
+}
+insertFasting();
 
-
-let fastings = storageFasting.fetchFastings();
-// Fastings
-let fastGrid = document.getElementById("fastingGrid");
-if (fastings.length > 0) {
-  for (let fasting of fastings) {
-    // All fasting days in year
-    let date = new Date(fasting.date).toLocaleDateString("ar-SA", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-    fastGrid.innerHTML += `
+window.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    let fastings = storageFasting.fetchFastings();
+    // Fastings
+    let fastGrid = document.getElementById("fastingGrid");
+    if (fastings.length > 0) {
+      for (let fasting of fastings) {
+        // All fasting days in year
+        let date = new Date(fasting.date).toLocaleDateString("ar-SA", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+        fastGrid.innerHTML += `
     <div class="fasting-item">
       <span>${calculateDate(fasting.date)}</span>
       <p>${fasting.title}</p>
@@ -74,36 +75,35 @@ if (fastings.length > 0) {
     </div>
     
   `;
-  }
-} else {
-  fastGrid.style.background = "#f00";
-}
-let stepOfCondition = 0;
-let fastingContainer = document.getElementById("closestFastingGrid");
-if (fastings.length > 0) {
-  for (let index = 0; index < fastings.length; index++) {
-    // three closest fasting days
-    if (
-      Date.parse(fastings[index].date) > Date.parse(new Date()) &&
-      stepOfCondition < 3
-    ) {
-      stepOfCondition++;
-      fastingContainer.innerHTML += `<div class= "table-style-grid">
-      <h4>${fastings[index].title} <small>${
-        fastings[index].month
-      }</small> </h4>
+      }
+    } else {
+      fastGrid.style.background = "#f00";
+    }
+    let stepOfCondition = 0;
+    let fastingContainer = document.getElementById("closestFastingGrid");
+    if (fastings.length > 0) {
+      for (let index = 0; index < fastings.length; index++) {
+        // three closest fasting days
+        if (
+          Date.parse(fastings[index].date) > Date.parse(new Date()) &&
+          stepOfCondition < 3
+        ) {
+          stepOfCondition++;
+          fastingContainer.innerHTML += `<div class= "table-style-grid">
+      <h4>${fastings[index].title} <small>${fastings[index].month}</small> </h4>
       <span class="timer-style timer ${
         Date.parse(fastings[index].date) > Date.parse(new Date())
           ? ""
           : "completed"
       } ">${calculateDate(fastings[index].date)}</span>
     </div>`;
+        }
+      }
+    } else {
+      document.getElementById("closestFasting").style.background = "#fff022";
     }
-  }
-} else {
-  document.getElementById("closestFasting").style.background = "#fff022";
-}
-
+  }, 5000);
+});
 
 // const fastings = [
 //   { title: "اول خميس", date: "2022-08-03T22:00:00.000Z", month: "محرم" },
