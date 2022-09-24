@@ -156,7 +156,7 @@ function displayYearInfo(year) {
   document.getElementById("smallCentury").innerHTML = Calender.getCentury(
     parseInt(year % 210)
   );
-  document.getElementById("bigCentury").innerHTML = parseInt(year / 210);
+  document.getElementById("bigCentury").innerHTML = parseInt(year / 210) + 1 ;
 }
 
 function changeMonthActive(currentMonth) {

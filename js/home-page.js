@@ -75,7 +75,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("smallCentury").innerHTML = getCentury(
     parseInt(yearCalc % 210)
   );
-  document.getElementById("bigCentury").innerHTML = parseInt(yearCalc / 210);
+  document.getElementById("bigCentury").innerHTML = parseInt(yearCalc / 210) + 1;
   prayerTimingDay();
 
   // Display first day in every month
