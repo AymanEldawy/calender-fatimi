@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = {
   entry: {
+    fastings: "./js/fastings.js",
     global: "./js/global.js",
     prayerTime: "./js/prayer-time.js",
     prayerTimings: "./js/prayer-timings.js",
@@ -15,6 +16,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundle.js",
+  },
+  optimization: {
+    runtimeChunk: false,
   },
   module: {
     rules: [
