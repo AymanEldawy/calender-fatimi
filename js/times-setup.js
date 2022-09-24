@@ -23,77 +23,6 @@ function planetTimings(latitude, longitude, selectedDate) {
   let sunrise = sunriseStr.split(":");
   let sunset = sunsetStr.split(":");
 
-  function endHoursFn(hours, minutes, nightOrLight, value) {
-    let amOrPm = "";
-    let endHours = parseInt(hours) + 1;
-
-    let endMinutes = parseInt(minutes);
-    endMinutes = endMinutes + value;
-    if (endMinutes < 0) {
-      endMinutes = 60 + endMinutes;
-      endHours = endHours - 1;
-    }
-    if (endMinutes >= 60) {
-      endHours = endHours + 1;
-      endMinutes = endMinutes - 60;
-    }
-    if (endHours < 0) {
-      endHours == 11;
-    }
-    if (endHours == 0) {
-      endHours == 12;
-    }
-    if (nightOrLight == "sunrise" && endHours > 11) {
-      amOrPm = "PM";
-    } else if (nightOrLight == "sunrise" && endHours <= 11) {
-      amOrPm = "AM";
-    }
-    if (nightOrLight == "sunset" && endHours > 11) {
-      amOrPm = "AM";
-    } else if (nightOrLight == "sunset" && endHours <= 11) {
-      amOrPm = "PM";
-    }
-    if (endHours > 12) {
-      endHours = endHours % 12;
-    }
-
-    return `${endHours.toString().padStart(2, 0)}:${endMinutes
-      .toString()
-      .padStart(2, 0)} ${amOrPm}`;
-  }
-
-  function resetTime(hours, minutes, nightOrLight) {
-    let amOrPm = "";
-    if (minutes < 0) {
-      minutes = 60 + minutes;
-      hours = hours - 1;
-    }
-    if (minutes >= 60) {
-      hours = hours + 1;
-      minutes = minutes - 60;
-    }
-    if (hours < 0) hours = 11;
-    if (hours == 0) {
-      hours = 12;
-    }
-    if (nightOrLight == "sunrise" && hours > 11) {
-      amOrPm = "PM";
-    } else if (nightOrLight == "sunrise" && hours <= 11) {
-      amOrPm = "AM";
-    }
-    if (nightOrLight == "sunset" && hours > 11) {
-      amOrPm = "AM";
-    } else if (nightOrLight == "sunset" && hours <= 11) {
-      amOrPm = "PM";
-    }
-    if (hours > 12) {
-      hours = hours % 12;
-    }
-
-    return `${hours.toString().padStart(2, 0)}:${minutes
-      .toString()
-      .padStart(2, 0)} ${amOrPm}`;
-  }
   let dayLen = `${
     parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
   }:${
@@ -177,7 +106,7 @@ function planetTimings(latitude, longitude, selectedDate) {
   hours = hours === 0 ? 12 : hours;
   hours = hours !== 12 ? hours % 12 : hours;
   hours = hours < 10 ? `0${hours}` : hours;
-  console.log(allHours)
+  console.log(allHours);
   for (let i = 0; i < allHours.length; i++) {
     let timeCheckBig = allHours[i].start.split(":").join("");
     let timeCheckLess = allHours[i].end.split(":").join("");
@@ -321,4 +250,75 @@ function getSunriseTime() {
   } else {
     planetTimings(latAndLong.latitude, latAndLong.longitude, new Date());
   }
+}
+function endHoursFn(hours, minutes, nightOrLight, value) {
+  let amOrPm = "";
+  let endHours = parseInt(hours) + 1;
+
+  let endMinutes = parseInt(minutes);
+  endMinutes = endMinutes + value;
+  if (endMinutes < 0) {
+    endMinutes = 60 + endMinutes;
+    endHours = endHours - 1;
+  }
+  if (endMinutes >= 60) {
+    endHours = endHours + 1;
+    endMinutes = endMinutes - 60;
+  }
+  if (endHours < 0) {
+    endHours == 11;
+  }
+  if (endHours == 0) {
+    endHours == 12;
+  }
+  if (nightOrLight == "sunrise" && endHours > 11) {
+    amOrPm = "PM";
+  } else if (nightOrLight == "sunrise" && endHours <= 11) {
+    amOrPm = "AM";
+  }
+  if (nightOrLight == "sunset" && endHours > 11) {
+    amOrPm = "AM";
+  } else if (nightOrLight == "sunset" && endHours <= 11) {
+    amOrPm = "PM";
+  }
+  if (endHours > 12) {
+    endHours = endHours % 12;
+  }
+
+  return `${endHours.toString().padStart(2, 0)}:${endMinutes
+    .toString()
+    .padStart(2, 0)} ${amOrPm}`;
+}
+
+function resetTime(hours, minutes, nightOrLight) {
+  let amOrPm = "";
+  if (minutes < 0) {
+    minutes = 60 + minutes;
+    hours = hours - 1;
+  }
+  if (minutes >= 60) {
+    hours = hours + 1;
+    minutes = minutes - 60;
+  }
+  if (hours < 0) hours = 11;
+  if (hours == 0) {
+    hours = 12;
+  }
+  if (nightOrLight == "sunrise" && hours > 11) {
+    amOrPm = "PM";
+  } else if (nightOrLight == "sunrise" && hours <= 11) {
+    amOrPm = "AM";
+  }
+  if (nightOrLight == "sunset" && hours > 11) {
+    amOrPm = "AM";
+  } else if (nightOrLight == "sunset" && hours <= 11) {
+    amOrPm = "PM";
+  }
+  if (hours > 12) {
+    hours = hours % 12;
+  }
+
+  return `${hours.toString().padStart(2, 0)}:${minutes
+    .toString()
+    .padStart(2, 0)} ${amOrPm}`;
 }
