@@ -7,14 +7,6 @@ let elActive = null;
 function planetTimings(latitude, longitude, selectedDate) {
   let allHours = [];
   let theSelectedDay = new Date(selectedDate).getDay();
-  // function isValidDate(d) {
-  //   return d instanceof Date && !isNaN(d);
-  // }
-  // const vaildDate = isValidDate(new Date(selectedDate));
-  // if (!vaildDate) {
-  //   theSelectedDay = new Date().getDay();
-  //   selectedDate = new Date()
-  // }
   let sunCalc = SunCalc.getTimes(new Date(selectedDate), latitude, longitude);
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
@@ -164,7 +156,9 @@ function planetTimings(latitude, longitude, selectedDate) {
     hours = hours !== 12 ? hours % 12 : hours;
     hours = hours < 1 ? 12 : hours;
     hours = hours < 10 ? `0${hours}` : hours;
-    if (parseInt(minuteEnd[0]) === 1 && hours === 12) minuteEnd[0] = 13;
+    if (parseInt(minuteEnd[0]) === 1 && hours === 12) {
+      minuteEnd[0] = 13;
+    }
     if (parseInt(minuteEnd[0]) == parseInt(minuteStart[0])) {
       let time =
         parseInt(minuteEnd[0] + minuteEnd[1]) -
@@ -209,8 +203,9 @@ function startTimer(duration, display) {
 
     if (--timer < 0) {
       timer = duration;
-      if (document.getElementById("tableTime"))
+      if (document.getElementById("tableTime")) {
         document.getElementById("tableTime").remove();
+      }
       setTimeout(() => {
         window.location.reload();
       }, 66000);
@@ -300,7 +295,9 @@ function resetTime(hours, minutes, nightOrLight) {
     hours = hours + 1;
     minutes = minutes - 60;
   }
-  if (hours < 0) hours = 11;
+  if (hours < 0) {
+    hours = 11;
+  }
   if (hours == 0) {
     hours = 12;
   }
