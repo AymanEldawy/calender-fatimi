@@ -112,7 +112,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       parseInt(valuePlusLight)
     );
     if (i == 11) {
-      console.log()
+      console.log();
       allHours.push({
         start,
         end,
@@ -121,13 +121,12 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       });
     } else {
       let select1 = theSelectedDay.getDay() + "light";
-      let p = weeks[select1][i]
-      console.log(p)
+      console.log(weeks[select1][`${i}`])
       allHours.push({
         start,
         end,
-        planet: p,
-        nextPlanet: weeks[select1][i + 1],
+        planet: weeks[`${theSelectedDay.getDay()}light`][`${i}`],
+        nextPlanet: weeks[`${theSelectedDay.getDay()}light`][`${i + 1}`],
       });
     }
   }
@@ -217,7 +216,7 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
   }
 
   if (elActive) {
-    console.log(elActive)
+    console.log(elActive);
     let timeNow = document.getElementById("timeNow");
     let timeNext = document.getElementById("timeNext");
     timeNow.innerHTML = elActive.planet.planet;
