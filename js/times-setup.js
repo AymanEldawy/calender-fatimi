@@ -7,6 +7,7 @@ let elActive = null;
 function planetTimings(latitude, longitude, selectedDate = new Date()) {
   let allHours = [];
   let sunCalc = SunCalc.getTimes(new Date(selectedDate), latitude, longitude);
+  let theSelectedDay = new Date(selectedDate);
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
@@ -114,16 +115,15 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       allHours.push({
         start,
         end,
-        planet: weeks[`${new Date(selectedDate).getDay()}light`][i],
-        nextPlanet:
-          weeks[`${(new Date(selectedDate).getDay() + 1) % 7}night`][0],
+        planet: weeks[`${theSelectedDay.getDay()}light`][i],
+        nextPlanet: weeks[`${(theSelectedDay.getDay() + 1) % 7}night`][0],
       });
     } else
       allHours.push({
         start,
         end,
-        planet: weeks[`${new Date(selectedDate).getDay()}light`][i],
-        nextPlanet: weeks[`${new Date(selectedDate).getDay()}light`][i + 1],
+        planet: weeks[`${theSelectedDay.getDay()}light`][i],
+        nextPlanet: weeks[`${theSelectedDay.getDay()}light`][i + 1],
       });
   }
   for (let i = 0; i < 12; i++) {
@@ -146,15 +146,15 @@ function planetTimings(latitude, longitude, selectedDate = new Date()) {
       allHours.push({
         start,
         end,
-        planet: weeks[`${new Date(selectedDate).getDay()}night`][i],
-        nextPlanet: weeks[`${new Date(selectedDate).getDay()}light`][0],
+        planet: weeks[`${theSelectedDay.getDay()}night`][i],
+        nextPlanet: weeks[`${theSelectedDay.getDay()}light`][0],
       });
     } else {
       allHours.push({
         start,
         end,
-        planet: weeks[`${new Date(selectedDate).getDay()}night`][i],
-        nextPlanet: weeks[`${new Date(selectedDate).getDay()}night`][i + 1],
+        planet: weeks[`${theSelectedDay.getDay()}night`][i],
+        nextPlanet: weeks[`${theSelectedDay.getDay()}night`][i + 1],
       });
     }
   }
@@ -271,13 +271,16 @@ function startTimer(duration, display) {
 
 window.addEventListener("DOMContentLoaded", () => {
   getSunriseTime();
-
-  let timeNow = document.getElementById("timeNow");
-  let timeNext = document.getElementById("timeNext");
-  timeNow.innerHTML = elActive.planet.planet;
-  timeNow.classList.add(`status-${elActive.planet.status}`);
-  timeNext.innerHTML = elActive.nextPlanet.planet;
-  timeNext.classList.add(`status-${elActive.nextPlanet.status}`);
+  setTimeout(() => {
+    if (elActive) {
+      let timeNow = document.getElementById("timeNow");
+      let timeNext = document.getElementById("timeNext");
+      timeNow.innerHTML = elActive.planet.planet;
+      timeNow.classList.add(`status-${elActive.planet.status}`);
+      timeNext.innerHTML = elActive.nextPlanet.planet;
+      timeNext.classList.add(`status-${elActive.nextPlanet.status}`);
+    }
+  }, 500);
 });
 
 function getSunriseTime() {
