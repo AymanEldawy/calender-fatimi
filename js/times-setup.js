@@ -177,7 +177,7 @@ function planetTimings(latitude, longitude, selectedDate) {
   hours = hours === 0 ? 12 : hours;
   hours = hours !== 12 ? hours % 12 : hours;
   hours = hours < 10 ? `0${hours}` : hours;
-
+  console.log(allHours)
   for (let i = 0; i < allHours.length; i++) {
     let timeCheckBig = allHours[i].start.split(":").join("");
     let timeCheckLess = allHours[i].end.split(":").join("");
