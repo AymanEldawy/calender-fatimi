@@ -7,14 +7,14 @@ let elActive = null;
 function planetTimings(latitude, longitude, selectedDate) {
   let allHours = [];
   let theSelectedDay = new Date(selectedDate).getDay();
-  function isValidDate(d) {
-    return d instanceof Date && !isNaN(d);
-  }
-  const vaildDate = isValidDate(new Date(selectedDate));
-  if (!vaildDate) {
-    theSelectedDay = new Date().getDay();
-    selectedDate = new Date()
-  }
+  // function isValidDate(d) {
+  //   return d instanceof Date && !isNaN(d);
+  // }
+  // const vaildDate = isValidDate(new Date(selectedDate));
+  // if (!vaildDate) {
+  //   theSelectedDay = new Date().getDay();
+  //   selectedDate = new Date()
+  // }
   let sunCalc = SunCalc.getTimes(new Date(selectedDate), latitude, longitude);
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
@@ -106,11 +106,6 @@ function planetTimings(latitude, longitude, selectedDate) {
   console.log(
     new Date(selectedDate),
     theSelectedDay,
-    weeks,
-    weeks["6night"],
-    weeks["6light"],
-    weeks["6night"][0],
-    weeks["6light"][1]
   );
 
   for (let i = 0; i < 12; i++) {
