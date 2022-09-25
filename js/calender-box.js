@@ -1,10 +1,13 @@
 import * as Calender from "./calender-setup.js";
+import { latAndLong } from "./global.js";
+import SunCalc from "./suncalc.js";
 function openCalender() {
   document.querySelector(".calender-picker").classList.remove("close-calender");
 }
 
 function displayCalenderGrid(date = new Date()) {
   // check events by this day
+  console.log(Calender.theCurrentDate)
   let HijriConfiguration = returnHijriConfiguration(date);
   const yearNumber = HijriConfiguration.hijriYear % 210;
   let firstDayOfYear = Calender.daysFormat[Calender.century[yearNumber]];
@@ -19,6 +22,7 @@ function displayCalenderGrid(date = new Date()) {
       Calender.months[HijriConfiguration.hijriMonth]
     } ${HijriConfiguration.hijriYear}`;
   }
+  console.log(HijriConfiguration.hijriMonth, currentMonthHijri)
   // Loop of month days
   if (document.querySelector(".calender-list-grid-body")) {
     let dyesGrid = document.querySelector(".calender-list-grid-body");
@@ -138,7 +142,6 @@ function __today() {
 // Events
 
 window.addEventListener("DOMContentLoaded", () => {
-  displayCalenderGrid(); // display calender
   document
     .getElementById("btnChangeByYear")
     .addEventListener("click", enterYear); // change by years
@@ -149,4 +152,41 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("goPrev").addEventListener("click", goPrev);
   if(document.getElementById('dateChecker'))
     document.getElementById('dateChecker').addEventListener('click', openCalender)
+
+    getSunriseTime()
 });
+
+function getSunriseTime() {
+  let suncalc = SunCalc.getTimes(
+    new Date(),
+    latAndLong.latitude,
+    latAndLong.longitude
+  );
+  let sunsetStr = suncalc.sunset.getHours() + ":" + suncalc.sunset.getMinutes();
+  let sunset = sunsetStr.split(":");
+  let date = new Date();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  if (
+    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >
+    parseInt(
+      `${sunset[0].toString().padStart(2, 0)}${sunset[1]
+        .toString()
+        .padStart(2, 0)}`
+    )
+  ) {
+    let currentDate = new Date();
+    let hijri = currentDate.toHijri();
+    hijri.addDay();
+    console.log("run..", hijri);
+
+    let tomorrow = hijri.toGregorian();
+    Calender.theCurrentDate.updateDate();
+    latAndLong.dayDate = new Date(tomorrow);
+    displayDate.innerHTML = new Date(tomorrow).toLocaleDateString("ar-EG");
+    displayCalenderGrid(tomorrow); // display calender
+  } else {
+    displayCalenderGrid(); // display calender
+
+  }
+}

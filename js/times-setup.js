@@ -2,6 +2,7 @@ import { weeks, daysInfo } from "./weeks.js";
 import { storageLocation, latAndLong } from "./global.js";
 // const SunCalc = require("suncalc2");
 import SunCalc from "./suncalc.js";
+import { theCurrentDate } from "./calender-setup.js";
 
 let elActive = null;
 function planetTimings(latitude, longitude, selectedDate) {
@@ -13,7 +14,7 @@ function planetTimings(latitude, longitude, selectedDate) {
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
   let sunrise = sunriseStr.split(":");
   let sunset = sunsetStr.split(":");
-  
+
   let dayLen = `${
     parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
   }:${
@@ -90,19 +91,30 @@ function planetTimings(latitude, longitude, selectedDate) {
 
   let date = new Date();
   let hours = date.getHours();
-  let minutes = date.getMinutes()
+  let minutes = date.getMinutes();
   let timeCheckAmOrPm =
-      `${hours.toString().padStart(2, 0)}${minutes
-        .toString()
-        .padStart(2, 0)}` >= parseInt(`${sunrise[0].toString().padStart(2,0)}${sunrise[1].toString().padStart(2,0)}`) &&
-      `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` <
-      parseInt(`${sunset[0].toString().padStart(2,0)}${sunset[1].toString().padStart(2,0)}`)
-        ? "am"
-        : "pm";
-  if(timeCheckAmOrPm === 'am') {
-    document.querySelector('.table-style:nth-of-type(4)').classList.add('style-light')
+    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` >=
+      parseInt(
+        `${sunrise[0].toString().padStart(2, 0)}${sunrise[1]
+          .toString()
+          .padStart(2, 0)}`
+      ) &&
+    `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` <
+      parseInt(
+        `${sunset[0].toString().padStart(2, 0)}${sunset[1]
+          .toString()
+          .padStart(2, 0)}`
+      )
+      ? "am"
+      : "pm";
+  if (timeCheckAmOrPm === "am") {
+    document
+      .querySelector(".table-style:nth-of-type(4)")
+      .classList.add("style-light");
   } else {
-    document.querySelector('.table-style:nth-of-type(4)').classList.add('style-night')
+    document
+      .querySelector(".table-style:nth-of-type(4)")
+      .classList.add("style-night");
   }
 
   hours = hours === 0 ? 12 : hours;
@@ -244,7 +256,11 @@ function getSunriseTime() {
         .padStart(2, 0)}`
     )
   ) {
-    let tomorrow = date.setDate(date.getDate() + 1);
+    let currentDate = new Date();
+    let hijri = currentDate.toHijri();
+    hijri.addDay();
+    let tomorrow = hijri.toGregorian();
+    theCurrentDate.updateDate();
     planetTimings(
       latAndLong.latitude,
       latAndLong.longitude,

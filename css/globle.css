@@ -3,6 +3,10 @@
   src: url("fonts/Qahiri-Regular.ttf");
 }
 @font-face {
+  font-family: "DTHULUTH";
+  src: url("fonts/DTHULUTH-II-1.ttf");
+}
+@font-face {
   font-family: "tajawal";
   src: url("fonts/Tajawal-Black.ttf");
   src: url("fonts/Tajawal-Bold.ttf");
@@ -33,7 +37,7 @@ body {
 }
 footer a,
 a.navbar-brand {
-  font-family: Qahiri;
+  font-family: "DTHULUTH";
 }
 
 ._modal-fasting,
@@ -176,8 +180,15 @@ ul.events.text-center {
   margin-top: -10px;
 }
 @media (max-width: 767px) {
+  #theme {
+    margin-top: 5px;
+  }
+  #chooseLocation,
+  #autoLocation,
+  .navbar-dark .navbar-toggler {
+    margin-top: 0;
+  }
   .navbar-dark .navbar-brand {
-    font-size: 1rem;
     margin-left: 0;
   }
   .manual-location .d-flex {
@@ -207,14 +218,13 @@ ul.events.text-center {
 .nav-btn {
   margin-top: 0.5rem;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  background-color: #0002;
-  color: #eee;
-  transition: background-color 0.2s ease-out;
+  color: #ccc;
+}
+.nav-btn:last-child {
+  margin-top: 1rem;
 }
 .nav-btn:hover {
-  background-color: #0004;
+  color: #fff;
 }
 .navbar .container,
 footer .container {
@@ -640,6 +650,7 @@ button.navbar-toggler[aria-expanded="true"] {
 }
 .navbar .container.d-flex {
   justify-content: unset;
+  padding: 0;
 }
 
 /* Themes */

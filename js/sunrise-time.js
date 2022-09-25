@@ -1,6 +1,7 @@
 import { weeks, daysInfo } from "./weeks.js";
 import { latAndLong } from "./global.js";
 import SunCalc from "./suncalc.js";
+import { months, theCurrentDate } from "./calender-setup.js";
 let days = [
   "الاحد",
   "الاتنين",
@@ -37,15 +38,8 @@ let displayDateHigry = document.getElementById("displayDateHigry");
 
 function resetDateHigry(theDate = new Date()) {
   let date = new Date(theDate);
-  let changeHijriDate = document.getElementById("changeHijriDate");
-  let { action, countofdays } = changeHijriDate.dataset;
-  let dateAfterReset = date.setDate(date.getDate());
-  if (action === "ناقص") {
-    dateAfterReset = date.setDate(date.getDate() - parseInt(countofdays));
-  } else if (action === "زيادة") {
-    dateAfterReset = date.setDate(date.getDate() + parseInt(countofdays));
-  }
-  return new Date(dateAfterReset).toLocaleDateString("ar-SA");
+  let hijri = date.toHijri();
+  return `${hijri._date} ${months[hijri._month]} ${hijri._year}`;
 }
 
 window.addEventListener("click", (e) => {
@@ -68,14 +62,11 @@ window.addEventListener("click", (e) => {
   }
 });
 window.addEventListener("DOMContentLoaded", () => {
-  loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
-
   document.getElementById("displayDay").addEventListener("click", (e) => {
     let value = e.target.dataset.day;
     let dayInfo = daysInfo[value];
     let planetLight = weeks[value + "light"];
     let planetNight = weeks[value + "night"];
-    console.log(dayInfo, planetLight, planetNight)
     let contentNight = "";
     let contentLight = "";
     for (let i = 0; i < planetNight.length; i++) {
@@ -120,52 +111,40 @@ window.addEventListener("DOMContentLoaded", () => {
   let prevDay = document.getElementById("prevDay");
   prevDay.addEventListener("click", () => {
     let theNextDay = null;
-    let date = new Date();
     if (latAndLong.day == "today") {
-      let tomorrow = date.setDate(date.getDate() - 1);
-      theNextDay = new Date(tomorrow)
-        .toLocaleDateString("en-UK")
-        .replace(/\//g, "-")
-        .split("-")
-        .reverse()
-        .join("-");
+      let currentDate = new Date();
+      let hijri = currentDate.toHijri();
+      hijri.subtractDay();
+      let yesterday = hijri.toGregorian();
+      theNextDay = new Date(yesterday);
     } else {
       let theNewDate = new Date(latAndLong.day.toString());
-      let tomorrow = theNewDate.setDate(theNewDate.getDate() - 1);
-      theNextDay = new Date(tomorrow)
-        .toLocaleDateString("en-UK")
-        .replace(/\//g, "-")
-        .split("-")
-        .reverse()
-        .join("-");
+      let hijri = theNewDate.toHijri();
+      hijri.subtractDay();
+      let yesterday = hijri.toGregorian();
+      theNextDay = new Date(yesterday);
     }
-    loadDate(latAndLong.latitude, latAndLong.longitude, theNextDay);
     backToDate.classList.add("show");
+    loadDate(latAndLong.latitude, latAndLong.longitude, theNextDay);
   });
   nextDay.addEventListener("click", () => {
     let theNextDay = null;
-    let date = new Date();
     if (latAndLong.day == "today") {
-      let tomorrow = date.setDate(date.getDate() + 1);
-      theNextDay = new Date(tomorrow)
-        .toLocaleDateString("en-UK")
-        .replace(/\//g, "-")
-        .split("-")
-        .reverse()
-        .join("-");
+      let currentDate = new Date();
+      let hijri = currentDate.toHijri();
+      hijri.addDay();
+      let tomorrow = hijri.toGregorian();
+      theNextDay = new Date(tomorrow);
     } else {
       let theNewDate = new Date(latAndLong.day.toString());
-      let tomorrow = theNewDate.setDate(theNewDate.getDate() + 1);
-      theNextDay = new Date(tomorrow)
-        .toLocaleDateString("en-UK")
-        .replace(/\//g, "-")
-        .split("-")
-        .reverse()
-        .join("-");
+      let hijri = theNewDate.toHijri();
+      hijri.addDay();
+      let tomorrow = hijri.toGregorian();
+      theNextDay = new Date(tomorrow);
     }
 
-    loadDate(latAndLong.latitude, latAndLong.longitude, theNextDay);
     backToDate.classList.add("show");
+    loadDate(latAndLong.latitude, latAndLong.longitude, theNextDay);
   });
   // Run default function if user not allow location
 
@@ -220,13 +199,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
       : new Date(selectedDate).getDay();
   latAndLong.day = selectedDate;
   displayDate.innerHTML = new Date(selectedDate).toLocaleDateString("ar-EG");
-  if (new Date().getHours() > 18) {
-    let date = new Date(selectedDate);
-    let theAcusalDate = date.setDate(date.getDate() - 1);
-    displayDate.innerHTML = new Date(theAcusalDate).toLocaleDateString("ar-EG");
-  } else {
-    displayDate.innerHTML = new Date(selectedDate).toLocaleDateString("ar-EG");
-  }
   displayDateHigry.innerHTML = resetDateHigry(selectedDate);
   let sunrise = sunriseStr.split(":");
   let sunset = sunsetStr.split(":");
@@ -250,7 +222,7 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
         : "pm";
     let thead = document.querySelector("thead");
     if (timeCheckAmOrPm === "am") {
-      document.getElementById("displayDay").setAttribute('data-day', theDay);
+      document.getElementById("displayDay").setAttribute("data-day", theDay);
       document.getElementById("displayDay").innerHTML = days[theDay];
       document.body.classList.add("light");
       thead.className = "thead-light";
@@ -263,7 +235,7 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
         .getElementById("nav-darken-tab")
         .classList.remove("active", "show");
     } else {
-      document.getElementById("displayDay").setAttribute('data-day', theDay);
+      document.getElementById("displayDay").setAttribute("data-day", theDay);
       document.getElementById("displayDay").innerHTML = `ليلة ${days[theDay]}`;
       document.getElementById("nav-lighten").classList.remove("active");
       document
@@ -399,10 +371,6 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenNight / 12) * i) / 60);
     let theMinutes = ((dayLenNight / 12) * i) % 60;
-    // let theMisSeconds = parseFloat(theMinutes).toFixed(2).split('.')[1];
-    // let theSeconds = (theMisSeconds * 12) / 60
-    // theMinutes += parseInt(theSeconds)
-    // theSeconds = theMisSeconds - (theSeconds * 60)
     let hours = parseInt(sunset[0]) + theHours;
     let minutes = parseInt(sunset[1]) + theMinutes;
     let dev = parseInt(minutes / 60);
@@ -475,23 +443,9 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
   hours = hours === 0 ? 12 : hours;
   hours = hours !== 12 ? hours % 12 : hours;
   hours = hours < 10 ? `0${hours}` : hours;
-  let __theDayDate =
-    selectedDate === "today"
-      ? new Date()
-          .toLocaleDateString("en-UK")
-          .replace(/\//g, "-")
-          .split("-")
-          .reverse()
-          .join("-")
-      : new Date(selectedDate)
-          .toLocaleDateString("en-UK")
-          .replace(/\//g, "-")
-          .split("-")
-          .reverse()
-          .join("-");
   let elActive = null;
   function reActiveElement() {
-    if (__theDayDate === latAndLong.dayDate) {
+    if (Date.parse(selectedDate) === Date.parse(latAndLong.dayDate)) {
       for (let i = 0; i < start.length; i++) {
         let timeCheckBig = start[i].textContent.split(":").join("");
         let timeCheckLess = end[i].textContent.split(":").join("");
@@ -624,13 +578,7 @@ function loadDate(latitude, longitude, selectedDate = latAndLong.dayDate) {
     e.target.classList.remove("show");
     loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
   };
-  let theDayDate = new Date(selectedDate)
-    .toLocaleDateString("en-UK")
-    .replace(/\//g, "-")
-    .split("-")
-    .reverse()
-    .join("");
-  if (theDayDate == latAndLong.dayDate) {
+  if (Date.parse(selectedDate) == Date.parse(latAndLong.dayDate)) {
     backToDate.classList.remove("show");
   }
 }
@@ -660,14 +608,15 @@ function getSunriseTime() {
         .padStart(2, 0)}`
     )
   ) {
-    let tomorrow = date.setDate(date.getDate() + 1);
-    latAndLong.dayDate = new Date(tomorrow)
-      .toLocaleDateString("en-UK")
-      .replace(/\//g, "-")
-      .split("-")
-      .reverse()
-      .join("-");
+    let currentDate = new Date();
+    let hijri = currentDate.toHijri();
+    hijri.addDay();
+    let tomorrow = hijri.toGregorian();
+    theCurrentDate.updateDate();
+    latAndLong.dayDate = new Date(tomorrow);
+    displayDate.innerHTML = new Date(tomorrow).toLocaleDateString("ar-EG");
     loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
-    displayDate.innerHTML = new Date().toLocaleDateString("ar-EG");
+  } else {
+    loadDate(latAndLong.latitude, latAndLong.longitude, latAndLong.dayDate);
   }
 }

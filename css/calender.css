@@ -63,7 +63,11 @@ body {
   /* transition: opacity 0.2s ease-in-out;
   pointer-events: unset; */
 }
-
+@media (max-width: 600px) {
+  .calender-picker {
+    left: -140px;
+  }
+}
 .calender-picker .calender-page-controls {
   margin: 0;
 }
@@ -151,10 +155,13 @@ input[type="color"] {
 /* Table */
 p.dateInsideList {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #2196f3;
   font-weight: bold;
-  margin: 0;
+  margin: 0 0 1rem 0;
+}
+p.dateInsideList span:last-child {
+  font-size: 0.9rem;
 }
 .thead-style {
   background: #2196f3;
@@ -174,7 +181,7 @@ p.dateInsideList {
 td {
   white-space: nowrap;
 }
-.prayer-list .table{
+.prayer-list .table {
   display: inline-table !important;
 }
 @media (max-width: 767px) {
@@ -183,7 +190,6 @@ td {
   }
   p.dateInsideList {
     white-space: nowrap;
-    font-size: 1rem; 
   }
   .prayer-list td,
   .prayer-list th {
@@ -197,13 +203,8 @@ td {
 /* Prayer single */
 
 .prayer-controls {
-  display: flex;
-  justify-content: space-between;
-  /* background: #f6f6f6; */
-  /* box-shadow: 0 1px 4px #22222259; */
   margin: 1rem 0;
   border-radius: 0.25rem;
-  align-items: center;
   padding: 0.5rem;
 }
 

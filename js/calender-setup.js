@@ -246,20 +246,28 @@ export const months = {
   11: "ذو القعده",
   12: "ذو الحجة",
 };
-let theCurrent = new Date()
+let theCurrent = new Date();
 export let theCurrentDate = {
   gregorianDate: new Date(),
   currentHijriDate: theCurrent.toHijri(),
+  updateDate() {
+    let date = new Date();
+    let hijri = date.toHijri();
+    hijri.addDay();
+    let gor = hijri.toGregorian();
+    this.gregorianDate = new Date(gor);
+    this.currentHijriDate = hijri;
+  },
   getCurrentDateHijri() {
-    return this.currentHijriDate._date
+    return this.currentHijriDate._date;
   },
   getCurrentMonthHijri() {
-    return this.currentHijriDate._month
+    return this.currentHijriDate._month;
   },
   getCurrentYearHijri() {
-    return this.currentHijriDate._year
+    return this.currentHijriDate._year;
   },
-  yearHijri:theCurrent.toHijri()._year,
+  yearHijri: theCurrent.toHijri()._year,
 };
 // Get the century for year
 export function getCentury(year) {

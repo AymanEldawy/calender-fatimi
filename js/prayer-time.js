@@ -2,6 +2,12 @@ import * as Calender from "./calender-setup.js";
 import { prayerTimings } from "./prayer-timings.js";
 
 window.addEventListener("DOMContentLoaded", () => {
+  document
+    .getElementById("backToCurrentMonth")
+    .addEventListener("click", () => {
+      Calender.theCurrentDate.gregorianDate = new Date();
+      displayPryerTime();
+    });
   document.querySelectorAll(".display button").forEach((btn) => {
     btn.addEventListener("click", () => {
       document
@@ -56,16 +62,25 @@ function displayPryerTime(date = new Date()) {
   // PryerTime Page
   let HijriConfiguration = returnHijriConfiguration(date);
   let monthName = Calender.months[HijriConfiguration.hijriMonth];
+  if (
+    HijriConfiguration.hijriMonth ===
+    Calender.theCurrentDate.getCurrentMonthHijri()
+  ) {
+    document.getElementById("backToCurrentMonth").classList.add("hide");
+  } else {
+    document.getElementById("backToCurrentMonth").classList.remove("hide");
+  }
   if (HijriConfiguration.hijriMonth == 12) {
     document.getElementById("goNextMonth").setAttribute("disabled", "disabled");
-    document.getElementById("goPrevMonth").removeAttribute("disabled");
   } else if (HijriConfiguration.hijriMonth == 1) {
-    document.getElementById("goNextMonth").removeAttribute("disabled");
     document.getElementById("goPrevMonth").setAttribute("disabled", "disabled");
+  } else {
+    document.getElementById("goPrevMonth").removeAttribute("disabled");
+    document.getElementById("goNextMonth").removeAttribute("disabled");
   }
   if (document.querySelector(".prayer-list .dateInsideList"))
     document.querySelector(
-      ".prayer-list .dateInsideList"
+      ".prayer-list .dateInsideList span:first-child"
     ).textContent = `${monthName} ${HijriConfiguration.hijriYear}`;
   document.getElementById(
     "monthPrayer"
@@ -77,6 +92,7 @@ function displayPryerTime(date = new Date()) {
     (Calender.countOfMonthDays(HijriConfiguration.hijriMonth - 1, yearNumber) +
       parseInt(firstDayOfYear.count)) %
     7; // calculate the first weekDay of month
+  let setMonth = new Set();
 
   // Loop of month days
   let dyesGrid = document.querySelector(".prayer-list tbody") || undefined;
@@ -94,6 +110,9 @@ function displayPryerTime(date = new Date()) {
     let gregorian = _hijri.toGregorian();
     let activeStyle = false;
     let GregorianDateIncrement = new Date(gregorian);
+    setMonth.add(
+      GregorianDateIncrement.toLocaleDateString("ar-EG", { month: "long" })
+    );
     let timePrayerByMonth = prayerTimings(GregorianDateIncrement);
     if (
       Calender.theCurrentDate.getCurrentDateHijri() === i &&
@@ -127,4 +146,11 @@ function displayPryerTime(date = new Date()) {
   ) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
+
+  // document.getElementById("monthPrayerGor").textContent = Array(
+  //   ...setMonth
+  // ).join(" - ");
+  document.querySelector(
+    ".prayer-list .dateInsideList span:last-child"
+  ).textContent = Array(...setMonth).join(" - ");
 }

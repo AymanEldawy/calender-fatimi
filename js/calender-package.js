@@ -4,6 +4,10 @@ import SunCalc from "./suncalc.js";
 // Let storage
 
 window.addEventListener("DOMContentLoaded", () => {
+  displayCalenderYear();
+  displayCalenderGrid();
+  getSunriseTime();
+
   document.getElementById(
     "theYear"
   ).textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
@@ -49,9 +53,6 @@ window.addEventListener("DOMContentLoaded", () => {
     .querySelector("span .gg-printer")
     .addEventListener("click", () => window.print());
   document.getElementById("thisYear").addEventListener("click", __thisYear);
-  displayCalenderYear();
-  displayCalenderGrid();
-  getSunriseTime();
 });
 function displayCalenderGrid(
   date = new Date(),
@@ -312,8 +313,8 @@ function changeMonth(e) {
 }
 function __today() {
   document.getElementById("today").classList.add("hide");
-  displayCalenderGrid();
-  Calender.theCurrentDate.gregorianDate = new Date();
+  let todayDate = Calender.theCurrentDate.currentHijriDate.toGregorian();
+  displayCalenderGrid(todayDate);
   changeMonthActive(Calender.theCurrentDate.getCurrentMonthHijri());
 }
 
@@ -471,7 +472,6 @@ function displayCalenderGridYear(date = new Date(), display) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
   let newSet = new Set(uniqueMonth);
-  console.log(newSet);
   h4El.innerHTML = `
     <span>${Calender.months[HijriConfiguration.hijriMonth]}</span>
     <span>${[...newSet].join(" - ")}</span>
@@ -549,11 +549,11 @@ function getSunriseTime() {
         .padStart(2, 0)}`
     )
   ) {
-    let tomorrow = date.setDate(date.getDate() + 1);
-    Calender.theCurrentDate.gregorianDate = new Date(tomorrow);
-    Calender.theCurrentDate.currentHijriDate = new Date(
-      tomorrow
-    ).toLocaleDateString("ar-SA");
+    let currentDate = new Date();
+    let hijri = currentDate.toHijri();
+    hijri.addDay();
+    let tomorrow = hijri.toGregorian();
+    Calender.theCurrentDate.updateDate();
     displayCalenderGrid(tomorrow);
   }
 }

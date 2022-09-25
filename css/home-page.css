@@ -261,3 +261,27 @@ span.status-bad ~ #timeNowTimer .flex-column span:first-child {
 .open-events-modal * {
   pointer-events: none;
 }
+
+#goPrevYear,
+#goNextYear {
+  position: absolute;
+  background: #0002;
+  padding: 0.2rem;
+  border-radius: 50%;
+  top: 9px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+}
+
+#goPrevYear {
+  right: 0;
+}
+#goNextYear {
+  left: 0;
+}
+
+#goPrevYear:hover,
+#goNextYear:hover {
+  background-color: #0004;
+}
