@@ -240,6 +240,12 @@ window.addEventListener("DOMContentLoaded", () => {
     </li>
     `;
   });
+  menu.innerHTML += `
+  <div class="dropdown-divider border-gray"></div>
+  <span class='nav-btn'>شرح الموقع</span>
+  <span class='nav-btn'>عن الموقع</span>
+  `;
+
   if (document.querySelector(".events-page .events")) {
     let eventsContainer = document.querySelector(".events-page .events");
     let daysContainer = document.getElementById("tab-days");
@@ -265,7 +271,7 @@ window.addEventListener("DOMContentLoaded", () => {
     let events = storageLocation.fetchEvents();
     let specificEvents = events.filter((event) => event.deletable === true);
     if (specificEvents.length < 1)
-      daysContainer.innerHTML = `<div class="alert alert-info">لاضافة اي مناسبة خاصة عن طريق التقويم الفاطمي</div>`;
+      daysContainer.innerHTML = `<div class="alert alert-info">يمكنك اضافة مناسبة خاصة عن طريق الذهاب لتقويم الفتح السليماني من القائمة الرئيسية</div>`;
     specificEvents.forEach((event) => {
       let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
         year: "numeric",

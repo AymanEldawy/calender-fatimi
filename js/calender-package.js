@@ -52,7 +52,6 @@ window.addEventListener("DOMContentLoaded", () => {
   displayCalenderYear();
   displayCalenderGrid();
   getSunriseTime();
-
 });
 function displayCalenderGrid(
   date = new Date(),
@@ -156,7 +155,7 @@ function displayYearInfo(year) {
   document.getElementById("smallCentury").innerHTML = Calender.getCentury(
     parseInt(year % 210)
   );
-  document.getElementById("bigCentury").innerHTML = parseInt(year / 210) + 1 ;
+  document.getElementById("bigCentury").innerHTML = parseInt(year / 210) + 1;
 }
 
 function changeMonthActive(currentMonth) {
@@ -288,12 +287,7 @@ function enterYear() {
   displayCalenderGrid(gregorian);
   changeMonthActive(1);
   Calender.theCurrentDate.gregorianDate = gregorian;
-  let thisYear = gregorian.toHijri()._year;
-  if (parseInt(thisYear) === hijri._year) {
-    document.getElementById("today").classList.add("hide");
-  } else {
-    document.getElementById("today").classList.remove("hide");
-  }
+  document.getElementById("today").classList.remove("hide");
 }
 function changeMonth(e) {
   let HIJRI_CONFIGURATION = returnHijriConfiguration(
@@ -430,16 +424,16 @@ function displayCalenderGridYear(date = new Date(), display) {
     7; // calculate the first weekDay of month
   // Display information about date
   let dyesGrid = display;
-  dyesGrid.innerHTML = `<h4>${
-    Calender.months[HijriConfiguration.hijriMonth]
-  }</h4>`;
-  dyesGrid.innerHTML += `<span class="text-primary">اح</span>`;
+  let h4El = document.createElement("h4");
+  dyesGrid.innerHTML = `<span class="text-primary">اح</span>`;
   dyesGrid.innerHTML += `<span class="text-primary">اث</span>`;
   dyesGrid.innerHTML += `<span class="text-primary">ث</span>`;
   dyesGrid.innerHTML += `<span class="text-primary">ار</span>`;
   dyesGrid.innerHTML += `<span class="text-primary">خ</span>`;
   dyesGrid.innerHTML += `<span class="text-primary">ج</span>`;
   dyesGrid.innerHTML += `<span class="text-primary">س</span>`;
+
+  let uniqueMonth = [];
   for (let i = 1; i <= firstDayNumOfMonth; i++) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
@@ -456,6 +450,7 @@ function displayCalenderGridYear(date = new Date(), display) {
     let gregorian = _hijri.toGregorian();
     let GregorianDateIncrement = new Date(gregorian);
     let hasEvent = checkIfDateHasEvents(GregorianDateIncrement);
+    uniqueMonth.push(gregorian.toLocaleDateString("ar-EG", { month: "long" }));
     if (
       Calender.theCurrentDate.getCurrentDateHijri() === i &&
       HijriConfiguration.hijriMonth == currentMonthHijri
@@ -475,6 +470,13 @@ function displayCalenderGridYear(date = new Date(), display) {
   ) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
+  let newSet = new Set(uniqueMonth);
+  console.log(newSet);
+  h4El.innerHTML = `
+    <span>${Calender.months[HijriConfiguration.hijriMonth]}</span>
+    <span>${[...newSet].join(" - ")}</span>
+  `;
+  dyesGrid.append(h4El);
 }
 let item = "";
 

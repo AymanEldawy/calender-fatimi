@@ -128,14 +128,13 @@ input[type="color"] {
   background: #fff;
 }
 
-
 .prayer-title img {
   max-width: 62px;
 }
 @media (max-width: 767px) {
   h2.prayer-title {
     text-align: right !important;
-    padding:0
+    padding: 0;
   }
 }
 
@@ -174,6 +173,26 @@ p.dateInsideList {
 }
 td {
   white-space: nowrap;
+}
+.prayer-list .table{
+  display: inline-table !important;
+}
+@media (max-width: 767px) {
+  .prayer-controls button {
+    white-space: nowrap;
+  }
+  p.dateInsideList {
+    white-space: nowrap;
+    font-size: 1rem; 
+  }
+  .prayer-list td,
+  .prayer-list th {
+    font-size: 0.7rem;
+    padding: 0.25rem;
+  }
+  th {
+    font-size: 0.6rem;
+  }
 }
 /* Prayer single */
 
@@ -569,11 +588,17 @@ span.empty {
   text-align: center;
   font-size: 2.1rem;
   white-space: nowrap;
-  display:flex;
+  display: flex;
+  position: relative;
   flex-direction: column;
+  padding: 0.5rem 0 1rem;
 }
 .calender-year h2 small {
   font-size: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .calender-year-grid {
   display: flex;
@@ -583,7 +608,7 @@ span.empty {
 .calender-year-grid > div {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
+  gap: 0.8rem;
   width: fit-content;
   border: 1px solid #ccc;
   padding: 0.5rem;
@@ -600,12 +625,30 @@ span.empty {
   left: 0;
   right: 0;
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  font-size: 1.2rem;
 }
-.calender-year-grid > div span {
+.calender-year-grid > div h4 span:first-child {
+  font-weight: bold;
+}
+.calender-year-grid > div h4 span:last-child {
+  font-size: 0.9rem;
+  color: #f02;
+  align-items: center;
+}
+.calender-year-grid > div > span {
   text-align: center;
+  position: relative;
+  font-size: 0.9rem;
 }
 .calender-year-grid > div em {
-  display: none;
+  color: #f02;
+  font-size: 0.7rem;
+  position: absolute;
+  bottom: 0;
+  left: -5px;
 }
 
 .mini-container.__month .calender-page {

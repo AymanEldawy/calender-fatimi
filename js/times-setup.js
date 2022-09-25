@@ -11,10 +11,9 @@ function planetTimings(latitude, longitude, selectedDate) {
   let sunriseStr =
     sunCalc.sunrise.getHours() + ":" + sunCalc.sunrise.getMinutes();
   let sunsetStr = sunCalc.sunset.getHours() + ":" + sunCalc.sunset.getMinutes();
-
   let sunrise = sunriseStr.split(":");
   let sunset = sunsetStr.split(":");
-
+  
   let dayLen = `${
     parseInt(sunsetStr.split(":")[0]) - parseInt(sunriseStr.split(":")[0])
   }:${
@@ -24,9 +23,7 @@ function planetTimings(latitude, longitude, selectedDate) {
   let dayLenNight = 1440 - dayLenLight;
   let valuePlusLight = Math.floor((dayLenLight / 12) * 1 - 60);
   let valuePlusNight = Math.floor((dayLenNight / 12) * 1 - 60);
-  console.log(theSelectedDay);
   theSelectedDay = theSelectedDay < 0 ? 0 : theSelectedDay;
-  console.log(theSelectedDay);
   for (let i = 0; i < 12; i++) {
     let theHours = parseInt(((dayLenLight / 12) * i) / 60);
     let theMinutes = ((dayLenLight / 12) * i) % 60;
@@ -43,7 +40,6 @@ function planetTimings(latitude, longitude, selectedDate) {
       parseInt(valuePlusLight)
     );
     if (i == 11) {
-      console.log();
       allHours.push({
         start,
         end,
@@ -94,11 +90,24 @@ function planetTimings(latitude, longitude, selectedDate) {
 
   let date = new Date();
   let hours = date.getHours();
+  let minutes = date.getMinutes()
+  let timeCheckAmOrPm =
+      `${hours.toString().padStart(2, 0)}${minutes
+        .toString()
+        .padStart(2, 0)}` >= parseInt(`${sunrise[0].toString().padStart(2,0)}${sunrise[1].toString().padStart(2,0)}`) &&
+      `${hours.toString().padStart(2, 0)}${minutes.toString().padStart(2, 0)}` <
+      parseInt(`${sunset[0].toString().padStart(2,0)}${sunset[1].toString().padStart(2,0)}`)
+        ? "am"
+        : "pm";
+  if(timeCheckAmOrPm === 'am') {
+    document.querySelector('.table-style:nth-of-type(4)').classList.add('style-light')
+  } else {
+    document.querySelector('.table-style:nth-of-type(4)').classList.add('style-night')
+  }
 
   hours = hours === 0 ? 12 : hours;
   hours = hours !== 12 ? hours % 12 : hours;
   hours = hours < 10 ? `0${hours}` : hours;
-  console.log(allHours);
   for (let i = 0; i < allHours.length; i++) {
     let timeCheckBig = allHours[i].start.split(":").join("");
     let timeCheckLess = allHours[i].end.split(":").join("");
@@ -142,7 +151,6 @@ function planetTimings(latitude, longitude, selectedDate) {
   }
 
   if (elActive) {
-    console.log(elActive);
     let timeNow = document.getElementById("timeNow");
     let timeNext = document.getElementById("timeNext");
     timeNow.innerHTML = elActive.planet.planet;

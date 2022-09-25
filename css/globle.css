@@ -72,17 +72,18 @@ a.navbar-brand {
 }
 ._modal-title,
 .modal-tabs button.active {
-  color: #ff9800;
+  color: #4caf50;
   font-size: 1.2rem;
   font-weight: bold;
-  border-bottom: 4px solid #ff9800 !important;
-  background: #ff98004a;
+  border-bottom: 4px solid #4caf50 !important;
+  background: #4caf5057;
   padding: 0.5rem;
   transform: translateY(2px);
   pointer-events: none;
+  text-align: center;
 }
 ._modal-title {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 ._modal .events {
@@ -153,13 +154,26 @@ ul.events.text-center {
   height: 56px;
   position: fixed;
   top: 0;
-  z-index: 99;
+  z-index: 999;
   left: 0;
   width: 100%;
 }
 .navbar-dark .navbar-brand {
   font-size: 1.5rem;
+  margin-top: -10px;
+}
+#theme {
   margin-top: -5px;
+}
+.navbar-dark .navbar-brand img {
+  max-height: 50px;
+  mix-blend-mode: color-dodge;
+  filter: invert(1);
+}
+#chooseLocation,
+#autoLocation,
+.navbar-dark .navbar-toggler {
+  margin-top: -10px;
 }
 @media (max-width: 767px) {
   .navbar-dark .navbar-brand {
@@ -177,6 +191,9 @@ ul.events.text-center {
 .navbar-dark .navbar-nav .nav-item {
   margin-bottom: 0.5rem;
 }
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+}
 .navbar-dark .navbar-nav .nav-item:hover > .nav-link,
 .navbar-dark .navbar-nav .active > .nav-link,
 .navbar-dark .navbar-nav .nav-link.active,
@@ -186,10 +203,27 @@ ul.events.text-center {
   border-left: 4px solid aliceblue;
   background: #fff5;
 }
+
+.nav-btn {
+  margin-top: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #0002;
+  color: #eee;
+  transition: background-color 0.2s ease-out;
+}
+.nav-btn:hover {
+  background-color: #0004;
+}
 .navbar .container,
 footer .container {
   position: relative;
   /* max-width: 900px !important; */
+}
+footer img {
+  max-height: 35px;
+  mix-blend-mode: unset;
 }
 .container {
   max-width: 700px;
@@ -475,7 +509,7 @@ button.navbar-toggler[aria-expanded="true"] {
     display: none !important;
   }
   .only-print {
-    display: flex !important; 
+    display: flex !important;
   }
   body {
     background-color: #d7dee1;
@@ -612,7 +646,6 @@ button.navbar-toggler[aria-expanded="true"] {
 #theme {
   position: relative;
   margin-right: auto;
-  margin-top: 10px;
   color: #fff;
 }
 #theme > button {
@@ -693,11 +726,23 @@ themes li[data-theme="اسم المود"] {
 }
 .table-style:first-of-type .table-style-item {
   cursor: pointer;
+  color: #fff;
+  background: #2196f3;
+}
+.table-style:nth-of-type(2) .table-style-item {
+  background: #009688;
+}
+.table-style:nth-of-type(4).style-night .table-style-item {
+  background: #080606ad;
+}
+.table-style:nth-of-type(4).style-light .table-style-item {
+  background: #fff;
 }
 #closestEvent:hover,
 #closestFasting:hover,
 .table-style:first-of-type .table-style-item:hover {
   background: #f2f2f2;
+  color: #444;
   cursor: pointer;
 }
 
@@ -710,7 +755,7 @@ themes li[data-theme="اسم المود"] {
   background: #fff;
   border-radius: 0.25rem;
   padding: 0.5rem;
-  box-shadow: 0 4px 2px #9e9e9e;
+  box-shadow: 0 4px 2px #9e9e9e6e;
 }
 
 .table-style-item span.table-style-label {
@@ -726,7 +771,7 @@ themes li[data-theme="اسم المود"] {
   margin: 2rem auto 0;
   padding: 0.2rem 1rem;
   white-space: nowrap;
-  background: #2b2b2b;
+  background: #027c6f;
   cursor: pointer;
   color: #fff;
 }
@@ -804,7 +849,7 @@ themes li[data-theme="اسم المود"] {
   padding: 0.25rem;
   opacity: 0;
   z-index: 99;
-  pointer-events: none
+  pointer-events: none;
 }
 .custom_tooltip:hover::before {
   opacity: 1;

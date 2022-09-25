@@ -251,7 +251,6 @@ export let theCurrentDate = {
   gregorianDate: new Date(),
   currentHijriDate: theCurrent.toHijri(),
   getCurrentDateHijri() {
-    console.log(this)
     return this.currentHijriDate._date
   },
   getCurrentMonthHijri() {
