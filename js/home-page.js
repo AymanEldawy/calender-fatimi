@@ -140,9 +140,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
 function starterMonthOfYear(yearCalc) {
   // Display first day in every month
+  let date = new Date();
+  let theCurrentYear = date.toHijri()._year;
+  if (yearCalc === theCurrentYear) {
+    document.getElementById("backToStarterYear").classList.add("hide");
+  } else {
+    document.getElementById("backToStarterYear").classList.remove("hide");
+  }
   document.querySelector(".row-first-days").innerHTML = "";
   document.querySelector(
-    "._modal-days ._modal-title"
+    "._modal-days ._modal-title span"
   ).innerHTML = `بداية شهور السنة (${yearCalc})`;
   for (let i = 1; i <= 12; i++) {
     let _hijri = new HijriDate(yearCalc, i, 1);
@@ -167,7 +174,15 @@ window.addEventListener("click", (e) => {
   if (e.target.matches("._modal-days")) {
     e.target.classList.add("hide");
   }
+  if (e.target.matches("._modal-days ._modal-title .btn")) {
+    let date = new Date();
+    let yearCalc = date.toHijri()._year;
+    starterMonthOfYear(yearCalc);
+  }
   if (e.target.matches(".table-style:first-of-type .table-style-item")) {
+    let date = new Date();
+    let yearCalc = date.toHijri()._year;
+    starterMonthOfYear(yearCalc);
     document.querySelector("._modal-days").classList.remove("hide");
   }
   if (e.target.matches("._modal-fasting")) {
@@ -210,3 +225,6 @@ function prayerTimingDay(date = new Date()) {
   </div>
   `;
 }
+
+
+

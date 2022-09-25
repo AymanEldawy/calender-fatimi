@@ -89,6 +89,12 @@ a.navbar-brand {
 ._modal-title {
   margin-bottom: 0.5rem;
 }
+._modal-days ._modal-title {
+  pointer-events: unset
+}
+._modal-title .hide{
+  display: none
+}
 
 ._modal .events {
   display: grid;
@@ -650,7 +656,7 @@ button.navbar-toggler[aria-expanded="true"] {
 }
 .navbar .container.d-flex {
   justify-content: unset;
-  padding: 0;
+  padding: 0 5px;
 }
 
 /* Themes */

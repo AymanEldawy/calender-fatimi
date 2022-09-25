@@ -155,6 +155,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
     getSunriseTime()
 });
+window.addEventListener('click', (e) => {
+  if(!e.target.matches('#dateChecker'))
+    document.querySelector(".calender-picker").classList.add("close-calender");
+
+
+})
 
 function getSunriseTime() {
   let suncalc = SunCalc.getTimes(
@@ -178,7 +184,6 @@ function getSunriseTime() {
     let currentDate = new Date();
     let hijri = currentDate.toHijri();
     hijri.addDay();
-    console.log("run..", hijri);
 
     let tomorrow = hijri.toGregorian();
     Calender.theCurrentDate.updateDate();

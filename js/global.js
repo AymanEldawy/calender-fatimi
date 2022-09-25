@@ -64,7 +64,7 @@ let links = [
   { fileName: "prayer-time.html", title: "مواقيت الصلاة" },
   { fileName: "smath.html", title: "حساب الجمل" },
   { fileName: "towers.html", title: "اعرف برجك" },
-  { fileName: "compare.html", title: "المقارنة بين الابراج" },
+  // { fileName: "compare.html", title: "المقارنة بين الابراج" },
 ];
 
 export const globalEvents = [
