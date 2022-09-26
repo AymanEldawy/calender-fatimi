@@ -150,7 +150,7 @@ function displayYearInfo(year) {
   )
     ? "نعم"
     : "لا";
-
+  console.log(Calender.daysFormat[Calender.century[year % 210]].count + 1, Calender.daysFormat[Calender.century[year % 210]].count)
   document.getElementById("firstDayOfYear").innerHTML =
     Calender.daysFormat[Calender.century[year % 210]].count + 1;
   document.getElementById("smallCentury").innerHTML = Calender.getCentury(
@@ -316,6 +316,7 @@ function __today() {
   let todayDate = Calender.theCurrentDate.currentHijriDate.toGregorian();
   displayCalenderGrid(todayDate);
   changeMonthActive(Calender.theCurrentDate.getCurrentMonthHijri());
+  document.getElementById('changeByYear').value = ""
 }
 
 function checkInputTitle(inputTitle) {
