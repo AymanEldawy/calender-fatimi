@@ -150,7 +150,6 @@ function displayYearInfo(year) {
   )
     ? "نعم"
     : "لا";
-  console.log(Calender.daysFormat[Calender.century[year % 210]].count + 1, Calender.daysFormat[Calender.century[year % 210]].count)
   document.getElementById("firstDayOfYear").innerHTML =
     Calender.daysFormat[Calender.century[year % 210]].count + 1;
   document.getElementById("smallCentury").innerHTML = Calender.getCentury(

@@ -42,7 +42,6 @@ function resetDate(theNewDate) {
     let hijri = currentDate.toHijri();
     hijri.addDay();
     let tomorrow = hijri.toGregorian();
-    console.log(hijri);
     return new Date(tomorrow);
   } else {
     return theNewDate;
@@ -115,7 +114,6 @@ window.addEventListener("DOMContentLoaded", () => {
   });
   document.getElementById("goNextYear").addEventListener("click", () => {
     theCurrentYearHijri += 1;
-    console.log("run...");
     starterMonthOfYear(theCurrentYearHijri);
   });
   // display the closest events
@@ -222,6 +220,10 @@ function prayerTimingDay(date = new Date()) {
   <div class="prayer-grid-item">
       <span>العشاء</span>
       <span>${prayerTime.Isha}</span>
+  </div>
+  <div class="prayer-grid-item">
+      <span>منتصف الليل</span>
+      <span>${prayerTime.MidNight}</span>
   </div>
   `;
 }

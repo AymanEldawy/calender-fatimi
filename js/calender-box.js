@@ -7,7 +7,6 @@ function openCalender() {
 
 function displayCalenderGrid(date = new Date()) {
   // check events by this day
-  console.log(Calender.theCurrentDate)
   let HijriConfiguration = returnHijriConfiguration(date);
   const yearNumber = HijriConfiguration.hijriYear % 210;
   let firstDayOfYear = Calender.daysFormat[Calender.century[yearNumber]];
@@ -22,7 +21,6 @@ function displayCalenderGrid(date = new Date()) {
       Calender.months[HijriConfiguration.hijriMonth]
     } ${HijriConfiguration.hijriYear}`;
   }
-  console.log(HijriConfiguration.hijriMonth, currentMonthHijri)
   // Loop of month days
   if (document.querySelector(".calender-list-grid-body")) {
     let dyesGrid = document.querySelector(".calender-list-grid-body");

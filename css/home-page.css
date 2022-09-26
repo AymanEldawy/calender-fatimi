@@ -1,15 +1,4 @@
-html,
-body {
-  direction: rtl;
-}
 
-.container {
-  max-width: 700px;
-  min-width: 300px;
-}
-a {
-  text-decoration: none;
-}
 .homepage {
   /* background: #d7dee1; */
   overflow: hidden;
@@ -118,11 +107,13 @@ li.link {
   align-items: center;
   position: relative;
   background-size: cover;
+  min-width: 150px;
   /* background-attachment: fixed; */
 }
 .prayer-grid-item span {
   position: relative;
   z-index: 2;
+  white-space: nowrap
 }
 .prayer-grid-item span:first-of-type {
   color: #fff;
@@ -160,6 +151,9 @@ li.link {
 }
 .prayer-grid-item:nth-of-type(6) {
   background-image: url("https://wallpaper.dog/large/5443234.jpg");
+}
+.prayer-grid-item:nth-of-type(7) {
+  background-image: url("https://wallpapercave.com/wp/wp5879886.jpg");
 }
 
 ._modal-content {

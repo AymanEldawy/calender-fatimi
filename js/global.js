@@ -13,10 +13,10 @@ export let storageLocation = {
     return JSON.parse(location)
       ? JSON.parse(location)
       : {
-          latitude: "17.5065",
-          longitude: "44.1316",
-          country: "SA",
-          city: "Najran",
+          // latitude: "17.5065",
+          // longitude: "44.1316",
+          // country: "SA",
+          // city: "Najran",
         };
   },
   saveLocation: (location) => {
@@ -56,7 +56,6 @@ export let latAndLong = {
     .reverse()
     .join("-"),
 };
-
 let links = [
   { fileName: "index.html", title: "الصفحة الرئيسية" },
   { fileName: "calender.html", title: "التقويم السليماني" },
@@ -208,8 +207,27 @@ export function calculateDate(date) {
     days < 0 && "completed"
   }">${calculateDaysFormat(days)}</span>`;
 }
+function createModalLocation() {
+  document.body.style.overflow = "hidden";
+  let div = document.createElement("div");
+  div.className = `_modal modal-location`;
+  div.innerHTML = `
+    <div class="modal-location-content">
+      <h2>لتجربة أفضل  من فضلك قم بادخال الموقع</h2>
+      <div class="mt-4">
+        <button class="btn btn-primary" id="m_location">أختيار الموقع يدوي</button>
+        <button class="btn btn-outline-primary" id="a_location">تحديد الموقع تلقائي</button>
+      </div>
+    </div>
+  `;
+  document.body.append(div);
+}
 
 window.addEventListener("DOMContentLoaded", () => {
+  if (!LOCATION.latitude) {
+    createModalLocation();
+    getLocation();
+  }
   let themeList = document.querySelector(".themes");
   themeList.innerHTML = `
     <li class="theme-color" data-theme="dark"></li>
@@ -315,10 +333,10 @@ window.addEventListener("click", (e) => {
   if (e.target.matches("#changeTheme")) {
     document.querySelector(".themes").classList.toggle("hide");
   }
-  if (e.target.matches("#autoLocation")) {
+  if (e.target.matches("#autoLocation") || e.target.matches("#a_location")) {
     getLocation();
   }
-  if (e.target.matches("#chooseLocation")) {
+  if (e.target.matches("#chooseLocation") || e.target.matches("#m_location")) {
     defaultLocation();
     overlayPopup.classList.add("open");
   }
@@ -455,14 +473,8 @@ async function showPosition(position) {
     code: countryInfo.countryCode,
   };
   latAndLong = { ...latAndLong, ...currentLocation };
-  if (
-    window.location.pathname == "/prayer-time.html" ||
-    window.location.pathname == "/times.html" ||
-    window.location.pathname == "/index.html"
-  ) {
-    window.location.reload();
-  }
   storageLocation.saveLocation(currentLocation);
+  window.location.reload();
 }
 
 function defaultLocation() {

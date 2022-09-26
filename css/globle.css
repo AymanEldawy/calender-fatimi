@@ -16,7 +16,10 @@
   src: url("fonts/Tajawal-Medium.ttf");
   src: url("fonts/Tajawal-Regular.ttf");
 }
-
+html,
+body {
+  direction: rtl;
+}
 body {
   font-family: tajawal, Arial, Helvetica, sans-serif;
   padding-top: 55px;
@@ -34,6 +37,9 @@ body {
 
 ::-webkit-scrollbar-track {
   background: #fff;
+}
+a {
+  text-decoration: none;
 }
 footer a,
 a.navbar-brand {
@@ -120,6 +126,16 @@ a.navbar-brand {
   ._modal .events {
     grid-template-columns: 1fr 1fr;
   }
+}
+.modal-location {
+  background-color: #ffffffcf;
+}
+.modal-location-content {
+  box-shadow: 1px 4px 5px #2225;
+  padding: 2rem;
+  border: 2px solid #2221;
+  background: #fff;
+  border-radius: 0.5rem;
 }
 .events-page {
   overflow: hidden;
@@ -247,7 +263,7 @@ footer img {
   mix-blend-mode: unset;
 }
 .container {
-  max-width: 700px;
+  max-width: 770px;
   min-width: 300px;
 }
 div#collapsibleNavId {
@@ -495,7 +511,7 @@ button.navbar-toggler[aria-expanded="true"] {
 
 @media (min-width: 768px) {
   .mini-container {
-    max-width: 600px !important;
+    max-width: 770px !important;
     padding: 0;
   }
 }
@@ -592,7 +608,7 @@ button.navbar-toggler[aria-expanded="true"] {
   align-items: center;
   height: 100%;
   background: #242424db;
-  z-index: 999;
+  z-index: 9999;
   padding: 2rem;
   transition: opacity 0.3s ease-out;
   opacity: 0;
