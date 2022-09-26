@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById(
     "theYear"
-  ).textContent = `${Calender.theCurrentDate.yearHijri} هـ`;
+  ).innerHTML = `<span>${Calender.theCurrentDate.yearHijri} هـ </span><small>${new Date(Calender.theCurrentDate.gregorianDate).getFullYear()}</small>`;
   document.getElementById("btnChangeByYear").addEventListener("click", () => {
     enterYear();
   }); // change by years
@@ -315,7 +315,7 @@ function __today() {
   let todayDate = Calender.theCurrentDate.currentHijriDate.toGregorian();
   displayCalenderGrid(todayDate);
   changeMonthActive(Calender.theCurrentDate.getCurrentMonthHijri());
-  document.getElementById('changeByYear').value = ""
+  document.getElementById("changeByYear").value = "";
 }
 
 function checkInputTitle(inputTitle) {
@@ -482,9 +482,11 @@ let item = "";
 
 function displayCalenderYear(year) {
   let theYear = year ? year : Calender.theCurrentDate.yearHijri;
+  let _hijri = new HijriDate(theYear, 1, 1);
+  let gregorian = _hijri.toGregorian(); 
   for (let i = 0; i < 12; i++) {
     let _hijri = new HijriDate(theYear, i + 1, 1);
-    let gregorian = _hijri.toGregorian();
+    let gregorian = _hijri.toGregorian(); 
     item = document.getElementById(`month-box-${i + 1}`);
     displayCalenderGridYear(gregorian, item);
   }
@@ -494,11 +496,12 @@ function displayCalenderYear(year) {
     ? true
     : false;
 
-  document.getElementById("theYear").innerHTML = `${
+  document.getElementById("theYear").innerHTML = `<span>${
     Calender.theCurrentDate.yearHijri
-  } هـ  ${yearIsLeap ? `<small class="text-danger">كبيسة</small>` : ""} `;
+  } هـ  ${
+    yearIsLeap ? `<small class="text-danger">كبيسة</small>` : ""
+  }</span> <small>${new Date(gregorian).getFullYear()}</small>`;
 }
-
 function goNextYear() {
   let gregorian = new Date();
   let year = gregorian.toHijri()._year;

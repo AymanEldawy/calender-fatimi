@@ -542,6 +542,7 @@ button.navbar-toggler[aria-expanded="true"] {
   footer,
   .prayer-controls,
   .navbar,
+  .d-flex.justify-content-between.mb-3 button,
   .print {
     display: none !important;
   }
@@ -770,11 +771,21 @@ themes li[data-theme="اسم المود"] {
 .table-style:nth-of-type(2) .table-style-item {
   background: #1dcaba;
 }
-.table-style:nth-of-type(4).style-night .table-style-item {
-  background: #08060670;
+.table-style:nth-of-type(4) {
+  background-size: cover;
+  background-position: center;
 }
+.table-style:nth-of-type(4).style-night {
+  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/004/487/829/small_2x/night-starry-sky-with-stars-moon-and-clouds-free-vector.jpg');
+}
+.table-style:nth-of-type(4).style-light {
+  background-image: url('https://i.pinimg.com/originals/f7/b7/63/f7b763d1516eee95cca47a826f5f708c.jpg');
+}
+.table-style:nth-of-type(4).style-night .table-style-item {
+  background: #383535cf;
+} 
 .table-style:nth-of-type(4).style-light .table-style-item {
-  background: #fff;
+  background: #f2f2f23d;
 }
 #closestEvent:hover,
 #closestFasting:hover,

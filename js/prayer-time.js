@@ -81,7 +81,7 @@ function displayPryerTime(date = new Date()) {
   if (document.querySelector(".prayer-list .dateInsideList"))
     document.querySelector(
       ".prayer-list .dateInsideList span:first-child"
-    ).textContent = `${monthName} ${HijriConfiguration.hijriYear}`;
+    ).textContent = `${monthName} ${HijriConfiguration.hijriYear} هـ`;
   document.getElementById(
     "monthPrayer"
   ).textContent = `${monthName} ${HijriConfiguration.hijriYear}`;
@@ -93,7 +93,7 @@ function displayPryerTime(date = new Date()) {
       parseInt(firstDayOfYear.count)) %
     7; // calculate the first weekDay of month
   let setMonth = new Set();
-
+  let __theYear = 0
   // Loop of month days
   let dyesGrid = document.querySelector(".prayer-list tbody") || undefined;
   dyesGrid.innerHTML = "";
@@ -110,6 +110,7 @@ function displayPryerTime(date = new Date()) {
     let gregorian = _hijri.toGregorian();
     let activeStyle = false;
     let GregorianDateIncrement = new Date(gregorian);
+    __theYear = GregorianDateIncrement.getFullYear()
     setMonth.add(
       GregorianDateIncrement.toLocaleDateString("ar-EG", { month: "long" })
     );
@@ -147,10 +148,7 @@ function displayPryerTime(date = new Date()) {
     dyesGrid.innerHTML += `<span class="empty"></span>`;
   }
 
-  // document.getElementById("monthPrayerGor").textContent = Array(
-  //   ...setMonth
-  // ).join(" - ");
   document.querySelector(
     ".prayer-list .dateInsideList span:last-child"
-  ).textContent = Array(...setMonth).join(" - ");
+  ).textContent = Array(...setMonth).join(" - ") + ' ' + __theYear;
 }

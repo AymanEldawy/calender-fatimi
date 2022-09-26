@@ -1,6 +1,8 @@
 import { latAndLong } from "./global.js";
 import SunCalc from "./suncalc.js";
 
+
+
 export function prayerTimings(selectedDate = new Date()) {
   let sunCalc = SunCalc.getTimes(
     new Date(selectedDate),
@@ -21,6 +23,7 @@ export function prayerTimings(selectedDate = new Date()) {
     parseInt(sunsetStr.split(":")[1]) - parseInt(sunriseStr.split(":")[1])
   }`.split(":");
   let dayLenLight = parseInt(dayLen[0]) * 60 + parseInt(dayLen[1]);
+  let dayLenNight = 1440 - dayLenLight;
 
   let fajrCalc = parseInt(sunrise[0]) * 60 + parseInt(sunrise[1]) - 70;
   let fajrHours = parseInt(fajrCalc / 60);
@@ -48,16 +51,11 @@ export function prayerTimings(selectedDate = new Date()) {
     .split(".")[1];
   let ishaMinutes = Math.round(parseFloat(`.${ishaCalcMinutes}`) * 60);
   let ishaTime = resetTime(ishaHours, ishaMinutes);
-  let CalcMidNightHours = 12 - parseInt(sunset[0] % 12);
-  let CalcAllNightMinutesSunset = CalcMidNightHours * 60 + +sunset[0];
-  let CalcAllNightMinutesSunrise = +sunrise[0] * 60 + +sunrise[1];
-  let CalcAllNightMinutes =CalcAllNightMinutesSunset + CalcAllNightMinutesSunrise;
-  let midNightHour = parseInt(CalcAllNightMinutes / 60);
-  let MidNightMinutes = parseFloat(CalcAllNightMinutes / 60)
-    .toFixed(2)
-    .split(".")[1];
-  let midNightTime = resetTime(midNightHour, MidNightMinutes)
-
+  
+  let midNightHours =
+    parseInt(sunset[0]) + parseInt(((dayLenNight / 12) * 6) / 60);
+  let midNightMinutes = parseInt(sunset[1]) + (((dayLenNight / 12) * 6) % 60);
+  let midNightTime = resetTime(parseInt(midNightHours), parseInt(midNightMinutes));
   return {
     Fajr: fajrTime,
     Sunrise: sunriseTime,
