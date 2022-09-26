@@ -70,14 +70,14 @@ function displayPryerTime(date = new Date()) {
   } else {
     document.getElementById("backToCurrentMonth").classList.remove("hide");
   }
-  if (HijriConfiguration.hijriMonth == 12) {
-    document.getElementById("goNextMonth").setAttribute("disabled", "disabled");
-  } else if (HijriConfiguration.hijriMonth == 1) {
-    document.getElementById("goPrevMonth").setAttribute("disabled", "disabled");
-  } else {
-    document.getElementById("goPrevMonth").removeAttribute("disabled");
-    document.getElementById("goNextMonth").removeAttribute("disabled");
-  }
+  // if (HijriConfiguration.hijriMonth == 12) {
+  //   document.getElementById("goNextMonth").setAttribute("disabled", "disabled");
+  // } else if (HijriConfiguration.hijriMonth == 1) {
+  //   document.getElementById("goPrevMonth").setAttribute("disabled", "disabled");
+  // } else {
+  //   document.getElementById("goPrevMonth").removeAttribute("disabled");
+  //   document.getElementById("goNextMonth").removeAttribute("disabled");
+  // }
   if (document.querySelector(".prayer-list .dateInsideList"))
     document.querySelector(
       ".prayer-list .dateInsideList span:first-child"
