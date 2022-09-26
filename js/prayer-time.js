@@ -63,6 +63,8 @@ function displayPryerTime(date = new Date()) {
   let HijriConfiguration = returnHijriConfiguration(date);
   let monthName = Calender.months[HijriConfiguration.hijriMonth];
   if (
+    HijriConfiguration.hijriYear ===
+    Calender.theCurrentDate.getCurrentYearHijri() && 
     HijriConfiguration.hijriMonth ===
     Calender.theCurrentDate.getCurrentMonthHijri()
   ) {
@@ -116,6 +118,10 @@ function displayPryerTime(date = new Date()) {
     );
     let timePrayerByMonth = prayerTimings(GregorianDateIncrement);
     if (
+      HijriConfiguration.hijriYear ===
+      Calender.theCurrentDate.getCurrentYearHijri() && 
+      HijriConfiguration.hijriMonth ===
+      Calender.theCurrentDate.getCurrentMonthHijri() &&  
       Calender.theCurrentDate.getCurrentDateHijri() === i &&
       HijriConfiguration.hijriMonth == currentMonthHijri
     ) {
