@@ -316,7 +316,7 @@ window.addEventListener("click", (e) => {
     document.getElementById("collapsibleNavId").classList.contains("show") &&
     !e.target.matches("#collapsibleNavId")
   ) {
-    document.getElementById("collapsibleNavId").classList.remove("show");
+    document.querySelector('.navbar-toggler').click()
   }
   if (e.target.classList.contains("theme-color")) {
     let siblings = [...e.target.parentElement.children];
