@@ -782,7 +782,7 @@ themes li[data-theme="اسم المود"] {
   background-image: url('https://i.pinimg.com/originals/f7/b7/63/f7b763d1516eee95cca47a826f5f708c.jpg');
 }
 .table-style:nth-of-type(4).style-night .table-style-item {
-  background: #383535cf;
+  background: transparent;
 } 
 .table-style:nth-of-type(4).style-light .table-style-item {
   background: #f2f2f23d;
@@ -869,7 +869,7 @@ themes li[data-theme="اسم المود"] {
 #closestFasting {
   padding-top: 1.5rem;
   min-width: 300px;
-  background: #93d7f6;
+  background: #c6ecfd;
 }
 #closestFasting * {
   pointer-events: none;
