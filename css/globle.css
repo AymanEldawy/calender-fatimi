@@ -771,12 +771,12 @@ themes li[data-theme="اسم المود"] {
 .table-style:nth-of-type(2) .table-style-item {
   background: #2196f3;
 }
-.table-style:nth-of-type(2) .table-style-type {
+/* .table-style:nth-of-type(2) .table-style-type {
   background-color: #64b5f6;
 }
 .table-style:nth-of-type(2) .table-style-value {
   background-color: #29b6f6;
-}
+} */
 
 .table-style:nth-of-type(4) {
   background-size: cover;
