@@ -592,13 +592,14 @@ span.empty {
   position: relative;
   width: 100%;
 }
-/* .calender-year h2 small {
+@media (max-width: 767px) {
+  .calender-year h2 {
+    font-size: 1.9rem;
+  }
+}
+.calender-year h2 small:first-child {
   font-size: 1rem;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-} */
+}
 .calender-year-grid {
   display: flex;
   flex-wrap: wrap;
