@@ -223,6 +223,27 @@ function createModalLocation() {
   document.body.append(div);
 }
 
+function displayEvents(event) {
+  let li = document.createElement("li");
+  let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  let hijri = new Date(event.date).toHijri();
+  li.className = "events-item __counter";
+  li.innerHTML += `
+    <h4>${event.title}</h4>
+    <p class="d-flex align-items justify-content-between">
+      <span>${new Date(event.date).toLocaleDateString("ar-SA", {
+        weekday: "long",
+      })} ${hijri._date} ${months[hijri._month]} ${hijri._year}</span>
+      <span>${gregorian}</span>
+      </p>
+    ${calculateDate(event.date)}
+  `;
+  return li;
+}
 window.addEventListener("DOMContentLoaded", () => {
   if (!LOCATION.latitude) {
     createModalLocation();
@@ -267,47 +288,30 @@ window.addEventListener("DOMContentLoaded", () => {
   if (document.querySelector(".events-page .events")) {
     let eventsContainer = document.querySelector(".events-page .events");
     let daysContainer = document.getElementById("tab-days");
-    globalEvents.forEach((event) => {
-      let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-      let hijri = new Date(event.date).toHijri();
-      eventsContainer.innerHTML += `
-      <li class="events-item __counter">
-        <h4>${event.title}</h4>
-        <p class="d-flex align-items justify-content-between">
-          <span>${new Date(event.date).toLocaleDateString("ar-SA", {
-            weekday: "long",
-          })} ${hijri._date} ${months[hijri._month]} ${hijri._year}</span>
-          <span>${gregorian}</span>
-          </p>
-        ${calculateDate(event.date)}
-      `;
+    let closestEvents = [];
+    let eventsMoved = [];
+    let date = new Date();
+    let minusDay = date.setDate(date.getDate() - 1);
+    for (let i = 0; i < globalEvents.length; i++) {
+      if (Date.parse(globalEvents[i].date) >= Date.parse(new Date(minusDay))) {
+        closestEvents.push(globalEvents[i]);
+      } else {
+        eventsMoved.push(globalEvents[i]);
+      }
+    }
+
+    closestEvents.forEach((event) => {
+      eventsContainer.append(displayEvents(event));
+    });
+    eventsMoved.forEach((event) => {
+      eventsContainer.append(displayEvents(event));
     });
     let events = storageLocation.fetchEvents();
     let specificEvents = events.filter((event) => event.deletable === true);
     if (specificEvents.length < 1)
       daysContainer.innerHTML = `<div class="alert alert-info">يمكنك اضافة مناسبة خاصة عن طريق الذهاب لتقويم الفتح السليماني من القائمة الرئيسية</div>`;
     specificEvents.forEach((event) => {
-      let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-      let hijri = new Date(event.date).toHijri();
-      daysContainer.innerHTML += `
-      <li class="events-item __counter">
-        <h4>${event.title}</h4>
-        <p class="d-flex align-items justify-content-between">
-          <span>${new Date(event.date).toLocaleDateString("ar-SA", {
-            weekday: "long",
-          })} ${hijri._date} ${months[hijri._month]} ${hijri._year}</span>
-          <span>${gregorian}</span>
-          </p>
-        ${calculateDate(event.date)}
-      `;
+      daysContainer.append(displayEvents(event));
     });
   }
 });
@@ -316,7 +320,7 @@ window.addEventListener("click", (e) => {
     document.getElementById("collapsibleNavId").classList.contains("show") &&
     !e.target.matches("#collapsibleNavId")
   ) {
-    document.querySelector('.navbar-toggler').click()
+    document.querySelector(".navbar-toggler").click();
   }
   if (e.target.classList.contains("theme-color")) {
     let siblings = [...e.target.parentElement.children];

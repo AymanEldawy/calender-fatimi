@@ -58,8 +58,19 @@ window.addEventListener("DOMContentLoaded", () => {
   let fastings = storageFasting.fetchFastings();
   // Fastings
   let fastGrid = document.getElementById("fastingGrid");
-  if (fastings.length > 0) {
-    for (let fasting of fastings) {
+  let closestFasting = [];
+  let fastingMoved = [];
+  let date = new Date();
+  let minusDay = date.setDate(date.getDate() - 1);
+  for (let i = 0; i < fastings.length; i++) {
+    if (Date.parse(fastings[i].date) >= Date.parse(new Date(minusDay))) {
+      closestFasting.push(fastings[i]);
+    } else {
+      fastingMoved.push(fastings[i]);
+    }
+  }
+  if (closestFasting.length > 0) {
+    for (let fasting of closestFasting) {
       // All fasting days in year
       let date = new Date(fasting.date).toLocaleDateString("ar-SA", {
         day: "numeric",
@@ -75,9 +86,26 @@ window.addEventListener("DOMContentLoaded", () => {
     
   `;
     }
-  } else {
-    fastGrid.style.background = "#f00";
   }
+  if (fastingMoved.length > 0) {
+    for (let fasting of fastingMoved) {
+      // All fasting days in year
+      let date = new Date(fasting.date).toLocaleDateString("ar-SA", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      fastGrid.innerHTML += `
+    <div class="fasting-item">
+      <span>${calculateDate(fasting.date)}</span>
+      <p>${fasting.title}</p>
+      <span>${date}</span>
+    </div>
+    
+  `;
+    }
+  }
+
   let stepOfCondition = 0;
   let fastingContainer = document.getElementById("closestFastingGrid");
   if (fastings.length > 0) {

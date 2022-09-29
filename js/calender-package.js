@@ -495,7 +495,9 @@ function displayCalenderYear(year) {
     ? true
     : false;
   let yearList = Object.keys(uniqueYear);
-  document.getElementById("theYear").innerHTML = `<span>${
+  document.getElementById("theYear").innerHTML = `
+  <small class="only-print-title">تقويم الفتح السليماني الطيبي</small>
+  <span>${
     Calender.theCurrentDate.yearHijri
   } هـ  ${
     yearIsLeap ? `<small class="text-danger">كبيسة</small>` : ""

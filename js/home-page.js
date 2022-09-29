@@ -84,7 +84,15 @@ window.addEventListener("DOMContentLoaded", () => {
   let date = new Date();
   let yearCalc = date.toHijri()._year;
   theCurrentYearHijri = yearCalc;
-  let theHours = new Date().getHours();
+  let sunCalc = SunCalc.getTimes(
+    new Date(),
+    LOCATION.latitude,
+    LOCATION.longitude
+  );
+  let theTime = `${new Date().getHours().toString().padStart(2, 0)}${new Date()
+    .getMinutes()
+    .toString()
+    .padStart(2, 0)}`;
   document.getElementById("date").textContent = resetDateHijri();
   document.getElementById("yearLeap").innerHTML = leapYears.includes(
     resetDate(new Date()).toLocaleDateString("ar-SA") % 210
@@ -93,14 +101,37 @@ window.addEventListener("DOMContentLoaded", () => {
     : "لا";
   document.getElementById("firstDayOfYear").innerHTML =
     daysFormat[century[yearCalc % 210]].count + 1;
-  document.getElementById("dayWeek").innerHTML =
-    theHours > 5 && theHours < 18
-      ? `يوم ${resetDate(new Date()).toLocaleDateString("ar-SA", {
-          weekday: "long",
-        })}`
-      : `ليلة ${resetDate(new Date()).toLocaleDateString("ar-SA", {
-          weekday: "long",
-        })}`;
+  if (
+    theTime >
+      parseInt(
+        `${sunCalc.sunrise
+          .getHours()
+          .toString()
+          .padStart(2, 0)}${sunCalc.sunrise
+          .getMinutes()
+          .toString()
+          .padStart(2, 0)}`
+      ) &&
+    theTime <
+      parseInt(
+        `${sunCalc.sunset.getHours().toString().padStart(2, 0)}${sunCalc.sunset
+          .getMinutes()
+          .toString()
+          .padStart(2, 0)}`
+      )
+  ) {
+    document.getElementById("dayWeek").innerHTML = `يوم ${resetDate(
+      new Date()
+    ).toLocaleDateString("ar-SA", {
+      weekday: "long",
+    })}`;
+  } else {
+    document.getElementById("dayWeek").innerHTML = `ليلة ${resetDate(
+      new Date()
+    ).toLocaleDateString("ar-SA", {
+      weekday: "long",
+    })}`;
+  }
   document.getElementById("smallCentury").innerHTML = getCentury(
     parseInt(yearCalc % 210)
   );
@@ -227,6 +258,3 @@ function prayerTimingDay(date = new Date()) {
   </div>
   `;
 }
-
-
-

@@ -517,9 +517,15 @@ button.navbar-toggler[aria-expanded="true"] {
 }
 .only-print {
   display: none !important;
+  margin: 0
 }
 .only-print img {
   mix-blend-mode: multiply;
+}
+
+.only-print-title {
+  display: none;
+  white-space: nowrap;
 }
 
 @media print {
@@ -546,6 +552,9 @@ button.navbar-toggler[aria-expanded="true"] {
   .print {
     display: none !important;
   }
+  .only-print-title {
+    display: block;
+  }
   .only-print {
     display: flex !important;
   }
@@ -559,7 +568,8 @@ button.navbar-toggler[aria-expanded="true"] {
     justify-content: center !important; */
   }
   .calender-year .year-controls h2 {
-    font-size: 1.3rem;
+    margin-top: -5px;
+    font-size: 1.1rem;
     text-align: center;
   }
   .calender-year-grid > div {
@@ -568,7 +578,10 @@ button.navbar-toggler[aria-expanded="true"] {
   }
   .calender-year-grid > div h4 {
     top: 2px;
-    font-size: 1.1rem;
+    font-size: 1rem;
+  }
+  .calender-year-grid > div h4 * {
+    white-space: nowrap;
   }
   .calender-year-grid > div span {
     font-size: 0.8rem;
@@ -870,7 +883,7 @@ themes li[data-theme="اسم المود"] {
 }
 .table-style-grid h4 small {
   font-size: 0.8rem;
-  color: #6a1b9a;
+  color: #b01111;
   font-weight: 500;
 }
 .timer {
@@ -888,7 +901,8 @@ themes li[data-theme="اسم المود"] {
 #closestFasting {
   padding-top: 1.5rem;
   min-width: 300px;
-  background: #c6ecfd;
+  background: #2196f3;
+  color: #fff
 }
 #closestFasting * {
   pointer-events: none;
