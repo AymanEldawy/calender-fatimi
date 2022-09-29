@@ -179,7 +179,11 @@ function starterMonthOfYear(yearCalc) {
   document.querySelector(".row-first-days").innerHTML = "";
   document.querySelector(
     "._modal-days ._modal-title span"
-  ).innerHTML = `بداية شهور السنة (${yearCalc})`;
+  ).innerHTML = `بداية شهور سنة (${yearCalc}) ${
+    leapYears.includes(yearCalc % 210)
+      ? "<small class='text-danger'>كبيسة</small>"
+      : ""
+  } `;
   for (let i = 1; i <= 12; i++) {
     let _hijri = new HijriDate(yearCalc, i, 1);
     let gregorian = _hijri.toGregorian();
@@ -217,7 +221,7 @@ window.addEventListener("click", (e) => {
   if (e.target.matches("._modal-fasting")) {
     e.target.classList.add("hide");
   }
-  if (e.target.matches(".table-style .table-style-item#closestFasting")) {
+  if (e.target.matches(".table-style .table-style-item#closestFasting a")) {
     document.querySelector("._modal-fasting").classList.remove("hide");
   }
 });

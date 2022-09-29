@@ -286,7 +286,7 @@ span.status-bad ~ #timeNowTimer .flex-column span:first-child {
   color: #111;
   font-weight: 500;
 }
-.open-events-modal * {
+.open-events-modal a * {
   pointer-events: none;
 }
 

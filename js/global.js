@@ -223,7 +223,7 @@ function createModalLocation() {
   document.body.append(div);
 }
 
-function displayEvents(event) {
+function displayEvents(event, id) {
   let li = document.createElement("li");
   let gregorian = new Date(event.date).toLocaleDateString("ar-EG", {
     year: "numeric",
@@ -232,6 +232,7 @@ function displayEvents(event) {
   });
   let hijri = new Date(event.date).toHijri();
   li.className = "events-item __counter";
+  li.id = id ? 'closestEventItem' : ''
   li.innerHTML += `
     <h4>${event.title}</h4>
     <p class="d-flex align-items justify-content-between">
@@ -288,23 +289,15 @@ window.addEventListener("DOMContentLoaded", () => {
   if (document.querySelector(".events-page .events")) {
     let eventsContainer = document.querySelector(".events-page .events");
     let daysContainer = document.getElementById("tab-days");
-    let closestEvents = [];
-    let eventsMoved = [];
-    let date = new Date();
-    let minusDay = date.setDate(date.getDate() - 1);
-    for (let i = 0; i < globalEvents.length; i++) {
-      if (Date.parse(globalEvents[i].date) >= Date.parse(new Date(minusDay))) {
-        closestEvents.push(globalEvents[i]);
-      } else {
-        eventsMoved.push(globalEvents[i]);
-      }
-    }
 
-    closestEvents.forEach((event) => {
-      eventsContainer.append(displayEvents(event));
-    });
-    eventsMoved.forEach((event) => {
-      eventsContainer.append(displayEvents(event));
+    let count = 0;
+    let date = new Date();
+    let minusDay = date.setDate(date.getDate() - 1)
+    globalEvents.forEach((event) => {
+      if (Date.parse(event.date) >= Date.parse(new Date(minusDay)) && count < 1) {
+        eventsContainer.append(displayEvents(event, true));
+        count ++;
+      } else eventsContainer.append(displayEvents(event));
     });
     let events = storageLocation.fetchEvents();
     let specificEvents = events.filter((event) => event.deletable === true);
@@ -367,7 +360,7 @@ window.addEventListener("click", (e) => {
       ".tab-toggler"
     ).className = `tab-toggler open-days-tab `;
   }
-  if (e.target.matches(".open-events-modal")) {
+  if (e.target.matches(".open-events-modal a")) {
     document.querySelector("._modal").classList.remove("hide");
   }
 });

@@ -854,7 +854,8 @@ themes li[data-theme="اسم المود"] {
   white-space: nowrap;
   background: #1e9589;
   cursor: pointer;
-  color: #fff;
+  font-size: 1.5rem;
+  color: #222;
 }
 .table-style span.table-style-type {
   position: absolute;
@@ -904,7 +905,11 @@ themes li[data-theme="اسم المود"] {
   background: #2196f3;
   color: #fff
 }
-#closestFasting * {
+#closestEvent a,
+#closestFasting a { 
+  color: inherit
+}
+#closestFasting a * {
   pointer-events: none;
 }
 #closeLocation i,
