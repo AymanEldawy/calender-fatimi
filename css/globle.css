@@ -855,7 +855,7 @@ themes li[data-theme="اسم المود"] {
   background: #1e9589;
   cursor: pointer;
   font-size: 1.5rem;
-  color: #222;
+  color: #fff
 }
 .table-style span.table-style-type {
   position: absolute;
