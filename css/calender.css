@@ -81,11 +81,9 @@ body {
   font-size: 0.8rem;
 }
 .calender-picker .calender-list .calender-list-grid-head {
-  background: #03a9f4;
   margin: 0;
 }
 .calender-picker .calender-list .calender-list-grid-head span {
-  color: #fff;
   font-size: 0.8rem;
 }
 .calender-picker .calender-list .calender-list-grid-body span {
@@ -116,8 +114,6 @@ input[type="color"] {
   max-width: 90px;
 }
 .calender-picker .calender-list .calender-list-grid-body span.active {
-  background-color: #00b7ff;
-  color: #fff;
   background-image: unset;
 }
 
@@ -142,31 +138,18 @@ input[type="color"] {
   }
 }
 
-.display button {
-  border: 1px solid #ccc;
-}
-.display button.active {
-  background: #2196f3;
-  color: #ffffff;
-  border-color: #03a9f4;
-}
-
 /* prayer-content */
 /* Table */
 p.dateInsideList {
   text-align: center;
   font-size: 1.3rem;
-  color: #2196f3;
   font-weight: bold;
   margin: 0 0 1rem 0;
 }
 p.dateInsideList span:last-child {
   font-size: 0.9rem;
 }
-.thead-style {
-  background: #2196f3;
-  color: #ffffff;
-}
+
 
 .prayer-list .table tbody tr:nth-child(odd) {
   background: #f2f2fa;
@@ -284,8 +267,6 @@ button#goNextYear {
 }
 .calender-page-display #btnAddEvent {
   margin-right: auto;
-  background: #00b7ff;
-  color: #fff;
   /* For now */
   display: none;
 }
@@ -338,10 +319,6 @@ div#listOfMonth {
   overflow: hidden;
 }
 
-.calender-list .calender-list-grid-head {
-  background: #0d6efd;
-  color: #fff;
-}
 
 .calender-list .calender-list-grid-head span {
   text-align: center;
@@ -368,8 +345,6 @@ div#listOfMonth {
   transition: border 0.2s ease-out;
 }
 .calender-list .calender-list-grid-body span.active {
-  background-color: #00b7ff;
-  color: #fff;
 }
 .calender-page .calender-list .calender-list-grid-body span.visited {
   border-color: #e91e63 #673ab7 #3f51b5 #9c27b0;
@@ -400,8 +375,6 @@ div#listOfMonth {
   position: absolute;
   border-radius: 50%;
   font-weight: bold;
-  background: #2196f3;
-  color: #fff;
   width: 20px;
   height: 20px;
   line-height: 1.1;
@@ -492,7 +465,6 @@ span.delete-event {
 .calender-picker .calender-list .calender-list-grid-head span {
   padding: 0.5rem 0;
   width: 47px;
-  background: #007bff;
 }
 .calender-picker .calender-list-grid-body {
 }
@@ -555,8 +527,6 @@ span.empty {
   transition: background 0.1s, color 0.2s ease-out;
 }
 .tab-control button.active {
-  background: #0d6efd;
-  color: #fff;
   width: 80px;
 }
 .calender-year {

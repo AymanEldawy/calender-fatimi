@@ -24,7 +24,9 @@ export let storageLocation = {
   },
   fetchTheme: () => {
     let theme = localStorage.getItem("TM_theme");
-    return JSON.parse(theme) ? JSON.parse(theme) : "";
+    return JSON.parse(theme)
+      ? JSON.parse(theme)
+      : { bg: "rgb(215, 222, 225)", data: "light", item: "blue" };
   },
   saveTheme: (theme) => {
     localStorage.setItem("TM_theme", JSON.stringify(theme));
@@ -232,7 +234,7 @@ function displayEvents(event, id) {
   });
   let hijri = new Date(event.date).toHijri();
   li.className = "events-item __counter";
-  li.id = id ? 'closestEventItem' : ''
+  li.id = id ? "closestEventItem" : "";
   li.innerHTML += `
     <h4>${event.title}</h4>
     <p class="d-flex align-items justify-content-between">
@@ -252,19 +254,37 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   let themeList = document.querySelector(".themes");
   themeList.innerHTML = `
-    <li class="theme-color" data-theme="dark"></li>
-    <li class="theme-color" data-theme="light"></li>
-    <li class="theme-color" data-theme="red"></li>
-    <li class="theme-color" data-theme="blue"></li>
-    <li class="theme-color" data-theme="yellow"></li>
-    <li class="theme-color" data-theme="green"></li>
-    <li class="theme-color" data-theme="purple"></li>
+    <p>الخلفية</p>
+    <ul class="themes-list">
+      <li class="theme-color" data-theme="dark"></li>
+      <li class="theme-color" data-theme="light"></li>
+      <li class="theme-color" data-theme="red"></li>
+      <li class="theme-color" data-theme="blue"></li>
+      <li class="theme-color" data-theme="yellow"></li>
+      <li class="theme-color" data-theme="green"></li>
+      <li class="theme-color" data-theme="purple"></li>
+    </ul>
+    <hr>
+    <p>العناصر</p>
+    <ul class="themes-list">
+      <li class="theme-color" data-items_bg="green"></li>
+      <li class="theme-color" data-items_bg="silver"></li>
+      <li class="theme-color" data-items_bg="golden"></li>
+      <li class="theme-color" data-items_bg="darker"></li>
+      <li class="theme-color" data-items_bg="purple"></li>
+      <li class="theme-color" data-items_bg="brown"></li>
+      <li class="theme-color" data-items_bg="blue"></li>
+    </ul>
   `;
 
   if (theme) {
     document.body.style.background = theme.bg;
+    document.body.setAttribute("data-theme_bg", theme.item);
     document
       .querySelector(`[data-theme="${theme.data}"]`)
+      .classList.add("active");
+    document
+      .querySelector(`[data-items_bg="${theme.item}"]`)
       .classList.add("active");
   }
 
@@ -292,11 +312,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
     let count = 0;
     let date = new Date();
-    let minusDay = date.setDate(date.getDate() - 1)
+    let minusDay = date.setDate(date.getDate() - 1);
     globalEvents.forEach((event) => {
-      if (Date.parse(event.date) >= Date.parse(new Date(minusDay)) && count < 1) {
+      if (
+        Date.parse(event.date) >= Date.parse(new Date(minusDay)) &&
+        count < 1
+      ) {
         eventsContainer.append(displayEvents(event, true));
-        count ++;
+        count++;
       } else eventsContainer.append(displayEvents(event));
     });
     let events = storageLocation.fetchEvents();
@@ -315,7 +338,14 @@ window.addEventListener("click", (e) => {
   ) {
     document.querySelector(".navbar-toggler").click();
   }
-  if (e.target.classList.contains("theme-color")) {
+  if (e.target.matches(".theme-color[data-items_bg]")) {
+    let siblings = [...e.target.parentElement.children];
+    siblings.forEach((sibling) => sibling.classList.remove("active"));
+    e.target.classList.add("active");
+    document.body.setAttribute("data-theme_bg", e.target.dataset.items_bg);
+    storageLocation.saveTheme({ ...theme, item: e.target.dataset.items_bg });
+  }
+  if (e.target.matches(".theme-color[data-theme]")) {
     let siblings = [...e.target.parentElement.children];
     siblings.forEach((sibling) => sibling.classList.remove("active"));
     e.target.classList.add("active");
@@ -323,7 +353,7 @@ window.addEventListener("click", (e) => {
       .getComputedStyle(e.target, null)
       .getPropertyValue("background-color");
     document.body.style.background = bg;
-    storageLocation.saveTheme({ bg, data: e.target.dataset.theme });
+    storageLocation.saveTheme({ ...theme, bg, data: e.target.dataset.theme });
     document.querySelector(".themes").classList.add("hide");
   }
 

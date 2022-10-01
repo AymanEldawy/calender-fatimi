@@ -10,24 +10,6 @@ footer .container {
   position: relative;
   color: #666;
 }
-div#collapsibleNavId {
-  position: absolute;
-  top: 50px;
-  left: 0px;
-  width: 200px;
-  background: rgb(0, 123, 255);
-  z-index: 9;
-  padding: 1rem;
-  text-align: center;
-}
-.navbar-dark .navbar-nav .nav-item:hover > .nav-link,
-.navbar-dark .navbar-nav .active > .nav-link,
-.navbar-dark .navbar-nav .nav-link.active,
-.navbar-dark .navbar-nav .nav-link.show,
-.navbar-dark .navbar-nav .show > .nav-link {
-  color: #fff;
-  background: #2196f3;
-}
 button.navbar-toggler {
   padding: 0.75rem;
 }
@@ -55,7 +37,6 @@ button.navbar-toggler[aria-expanded="true"] {
   margin-top: 2rem;
   border-radius: 0.25rem;
   width: 90%;
-  background-color: rgb(0 123 255);
 }
 #dateToday {
   display: flex;
@@ -69,7 +50,6 @@ button.navbar-toggler[aria-expanded="true"] {
 .nav-list {
   display: flex;
   justify-content: space-between;
-  background: #007bff;
   box-shadow: 0 1px 5px #021 inset;
   padding-top: 0.5rem;
 }
@@ -89,7 +69,6 @@ button.navbar-toggler[aria-expanded="true"] {
   position: relative;
   flex: 1;
   cursor: pointer;
-  border-bottom: 2px solid #0d6cb7;
 }
 .nav-list-item .d-flex {
   align-items: center;
@@ -122,7 +101,6 @@ span#nextDay {
 .nav-list-item > span:last-of-type:not(.arrow) ,
 .nav-list-item > span:last-of-type:not(#closeCalender) {
   background: #fff;
-  color: #fff;
   border-radius: 0.25rem;
   color: #444;
   padding: 0.25rem;
@@ -332,19 +310,6 @@ span.status-bad ~ #tableTime .flex-column span:first-child {
   background: #262828;
   box-shadow: 0px 2px 1px #0f0e0e36;
 }
-/* .dark .nav-list-item {
-  color: #eee;
-}
-.dark .nav-list-item {
-  border-bottom: 2px solid #2c2e2f;
-  background: rgb(17 17 17);
-  margin-bottom: 0px;
-  color: #fff;
-} */
-/* .dark .nav-list-item span {
-  background: rgb(17 17 17);
-  color: #c5c0c0;
-} */
 #nav-darken-tab .table {
   color: #797b7d;
 }

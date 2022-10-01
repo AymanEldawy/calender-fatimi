@@ -93,7 +93,6 @@ li.link {
 }
 
 .prayer-grid-item {
-  background: #3f51b5;
   font-size: 1.3rem;
   display: flex;
   justify-content: space-between;
@@ -115,12 +114,8 @@ li.link {
   z-index: 2;
   white-space: nowrap
 }
-.prayer-grid-item span:first-of-type {
-  color: #fff;
-}
+
 .prayer-grid-item span:last-of-type {
-  background: #4b5fd2;
-  color: #fff;
   border-radius: 0.25rem;
   font-size: 0.9rem;
   padding: 0.2rem 0.5rem;
@@ -310,7 +305,3 @@ span.status-bad ~ #timeNowTimer .flex-column span:first-child {
   left: 0;
 }
 
-#goPrevYear:hover,
-#goNextYear:hover {
-  background-color: #0004;
-}

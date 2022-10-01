@@ -2,51 +2,6 @@
 body {
   background: #eae8e8;
 }
-.auto-style2 {
-  text-align: center;
-  font-size: xx-large;
-  color: #0000ff;
-  font-family: "Times New Roman", Times, serif;
-  background-color: #c3f5b7;
-}
-.auto-style3 {
-  font-size: x-large;
-  color: #0000ff;
-}
-.auto-style6 {
-  font-size: xx-large;
-  font-family: Arial, Helvetica, sans-serif;
-  color: blue;
-  background-color: #bcf3af;
-  margin-right: 65px;
-}
-.auto-style8 {
-  font-size: larger;
-  background-color: #c3f5b7;
-}
-.auto-style9 {
-  font-size: large;
-}
-.auto-style10 {
-  background-color: #c3f5b7;
-}
-.auto-style11 {
-  text-align: center;
-}
-.auto-style12 {
-  font-size: x-large;
-}
-.auto-style13 {
-  font-size: xx-large;
-  color: #0000ff;
-}
-.auto-style15 {
-  font-size: xx-large;
-}
-.auto-style16 {
-  font-size: large;
-  margin-right: 125px;
-}
 .card-header {
   background: #dbdcdd;
 }
@@ -130,11 +85,6 @@ body {
 .compare .__right {
   gap: 2px;
 } 
-.compare .col-4.active {
-  border: 2px solid #3b92df;
-  background-color: #007bff;
-  color: #fff;
-}
 .modal-dialog {
   max-width: 90%;
   min-width: 200px;

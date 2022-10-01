@@ -33,7 +33,6 @@ div#planetMessage:not(:empty) {
   pointer-events: none;
 }
 .popup {
-  background-color: #03a9f4;
   padding: 1rem;
   max-width: 650px;
   width: 80%;

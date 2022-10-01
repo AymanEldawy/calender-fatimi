@@ -31,10 +31,6 @@ body {
   height: 10px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #51c3f8;
-}
-
 ::-webkit-scrollbar-track {
   background: #fff;
 }
@@ -229,29 +225,9 @@ ul.events.text-center {
 .navbar-dark .navbar-nav .nav-item {
   margin-bottom: 0.5rem;
 }
-.navbar-dark .navbar-nav .nav-link {
-  color: #fff;
-}
-.navbar-dark .navbar-nav .nav-item:hover > .nav-link,
-.navbar-dark .navbar-nav .active > .nav-link,
-.navbar-dark .navbar-nav .nav-link.active,
-.navbar-dark .navbar-nav .nav-link.show,
-.navbar-dark .navbar-nav .show > .nav-link {
-  color: #fff;
-  border-left: 4px solid aliceblue;
-  background: #fff5;
-}
 
-.nav-btn {
-  margin-top: 0.5rem;
-  cursor: pointer;
-  color: #ccc;
-}
 .nav-btn:last-child {
   margin-top: 1rem;
-}
-.nav-btn:hover {
-  color: #fff;
 }
 .navbar .container,
 footer .container {
@@ -271,7 +247,6 @@ div#collapsibleNavId {
   top: 47px;
   left: 0;
   width: 200px;
-  background: rgb(13 110 253);
   z-index: 99;
   padding: 1rem;
   text-align: center;
@@ -286,10 +261,6 @@ div#collapsibleNavId.show {
 }
 button.navbar-toggler {
   padding: 0.75rem;
-}
-button.navbar-toggler[aria-expanded="true"] {
-  background: #fff;
-  color: #888;
 }
 
 .visitors {
@@ -308,8 +279,6 @@ button.navbar-toggler[aria-expanded="true"] {
   background: #222;
   padding: 0 0.5rem;
   height: 20px;
-  border-radius: 0.25rem;
-  color: #fff;
   position: relative;
 }
 .counter-item::before {
@@ -398,8 +367,6 @@ button.navbar-toggler[aria-expanded="true"] {
   top: 8px;
   left: 0;
   padding: 0.5rem;
-  background: #ff9800;
-  color: #fff;
   border-radius: 0 5px 5px 0;
   font-size: 0.8rem;
 }
@@ -627,7 +594,6 @@ button.navbar-toggler[aria-expanded="true"] {
   transition: opacity 0.3s ease-out;
   opacity: 0;
   pointer-events: none;
-  color: #fff;
 }
 .overlay.open {
   opacity: 1;
@@ -654,10 +620,7 @@ button.navbar-toggler[aria-expanded="true"] {
   cursor: pointer;
 }
 .manual-location .country-info {
-  box-shadow: 0px 2px 1px #0f0e0e36;
-  background: #03a9f4;
   border-radius: 0.25rem;
-  color: #fff;
   overflow: hidden;
 }
 .country-info > p {
@@ -679,89 +642,11 @@ button.navbar-toggler[aria-expanded="true"] {
 #chooseLocation {
   margin-left: 0.5rem;
 }
-#chooseLocation,
-#autoLocation {
-  color: #fff;
-}
-#theme button:hover,
-.navbar-dark .navbar-toggler:hover,
-#chooseLocation:hover,
-#autoLocation:hover {
-  background-color: #6d9de7;
-}
 .navbar .container.d-flex {
   justify-content: unset;
   padding: 0;
 }
 
-/* Themes */
-#theme {
-  position: relative;
-  margin-right: auto;
-  color: #fff;
-}
-#theme > button {
-  color: #fff;
-}
-.themes {
-  display: flex;
-  gap: 10px;
-  list-style: none;
-  justify-content: center;
-  position: absolute;
-  top: 35px;
-  left: 0;
-  background: #fff;
-  padding: 1rem;
-  box-shadow: 0 1px 4px #2226;
-  border-radius: 0.25rem;
-  transition: opacity 0.2s ease-in-out;
-}
-.themes li {
-  width: 30px;
-  height: 30px;
-  background-color: #000;
-  cursor: pointer;
-}
-.themes li[data-theme="dark"] {
-  background-color: rgb(71 69 69);
-  /* background-color: #111; */
-}
-.themes li[data-theme="light"] {
-  background-color: #d7dee1;
-  border: 1px solid #ccc;
-}
-.themes li[data-theme="red"] {
-  background-color: rgb(255 152 152);
-  /* background-color: #f44336; */
-}
-.themes li[data-theme="purple"] {
-  background-color: rgb(236 150 247);
-  /* background-color: #4caf50; */
-}
-.themes li[data-theme="green"] {
-  background-color: rgb(150 247 165);
-  /* background-color: #4caf50; */
-}
-.themes li[data-theme="blue"] {
-  background-color: hwb(198deg 59% 3%);
-  /* background-color: #03a9f4; */
-}
-.themes li[data-theme="yellow"] {
-  background-color: rgb(247 231 150);
-  /* background-color: #ff9800; */
-}
-/* 
-لاضافة لون جديد انسخ واحدة من  
-themes li[data-theme="اسم المود"] {
-  background-color: اللون;
-}
-*/
-
-.themes li.active {
-  border: 3px solid #000;
-  cursor: not-allowed;
-}
 
 .table-style:first-child {
   margin-top: 2rem;
@@ -778,19 +663,7 @@ themes li[data-theme="اسم المود"] {
 }
 .table-style:first-of-type .table-style-item {
   cursor: pointer;
-  color: #fff;
-  background: #2196f3;
 }
-.table-style:nth-of-type(2) .table-style-item {
-  background: #2196f3;
-}
-/* .table-style:nth-of-type(2) .table-style-type {
-  background-color: #64b5f6;
-}
-.table-style:nth-of-type(2) .table-style-value {
-  background-color: #29b6f6;
-} */
-
 .table-style:nth-of-type(4) {
   background-size: cover;
   background-position: center;
@@ -852,20 +725,20 @@ themes li[data-theme="اسم المود"] {
   margin: 2rem auto 0;
   padding: 0.2rem 1rem;
   white-space: nowrap;
-  background: #1e9589;
   cursor: pointer;
   font-size: 1.5rem;
+<<<<<<< HEAD
   color: #fff
+=======
+>>>>>>> 961e8cd (added theme for items)
 }
 .table-style span.table-style-type {
   position: absolute;
   top: 10px;
   right: 0;
   margin-left: auto;
-  background: #24a295;
   font-size: 0.8rem;
   border-radius: 0.25rem 0 0 0.25rem;
-  color: #fff;
   padding: 0.25rem;
 }
 .table-style-grid {
@@ -898,13 +771,6 @@ themes li[data-theme="اسم المود"] {
   background: #e2e2e2;
 }
 
-#closestEvent,
-#closestFasting {
-  padding-top: 1.5rem;
-  min-width: 300px;
-  background: #2196f3;
-  color: #fff
-}
 #closestEvent a,
 #closestFasting a { 
   color: inherit
@@ -930,14 +796,13 @@ themes li[data-theme="اسم المود"] {
   left: 50%;
   transform: translateX(-50%);
   border-radius: 0.25rem;
-  background: #000;
-  color: #fff;
   font-size: 0.8rem;
   white-space: nowrap;
   padding: 0.25rem;
   opacity: 0;
   z-index: 99;
   pointer-events: none;
+  background-color: #222;
 }
 .custom_tooltip:hover::before {
   opacity: 1;
