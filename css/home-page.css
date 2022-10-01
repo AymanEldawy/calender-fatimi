@@ -282,6 +282,7 @@ span.status-bad ~ #timeNowTimer .flex-column span:first-child {
 
 #goPrevYear,
 #goNextYear {
+  color: #fff;
   position: absolute;
   background: #0002;
   padding: 0.2rem;

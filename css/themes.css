@@ -167,7 +167,6 @@ button.navbar-toggler[aria-expanded="true"] {
 #autoLocation:hover {
   background-color: #fff;
   color: #888;
-
 }
 
 .table-style span.table-style-type {
@@ -265,4 +264,11 @@ p.dateInsideList {
 
 .nav-list {
   background: #007bff;
+}
+
+._modal-title,
+.modal-tabs button.active {
+  color: #ffffff;
+  border-bottom: 4px solid #0a0a0a1c !important;
+  background: var(--color-theme);
 }

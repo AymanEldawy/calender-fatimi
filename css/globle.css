@@ -78,11 +78,12 @@ a.navbar-brand {
 }
 ._modal-title,
 .modal-tabs button.active {
+  
   color: #4caf50;
+  border-bottom: 4px solid  #4caf50 !important;
+  background: #4caf5057;
   font-size: 1.2rem;
   font-weight: bold;
-  border-bottom: 4px solid #4caf50 !important;
-  background: #4caf5057;
   padding: 0.5rem;
   transform: translateY(2px);
   pointer-events: none;
@@ -792,6 +793,7 @@ button.navbar-toggler {
   position: relative;
 }
 .custom_tooltip::before {
+  color: #fff;
   content: attr(data-title);
   position: absolute;
   top: 30px;
