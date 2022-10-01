@@ -244,7 +244,7 @@ footer img {
 }
 div#collapsibleNavId {
   position: absolute;
-  top: 47px;
+  top: 46px;
   left: 0;
   width: 200px;
   z-index: 99;
@@ -484,7 +484,7 @@ button.navbar-toggler {
 }
 .only-print {
   display: none !important;
-  margin: 0
+  margin: 0;
 }
 .only-print img {
   mix-blend-mode: multiply;
@@ -647,15 +647,18 @@ button.navbar-toggler {
   padding: 0;
 }
 
-
 .table-style:first-child {
   margin-top: 2rem;
 }
+
 .table-style {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1rem;
+}
+.table-grid {
+  margin-top: 2rem;
 }
 .table-style:last-of-type {
   gap: 1rem;
@@ -687,10 +690,9 @@ button.navbar-toggler {
   background: #616161;
   border: none;
 }
-.table-style:nth-of-type(4).style-night #timeNowTimer span{
+.table-style:nth-of-type(4).style-night #timeNowTimer span {
   color: #eee;
 }
-
 
 #closestEvent:hover,
 #closestFasting:hover,
@@ -727,10 +729,6 @@ button.navbar-toggler {
   white-space: nowrap;
   cursor: pointer;
   font-size: 1.5rem;
-<<<<<<< HEAD
-  color: #fff
-=======
->>>>>>> 961e8cd (added theme for items)
 }
 .table-style span.table-style-type {
   position: absolute;
@@ -757,7 +755,6 @@ button.navbar-toggler {
 }
 .table-style-grid h4 small {
   font-size: 0.8rem;
-  color: #b01111;
   font-weight: 500;
 }
 .timer {
@@ -772,8 +769,8 @@ button.navbar-toggler {
 }
 
 #closestEvent a,
-#closestFasting a { 
-  color: inherit
+#closestFasting a {
+  color: inherit;
 }
 #closestFasting a * {
   pointer-events: none;
@@ -806,4 +803,40 @@ button.navbar-toggler {
 }
 .custom_tooltip:hover::before {
   opacity: 1;
+}
+._modal-content {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #fff;
+}
+._modal-content .about {
+  max-width: 500px;
+  max-width: 500px;
+  font-size: 1.2rem;
+  padding: 1rem;
+}
+.modal-explain ._modal-content {
+  max-height: 80vh;
+  overflow: auto;
+}
+.modal-explain.hide .videos {
+  display: none;
+}
+.modal-explain .videos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 500px;
+  margin-top: 1rem;
+}
+.modal-explain .videos-item {
+  flex: 1;
+  min-width: 200px;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  background: #f6f6f6;
+  text-align: center;
+}
+.modal-explain video {
+  max-width: 100%;
 }

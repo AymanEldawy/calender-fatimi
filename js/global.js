@@ -248,6 +248,7 @@ function displayEvents(event, id) {
   return li;
 }
 window.addEventListener("DOMContentLoaded", () => {
+ 
   if (!LOCATION.latitude) {
     createModalLocation();
     getLocation();
@@ -330,6 +331,8 @@ window.addEventListener("DOMContentLoaded", () => {
       daysContainer.append(displayEvents(event));
     });
   }
+  aboutWeb();
+  explainWeb();
 });
 window.addEventListener("click", (e) => {
   if (
@@ -372,6 +375,18 @@ window.addEventListener("click", (e) => {
   }
   if (e.target.matches("#addLocation")) {
     setLocation();
+  }
+  if (e.target.matches(".nav-btn:first-of-type")) {
+    document.querySelector(".modal-explain").classList.remove("hide");
+  }
+  if (e.target.matches(".modal-explain")) {
+    document.querySelector(".modal-explain").classList.add("hide");
+  }
+  if (e.target.matches(".nav-btn:last-of-type")) {
+    document.querySelector(".modal-about").classList.remove("hide");
+  }
+  if (e.target.matches(".modal-about")) {
+    document.querySelector(".modal-about").classList.add("hide");
   }
   if (e.target.matches("._modal")) {
     document.querySelector("._modal").classList.add("hide");
@@ -541,4 +556,60 @@ function displayCountry() {
     ).innerHTML += `<option value="${country.Name}%${country.Alpha2Code}">${country.Name}</option>`;
   });
   changeCountry(countries[0].Alpha2Code);
+}
+
+function aboutWeb() {
+  let div = document.createElement("div");
+
+  div.className = `_modal modal-about hide`;
+  div.innerHTML = `
+    <div class="_modal-content">
+      <h2 class="_modal-title">عن الموقع</h2>
+      <div class="about">
+     <p>
+بسم الله الرحمن الرحيم الحمد لله حمداً متصلاً دائماً كثيراً، وصلى الله على النبي محمد وأهل بيتة الذين أذهب الله عنهم الرجس وطهرهم تطهيراً.
+</p>
+<p>نظرا لما يعانيه البعض من أهل الدعوة الهادية من قلة مصادر التقويم الإسماعيلي ووقوعهم في الخطاء أحيانا والشك أحيانا أخرى، فقد استعنت بالله بعد اخذ موافقة ولي نعمتي بوضع هذا التقويم البسيط ليسهل للمرتاد الوصول الى مبتغاه وزيادة، ووسمته بـــ (الفتح السليماني الطيبي) راجيا من الله أن يستفيد منه جميع الإخوان حامدا لله وشاكرا تمام نعمته مرجعا صحة ذلك لولي النعمة وما كان من خطاء فهوا من قصوري وفهمي.</p>
+<span>والحمد لله رب العالمين</span>
+</div>
+</div>
+  `;
+  document.body.appendChild(div);
+}
+function explainWeb() {
+  let div = document.createElement("div");
+
+  div.className = `_modal modal-explain hide`;
+  div.innerHTML = `
+  <div class="_modal-content">
+    <h2 class="_modal-title">عن الموقع</h2>
+    <div class="videos">
+      <div class="videos-item">
+        <h4>مقدمة</h4>
+        <video controls src="../media/مقدمة.mp4"></video>
+      </div>
+      <div class="videos-item">
+        <h4>التقويم</h4>
+        <video controls src="../media/التقويم.mp4"></video>
+      </div>
+      <div class="videos-item">
+        <h4>الساعات</h4>
+        <video controls src="../media/الساعات.mp4"></video>
+      </div>
+      <div class="videos-item">
+        <h4>مواقيت الصلاة</h4>
+        <video controls src="../media/مواقيت الصلاة.mp4"></video>
+      </div>
+      <div class="videos-item">
+        <h4>حساب الجمل</h4>
+        <video controls src="../media/حساب الجمل.mp4"></video>
+      </div>
+      <div class="videos-item">
+        <h4>أعرف برجك</h4>
+        <video controls src="../media/اعرف برجك.mp4"></video>
+      </div>
+    </div>
+  </div>
+  `;
+  document.body.appendChild(div);
 }

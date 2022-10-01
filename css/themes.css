@@ -155,7 +155,7 @@ button.navbar-toggler[aria-expanded="true"] {
 .nav-btn {
   margin-top: 0.5rem;
   cursor: pointer;
-  color: #ccc;
+  color: #eee;
 }
 .nav-btn:hover {
   color: #fff;
@@ -165,7 +165,9 @@ button.navbar-toggler[aria-expanded="true"] {
 .navbar-dark .navbar-toggler:hover,
 #chooseLocation:hover,
 #autoLocation:hover {
-  background-color: #6d9de7;
+  background-color: #fff;
+  color: #888;
+
 }
 
 .table-style span.table-style-type {
@@ -194,6 +196,7 @@ button.navbar-toggler[aria-expanded="true"] {
 .calender-page-display #btnAddEvent,
 .compare .col-4.active,
 div#collapsibleNavId,
+.calender-page .table-style-item,
 #closestFasting {
   background-image: var(--color-theme) !important;
   color: #fff !important;

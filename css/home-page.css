@@ -1,4 +1,3 @@
-
 .homepage {
   /* background: #d7dee1; */
   overflow: hidden;
@@ -112,7 +111,7 @@ li.link {
 .prayer-grid-item span {
   position: relative;
   z-index: 2;
-  white-space: nowrap
+  white-space: nowrap;
 }
 
 .prayer-grid-item span:last-of-type {
@@ -151,11 +150,7 @@ li.link {
   background-image: url("https://wallpapercave.com/wp/wp5879886.jpg");
 }
 
-._modal-content {
-  background: #fff;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-}
+
 .row-first-days {
   flex-direction: column;
   justify-content: space-between;
@@ -304,4 +299,3 @@ span.status-bad ~ #timeNowTimer .flex-column span:first-child {
 #goNextYear {
   left: 0;
 }
-
