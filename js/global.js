@@ -370,8 +370,11 @@ window.addEventListener("click", (e) => {
     defaultLocation();
     overlayPopup.classList.add("open");
   }
-  if (e.target.matches("#closeLocation")) {
+  if (e.target.matches("#closeLocation") || e.target.matches(".overlay")) {
     overlayPopup.classList.remove("open");
+  }
+  if (!e.target.matches(".themes") && !e.target.matches("#changeTheme")) {
+    document.querySelector('.themes').classList.add("hide");
   }
   if (e.target.matches("#addLocation")) {
     setLocation();
@@ -586,27 +589,27 @@ function explainWeb() {
     <div class="videos">
       <div class="videos-item">
         <h4>مقدمة</h4>
-        <video controls src="../media/مقدمة.mp4"></video>
+        <video controls src="media/مقدمة.mp4"></video>
       </div>
       <div class="videos-item">
         <h4>التقويم</h4>
-        <video controls src="../media/التقويم.mp4"></video>
+        <video controls src="media/التقويم.mp4"></video>
       </div>
       <div class="videos-item">
         <h4>الساعات</h4>
-        <video controls src="../media/الساعات.mp4"></video>
+        <video controls src="media/الساعات.mp4"></video>
       </div>
       <div class="videos-item">
         <h4>مواقيت الصلاة</h4>
-        <video controls src="../media/مواقيت الصلاة.mp4"></video>
+        <video controls src="media/مواقيت الصلاة.mp4"></video>
       </div>
       <div class="videos-item">
         <h4>حساب الجمل</h4>
-        <video controls src="../media/حساب الجمل.mp4"></video>
+        <video controls src="media/حساب الجمل.mp4"></video>
       </div>
       <div class="videos-item">
         <h4>أعرف برجك</h4>
-        <video controls src="../media/اعرف برجك.mp4"></video>
+        <video controls src="media/اعرف برجك.mp4"></video>
       </div>
     </div>
   </div>
