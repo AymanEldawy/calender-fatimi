@@ -277,7 +277,7 @@ button.navbar-toggler {
   box-shadow: 0 6px 5px #0002;
 }
 .counter-item {
-  background: #222;
+  color: #fff;
   padding: 0 0.5rem;
   height: 20px;
   position: relative;
