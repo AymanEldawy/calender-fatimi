@@ -389,7 +389,6 @@ div#listOfMonth {
   position: absolute;
   top: 0;
   font-size: 0.8rem;
-  color: #673ab7;
 }
 .calender-list-grid-body span[data-has_event="true"] em {
   color: inherit;
