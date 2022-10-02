@@ -214,12 +214,14 @@ function createModalLocation() {
   let div = document.createElement("div");
   div.className = `_modal modal-location`;
   div.innerHTML = `
-    <div class="modal-location-content text-center">
-      <p id="userDenied" class="hidden alert alert-danger mb-3"></p>
-      <h2>لتجربة أفضل  من فضلك قم بادخال الموقع</h2>
-      <div class="mt-4">
-        <button class="btn btn-primary mx-2" id="m_location">أختيار الموقع يدوي</button>
-        <button class="btn btn-outline-primary" id="a_location">تحديد الموقع تلقائي</button>
+    <div class="modal-location-content">
+      <div id="userDenied" class="hidden alert alert-danger mb-3"></div>
+      <div class="location-msg">
+        <h2>لتجربة أفضل  من فضلك قم بادخال الموقع</h2>
+        <div class="mt-4">
+        <button class="btn btn-primary mx-2" class="m_location">أختيار الموقع يدوي</button>
+        <button class="btn btn-outline-primary" class="a_location">تحديد الموقع تلقائي</button>
+        </div>
       </div>
     </div>
   `;
@@ -336,7 +338,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 window.addEventListener("click", (e) => {
   if (e.target.matches("#opencreateModalRule")) {
-    createModalRule();
+    window.open("media/allowed.png", "blank");
   }
   if (
     document.getElementById("collapsibleNavId").classList.contains("show") &&
@@ -366,15 +368,15 @@ window.addEventListener("click", (e) => {
   if (e.target.matches("#changeTheme")) {
     document.querySelector(".themes").classList.toggle("hide");
   }
-  if (e.target.matches("#autoLocation") || e.target.matches("#a_location")) {
+  if (e.target.matches("#autoLocation") || e.target.matches(".a_location")) {
     getLocation();
   }
-  if (e.target.matches("#chooseLocation") || e.target.matches("#m_location")) {
+  if (e.target.matches("#chooseLocation") || e.target.matches(".m_location")) {
     defaultLocation();
-    overlayPopup.classList.add("open");
+    document.getElementById("overlayPopup").classList.add("open");
   }
   if (e.target.matches("#closeLocation") || e.target.matches(".overlay")) {
-    overlayPopup.classList.remove("open");
+    document.getElementById("overlayPopup").classList.remove("open");
   }
   if (!e.target.matches(".themes") && !e.target.matches("#changeTheme")) {
     document.querySelector(".themes").classList.add("hide");
@@ -506,36 +508,47 @@ function setLocation() {
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
-    // navigator.permissions
-    //   .query({ name: "geolocation" })
-    //   .then(function (PermissionStatus) {
-    //     if (PermissionStatus.state == "granted") {
-    //       window.location.reload();
-    //     } else if (PermissionStatus.state == "prompt") {
-    //       userDeniedMessage();
-    //     }
-    //   });
+    navigator.permissions &&
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then(function (PermissionStatus) {
+          if (PermissionStatus.state == "granted") {
+            console.log("allowed");
+          } else if (PermissionStatus.state == "prompt") {
+            console.log(" prompt - not yet grated or denied");
+          } else {
+            if (!document.querySelector(".modal-location")) {
+              createModalLocation();
+            }
+            userDeniedMessage();
+            console.log("denied");
+          }
+        });
   }
-}
-function createModalRule() {
-  window.open("media/allowed.png", "blank");
-  setTimeout(()=> {
-    window.open("media/reset.png", "blank");
-  }, 5000)
 }
 
 function userDeniedMessage() {
   let msg = document.getElementById("userDenied");
+  document.querySelector('.location-msg').style.display = 'none'
+  document.querySelector('.modal-location-content').classList.add('__alert')
   msg.style.display = "block";
-  msg.innerHTML =
-    "تم رفض الوصول الي الموقع. من فضلك قم باعادة <button class='btn p-0 border-0 text-primary' id='opencreateModalRule'> تفعيل الصلاحيات </button> او قم بادخال الموقع يدويا";
-  document.getElementById("a_location").style.display = "none";
+  msg.innerHTML = `
+    <h3 class="text-center d-block mb-3 font-bold">تم رفض الوصول الي الموقع.</h3>
+    <p>- من فضلك قم باعادة 
+    <button class='alert-link btn p-0 border-0 text-primary' id='opencreateModalRule'> تفعيل الصلاحيات </button>
+     ثم اختيار 
+     <button class='alert-link a_location btn p-0 border-0 text-primary'>التحديد التلقائي</button>
+     </p>
+    <p class="mb-0">- او قم بادخال <button class='alert-link m_location btn p-0 border-0 text-primary'>الموقع يدويا</button></p>
+  `;
 }
 
 function errorPosition(error) {
   switch (error.code) {
     case error.PERMISSION_DENIED:
-      userDeniedMessage();
+      if (!LOCATION.latitude) {
+        userDeniedMessage();
+      }
       break;
   }
 }

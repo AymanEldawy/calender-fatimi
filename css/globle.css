@@ -134,6 +134,11 @@ a.navbar-brand {
   background: #fff;
   border-radius: 0.5rem;
 }
+.modal-location-content.__alert {
+  background: none;
+  box-shadow: none;
+  border: none;
+}
 .events-page {
   overflow: hidden;
   max-width: 500px;
