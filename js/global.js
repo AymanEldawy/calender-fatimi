@@ -1,23 +1,10 @@
-import { countries, cities, getCitiesByCountryCode } from "./cities.js";
+import { countries, getCitiesByCountryCode } from "./cities.js";
 import { months } from "./calender-setup.js";
-
-// مجموع ساعات النهار / 12
-// مجموع وقت الشروق + (رقم الساعة * الباقي من القسمة)
-// باقي القسمة * 60 = عدد الدقائق المتبقية
-// نطرحه من وقت الساعة القادمة و يظل هذا عدد الدقائق
-// الوقت الحالي نطرح من الساعة القادمة
 
 export let storageLocation = {
   fetchLocation: () => {
     let location = localStorage.getItem("TM_location");
-    return JSON.parse(location)
-      ? JSON.parse(location)
-      : {
-          // latitude: "17.5065",
-          // longitude: "44.1316",
-          // country: "SA",
-          // city: "Najran",
-        };
+    return JSON.parse(location) ? JSON.parse(location) : {};
   },
   saveLocation: (location) => {
     localStorage.setItem("TM_location", JSON.stringify(location));
@@ -47,10 +34,7 @@ let LOCATION = storageLocation.fetchLocation();
 export let latAndLong = {
   latitude: LOCATION.latitude || "17.5065",
   longitude: LOCATION.longitude || "44.1316",
-  city: LOCATION.city || "Najran",
-  country: LOCATION.country || "Saudi Arabia",
   day: "today",
-  code: LOCATION.code || "SA",
   dayDate: new Date()
     .toLocaleDateString("en-UK")
     .replace(/\//g, "-")
@@ -372,7 +356,6 @@ window.addEventListener("click", (e) => {
     getLocation();
   }
   if (e.target.matches("#chooseLocation") || e.target.matches(".m_location")) {
-    defaultLocation();
     document.getElementById("overlayPopup").classList.add("open");
   }
   if (e.target.matches("#closeLocation") || e.target.matches(".overlay")) {
@@ -418,7 +401,6 @@ window.addEventListener("click", (e) => {
   }
 });
 
-// window.onload = function () {
 openChooseLocation();
 createEventModal();
 displayCountry();
@@ -487,18 +469,13 @@ function createEventModal() {
 }
 
 function setLocation() {
-  let country = document.getElementById("country").value.split("%");
   let cityInfo = document.getElementById("city").value;
   let cityLocation = cityInfo.split("__");
   let latitude = cityLocation[0];
   let longitude = cityLocation[1];
-  let city = cityLocation[2];
   let currentLocation = {
-    country: country[0],
-    city,
     latitude,
     longitude,
-    code: country[1],
   };
   latAndLong = { ...latAndLong, ...currentLocation };
   storageLocation.saveLocation(currentLocation);
@@ -529,8 +506,8 @@ function getLocation() {
 
 function userDeniedMessage() {
   let msg = document.getElementById("userDenied");
-  document.querySelector('.location-msg').style.display = 'none'
-  document.querySelector('.modal-location-content').classList.add('__alert')
+  document.querySelector(".location-msg").style.display = "none";
+  document.querySelector(".modal-location-content").classList.add("__alert");
   msg.style.display = "block";
   msg.innerHTML = `
     <h3 class="text-center d-block mb-3 font-bold">تم رفض الوصول الي الموقع.</h3>
@@ -553,38 +530,13 @@ function errorPosition(error) {
   }
 }
 async function showPosition(position) {
-  let countryInfo = await fetch(`https://api.db-ip.com/v2/free/self`)
-    .then((data) => data.json())
-    .then((d) => d);
   let currentLocation = {
     latitude: position.coords.latitude,
     longitude: position.coords.longitude,
-    city: countryInfo.city,
-    country: countryInfo.countryName,
-    code: countryInfo.countryCode,
   };
   latAndLong = { ...latAndLong, ...currentLocation };
   storageLocation.saveLocation(currentLocation);
   window.location.reload();
-}
-
-function defaultLocation() {
-  let LOCATION = storageLocation.fetchLocation();
-  latAndLong.latitude = LOCATION.latitude;
-  latAndLong.longitude = LOCATION.longitude;
-  if (LOCATION && LOCATION.country) {
-    document.querySelectorAll("#country option").forEach((e) => {
-      if (LOCATION.country == e.value) {
-        e.setAttribute("selected", "selected");
-        changeCountry(LOCATION.country);
-        document.querySelectorAll("#city option").forEach((e) => {
-          if (LOCATION.city == e.value.split("-")[2]) {
-            e.setAttribute("selected", "selected");
-          }
-        });
-      }
-    });
-  }
 }
 
 function changeCountry(countryCode = "SA") {
