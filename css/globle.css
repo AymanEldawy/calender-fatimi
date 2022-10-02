@@ -847,3 +847,7 @@ button.navbar-toggler {
 .modal-explain video {
   max-width: 100%;
 }
+
+#userDenied {
+  display: none;
+}

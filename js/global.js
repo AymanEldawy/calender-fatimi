@@ -214,10 +214,11 @@ function createModalLocation() {
   let div = document.createElement("div");
   div.className = `_modal modal-location`;
   div.innerHTML = `
-    <div class="modal-location-content">
+    <div class="modal-location-content text-center">
+      <p id="userDenied" class="hidden alert alert-danger mb-3"></p>
       <h2>لتجربة أفضل  من فضلك قم بادخال الموقع</h2>
       <div class="mt-4">
-        <button class="btn btn-primary" id="m_location">أختيار الموقع يدوي</button>
+        <button class="btn btn-primary mx-2" id="m_location">أختيار الموقع يدوي</button>
         <button class="btn btn-outline-primary" id="a_location">تحديد الموقع تلقائي</button>
       </div>
     </div>
@@ -248,7 +249,6 @@ function displayEvents(event, id) {
   return li;
 }
 window.addEventListener("DOMContentLoaded", () => {
- 
   if (!LOCATION.latitude) {
     createModalLocation();
     getLocation();
@@ -335,6 +335,9 @@ window.addEventListener("DOMContentLoaded", () => {
   explainWeb();
 });
 window.addEventListener("click", (e) => {
+  if (e.target.matches("#opencreateModalRule")) {
+    createModalRule();
+  }
   if (
     document.getElementById("collapsibleNavId").classList.contains("show") &&
     !e.target.matches("#collapsibleNavId")
@@ -374,7 +377,7 @@ window.addEventListener("click", (e) => {
     overlayPopup.classList.remove("open");
   }
   if (!e.target.matches(".themes") && !e.target.matches("#changeTheme")) {
-    document.querySelector('.themes').classList.add("hide");
+    document.querySelector(".themes").classList.add("hide");
   }
   if (e.target.matches("#addLocation")) {
     setLocation();
@@ -498,12 +501,42 @@ function setLocation() {
   latAndLong = { ...latAndLong, ...currentLocation };
   storageLocation.saveLocation(currentLocation);
   window.location.reload();
-  document.getElementById("overlayPopup").classList.remove("open");
 }
 
 function getLocation() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
+    navigator.geolocation.getCurrentPosition(showPosition, errorPosition);
+    // navigator.permissions
+    //   .query({ name: "geolocation" })
+    //   .then(function (PermissionStatus) {
+    //     if (PermissionStatus.state == "granted") {
+    //       window.location.reload();
+    //     } else if (PermissionStatus.state == "prompt") {
+    //       userDeniedMessage();
+    //     }
+    //   });
+  }
+}
+function createModalRule() {
+  window.open("media/allowed.png", "blank");
+  setTimeout(()=> {
+    window.open("media/reset.png", "blank");
+  }, 5000)
+}
+
+function userDeniedMessage() {
+  let msg = document.getElementById("userDenied");
+  msg.style.display = "block";
+  msg.innerHTML =
+    "تم رفض الوصول الي الموقع. من فضلك قم باعادة <button class='btn p-0 border-0 text-primary' id='opencreateModalRule'> تفعيل الصلاحيات </button> او قم بادخال الموقع يدويا";
+  document.getElementById("a_location").style.display = "none";
+}
+
+function errorPosition(error) {
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      userDeniedMessage();
+      break;
   }
 }
 async function showPosition(position) {
@@ -590,6 +623,10 @@ function explainWeb() {
       <div class="videos-item">
         <h4>مقدمة</h4>
         <video controls src="media/مقدمة.mp4"></video>
+      </div>
+      <div class="videos-item">
+        <h4>الرئيسية</h4>
+        <video controls src="media/الرئيسية.mp4"></video>
       </div>
       <div class="videos-item">
         <h4>التقويم</h4>
