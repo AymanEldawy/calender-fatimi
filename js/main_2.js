@@ -162,7 +162,7 @@ if (document.getElementById("knowTower")) {
     if (info.name) {
       document.getElementById(
         "showResult"
-      ).innerHTML = `<div class="result-template mx-auto pt-3"style="max-width:600px; border-top:1px solid #ccc"><div class="result-body"><ul class="list-group"><li class="list-group-item list-group-item-secondary">النتيجة</li><li class="list-group-item align-items-center d-flex"><span>حساب الجمل</span><span class="badge badge-dark badge-pill ">${info.num}</span></li></ul></div></div>`;
+      ).innerHTML = `<div class="result-template mx-auto"style="max-width:600px; border-top:1px solid #ccc"><div class="result-body"><ul class="list-group"><li class="list-group-item list-group-item-secondary">النتيجة</li><li class="list-group-item align-items-center d-flex"><span>حساب الجمل</span><span class="badge badge-dark badge-pill ">${info.num}</span></li></ul></div></div>`;
     }
   }
   function calculate() {

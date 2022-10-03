@@ -197,6 +197,9 @@ button.navbar-toggler[aria-expanded="true"] {
 .compare .col-4.active,
 div#collapsibleNavId,
 .calender-page .table-style-item,
+.main-container,
+.nav-list,
+.badge-dark,
 #closestFasting {
   background-image: var(--color-theme) !important;
   color: #fff !important;
@@ -247,24 +250,11 @@ p.dateInsideList {
   background-color: #0004;
 }
 
-/*  */
-
-.compare .col-4.active {
-  border: 2px solid #3b92df;
-}
 
 /* pages */
 
 .popup {
   background-color: #03a9f4;
-}
-
-.main-container {
-  background-color: #007bff;
-}
-
-.nav-list {
-  background: #007bff;
 }
 
 ._modal-title,
@@ -274,4 +264,22 @@ p.dateInsideList {
   background: var(--color-theme);
 }
 .counter-item {
-  background: var(--color-theme); }
+  background: var(--color-theme);
+}
+
+.list-group-item-secondary {
+}
+
+.result-template {
+  padding: 0.5rem;
+  box-shadow: 0 4px 2px #9e9e9e6e;
+  background-image: var(--color-theme);
+  border-radius: 0.5rem;
+}
+.result-head.align-items-center.justify-content-around.d-flex {
+  box-shadow: 0 4px 2px #9e9e9e6e;
+  color: #fff;
+}
+li.list-group-item.list-group-item-secondary {
+  border-radius: 0;
+}

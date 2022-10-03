@@ -498,7 +498,6 @@ function getLocation() {
               createModalLocation();
             }
             userDeniedMessage();
-            console.log("denied");
           }
         });
   }

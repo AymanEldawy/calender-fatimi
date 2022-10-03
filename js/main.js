@@ -185,15 +185,15 @@ if (document.getElementById("knowTower")) {
   function templateResult(info) {
     if (info.name) {
       document.getElementById("showResult").innerHTML = `
-    <div class="result-template mx-auto pt-3" style="max-width:600px; border-top:1px solid #ccc">
-      <div class="result-head align-items-center justify-content-around d-flex mb-3">
+    <div class="result-template mx-auto" style="max-width:600px; border-top:1px solid #ccc">
+      <div class="result-head align-items-center justify-content-around d-flex">
         <div class="text-center">
           <span class="d-block">اسمك</span>
-          <h3 class="bg-primary px-2 rounded-sm mt-1 text-white">${info.name}</h3>
+          <h3 class="bg-white px-2 rounded-sm mt-1 text-dark">${info.name}</h3>
         </div>
         <div class="text-center">
           <span class="d-block">اسم الام</span>
-          <h3 class="bg-primary px-2 rounded-sm mt-1 text-white">${info.mother}</h3>
+          <h3 class="bg-white px-2 rounded-sm mt-1 text-dark">${info.mother}</h3>
         </div>
       </div>
       <div class="result-body">

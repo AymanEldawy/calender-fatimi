@@ -708,8 +708,8 @@ button.navbar-toggler {
 #closestEvent:hover,
 #closestFasting:hover,
 .table-style:first-of-type .table-style-item:hover {
-  background: #f2f2f2;
-  color: #444;
+  background: #f2f2f2 !important;
+  color: #444 !important;
   cursor: pointer;
 }
 
