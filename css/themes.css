@@ -19,6 +19,10 @@ body[data-theme_bg="brown"] {
 body[data-theme_bg="purple"] {
   --color-theme: radial-gradient(#6b047f, #470554);
 }
+body[data-theme_bg="white"] {
+  --color-theme: radial-gradient(#f0f0f0, #eeeeee);
+  color: #222;
+}
 
 /* Themes */
 #theme {
@@ -41,6 +45,14 @@ body[data-theme_bg="purple"] {
   box-shadow: 0 1px 4px #2226;
   border-radius: 0.25rem;
   transition: opacity 0.2s ease-in-out;
+}
+@media (max-width: 600px) {
+  .themes {
+    position: fixed;
+    top: 55px;
+    transform: translateX(-50%);
+    left: 50%;
+  }
 }
 .themes-list {
   padding: 0;
@@ -90,6 +102,12 @@ body[data-theme_bg="purple"] {
   background-color: rgb(247 231 150);
   /* background-color: #ff9800; */
 }
+.themes li[data-theme="white"] {
+  background-color: #fff;
+  border: 1px solid #ccc;
+
+  /* background-color: #ff9800; */
+}
 /* 
 لاضافة لون جديد انسخ واحدة من  
 themes li[data-theme="اسم المود"] {
@@ -117,6 +135,10 @@ li[data-items_bg="brown"] {
 }
 li[data-items_bg="purple"] {
   background-image: radial-gradient(#6b047f, #470554);
+}
+li[data-items_bg="white"] {
+  background-image: radial-gradient(#f0f0f0, #eeeeee);
+  border: 1px solid #ccc;
 }
 
 .themes li.active {
@@ -182,6 +204,7 @@ button.navbar-toggler[aria-expanded="true"] {
 #autoLocation {
   color: #fff;
 }
+footer,
 .bg-primary,
 .tab-control button.active,
 .calender-picker .calender-list .calender-list-grid-head span,
@@ -250,7 +273,6 @@ p.dateInsideList {
   background-color: #0004;
 }
 
-
 /* pages */
 
 .popup {
@@ -282,4 +304,75 @@ p.dateInsideList {
 }
 li.list-group-item.list-group-item-secondary {
   border-radius: 0;
+}
+/* Theme white */
+body[data-theme_bg="white"]
+  .result-head.align-items-center.justify-content-around.d-flex {
+  color: #222;
+}
+
+body[data-theme_bg="white"] ._modal-title,
+.modal-tabs button.active {
+  color: #222;
+}
+body[data-theme_bg="white"] .bg-primary,
+body[data-theme_bg="white"] .tab-control button.active,
+body[data-theme_bg="white"]
+  .calender-picker
+  .calender-list
+  .calender-list-grid-head
+  span,
+body[data-theme_bg="white"]
+  .calender-picker
+  .calender-list
+  .calender-list-grid-body
+  span.active,
+body[data-theme_bg="white"]
+  .calender-picker
+  .calender-list
+  .calender-list-grid-head,
+body[data-theme_bg="white"] .table-style:nth-of-type(2) .table-style-item,
+body[data-theme_bg="white"] .table-style:first-of-type .table-style-item,
+body[data-theme_bg="white"] #closestEvent,
+body[data-theme_bg="white"] .display button.active,
+body[data-theme_bg="white"] .thead-style,
+body[data-theme_bg="white"] .calender-list .calender-list-grid-head,
+body[data-theme_bg="white"] .calender-page-display #btnAddEvent,
+body[data-theme_bg="white"] .compare .col-4.active,
+body[data-theme_bg="white"] div#collapsibleNavId,
+body[data-theme_bg="white"] .calender-page .table-style-item,
+body[data-theme_bg="white"] .main-container,
+body[data-theme_bg="white"] .nav-list,
+body[data-theme_bg="white"] .badge-dark,
+body[data-theme_bg="white"] #closestFasting,
+body[data-theme_bg="white"] footer .text-white,
+body[data-theme_bg="white"] .calender-list .calender-list-grid-body span.active,
+body[data-theme_bg="white"] .navbar-dark .navbar-brand {
+  color: #222 !important;
+}
+body[data-theme_bg="white"] .counter-item,
+body[data-theme_bg="white"] #chooseLocation,
+body[data-theme_bg="white"] #autoLocation,
+body[data-theme_bg="white"] #theme > button,
+body[data-theme_bg="white"] .calender-list-grid-body span em,
+body[data-theme_bg="white"] .nav-btn,
+body[data-theme_bg="white"] .navbar-dark .navbar-nav .nav-link,
+body[data-theme_bg="white"] .navbar-dark .navbar-toggler {
+  color: #585858 !important;
+}
+
+body[data-theme_bg="white"]
+  .calender-list
+  .calender-list-grid-body
+  span.active {
+  background-color: #e2e2e2;
+}
+
+body[data-theme_bg="white"] #displayDate,
+body[data-theme_bg="white"] #displayDateHigry,
+body[data-theme_bg="white"] .nav-list-item > span:last-of-type:not(.arrow),
+body[data-theme_bg="white"]
+  .nav-list-item
+  > span:last-of-type:not(#closeCalender) {
+  background: #e2e2e2;
 }

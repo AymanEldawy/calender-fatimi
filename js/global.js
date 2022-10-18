@@ -211,6 +211,7 @@ function createModalLocation() {
   `;
   document.body.append(div);
 }
+console.log("run") 
 
 function displayEvents(event, id) {
   let li = document.createElement("li");
@@ -250,6 +251,7 @@ window.addEventListener("DOMContentLoaded", () => {
       <li class="theme-color" data-theme="yellow"></li>
       <li class="theme-color" data-theme="green"></li>
       <li class="theme-color" data-theme="purple"></li>
+      <li class="theme-color" data-theme="white"></li>
     </ul>
     <hr>
     <p>العناصر</p>
@@ -261,6 +263,7 @@ window.addEventListener("DOMContentLoaded", () => {
       <li class="theme-color" data-items_bg="purple"></li>
       <li class="theme-color" data-items_bg="brown"></li>
       <li class="theme-color" data-items_bg="blue"></li>
+      <li class="theme-color" data-items_bg="white"></li>
     </ul>
   `;
 
@@ -319,6 +322,12 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   aboutWeb();
   explainWeb();
+  let height = window
+    .getComputedStyle(document.body, "")
+    .getPropertyValue("height");
+  if (parseInt(height) < window.innerHeight) {
+    document.body.style.minHeight = window.innerHeight + "px";
+  }
 });
 window.addEventListener("click", (e) => {
   if (e.target.matches("#opencreateModalRule")) {
@@ -490,9 +499,9 @@ function getLocation() {
         .query({ name: "geolocation" })
         .then(function (PermissionStatus) {
           if (PermissionStatus.state == "granted") {
-            console.log("allowed");
+            // console.log("allowed");
           } else if (PermissionStatus.state == "prompt") {
-            console.log(" prompt - not yet grated or denied");
+            // console.log(" prompt - not yet grated or denied");
           } else {
             if (!document.querySelector(".modal-location")) {
               createModalLocation();
@@ -582,7 +591,7 @@ function explainWeb() {
   div.className = `_modal modal-explain hide`;
   div.innerHTML = `
   <div class="_modal-content">
-    <h2 class="_modal-title">عن الموقع</h2>
+    <h2 class="_modal-title">شرح الموقع</h2>
     <div class="videos">
       <div class="videos-item">
         <h4>مقدمة</h4>
@@ -617,3 +626,4 @@ function explainWeb() {
   `;
   document.body.appendChild(div);
 }
+

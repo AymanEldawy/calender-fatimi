@@ -259,6 +259,8 @@ if (document.getElementById("knowTower")) {
     let _mother = document.getElementById("inputMother").value;
     let towerInformation = {};
     if (_name && _mother) {
+      document.querySelector("footer").classList.remove("bottom-fixed")
+      
       let name = _name + " " + _mother;
       let arr1 = [
         "ا",

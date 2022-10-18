@@ -5,8 +5,7 @@ body {
 a {
   color: inherit;
 }
-.navbar .container,
-footer .container {
+.navbar .container {
   position: relative;
   color: #666;
 }
