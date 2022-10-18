@@ -683,10 +683,10 @@ button.navbar-toggler {
   background-position: center;
 }
 .table-style:nth-of-type(4).style-night {
-  background-image: url("media/timer-night.jpg");
+  background-image: url("../media/timer-night.jpg");
 }
 .table-style:nth-of-type(4).style-light {
-  background-image: url("media/timer-daylight.jpg");
+  background-image: url("../media/timer-daylight.jpg");
 }
 .table-style:nth-of-type(4).style-night .table-style-item {
   background: transparent;
