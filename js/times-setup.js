@@ -220,12 +220,9 @@ function startTimer(duration, display) {
         <span>${minutes}</span>
       </div>
     `;
-
     if (--timer < 0) {
-      timer = duration;
-      if (document.getElementById("tableTime")) {
-        document.getElementById("tableTime").remove();
-      }
+      document.getElementById("timeNowTimer").parentElement.style.display =
+        "none";
       setTimeout(() => {
         window.location.reload();
       }, 66000);

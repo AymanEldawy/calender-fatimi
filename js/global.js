@@ -42,6 +42,7 @@ export let latAndLong = {
     .reverse()
     .join("-"),
 };
+
 let links = [
   { fileName: "index.html", title: "الصفحة الرئيسية" },
   { fileName: "calender.html", title: "التقويم السليماني" },
@@ -49,7 +50,10 @@ let links = [
   { fileName: "prayer-time.html", title: "مواقيت الصلاة" },
   { fileName: "smath.html", title: "حساب الجمل" },
   { fileName: "towers.html", title: "اعرف برجك" },
-  // { fileName: "compare.html", title: "المقارنة بين الابراج" },
+  { fileName: "towers.html", title: "اعرف برجك" },
+
+  
+  // { fileName: "compare.html", title: "المقارنة بين الابراج" },  
 ];
 
 export const globalEvents = [
@@ -106,6 +110,11 @@ export const globalEvents = [
   {
     title: "الاخر من رمضان",
     date: toDateGregorian({ month: 9, day: 30 }),
+    deletable: false,
+  },
+  {
+    title: "عيد الفطر",
+    date: toDateGregorian({ month: 10, day: 1 }),
     deletable: false,
   },
   {
@@ -585,6 +594,7 @@ function aboutWeb() {
   `;
   document.body.appendChild(div);
 }
+
 function explainWeb() {
   let div = document.createElement("div");
 
@@ -617,10 +627,14 @@ function explainWeb() {
         <h4>حساب الجمل</h4>
         <video controls src="media/حساب الجمل.mp4"></video>
       </div>
+
+      
       <div class="videos-item">
         <h4>أعرف برجك</h4>
         <video controls src="media/اعرف برجك.mp4"></video>
       </div>
+
+
     </div>
   </div>
   `;

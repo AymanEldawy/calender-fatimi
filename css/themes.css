@@ -74,9 +74,11 @@ body[data-theme_bg="white"] {
   background-color: #000;
   cursor: pointer;
 }
+
+/* خلفية الموقع  */
+
 .themes li[data-theme="dark"] {
   background-color: rgb(71 69 69);
-  /* background-color: #111; */
 }
 .themes li[data-theme="light"] {
   background-color: #d7dee1;
@@ -84,36 +86,26 @@ body[data-theme_bg="white"] {
 }
 .themes li[data-theme="red"] {
   background-color: rgb(255 152 152);
-  /* background-color: #f44336; */
 }
 .themes li[data-theme="purple"] {
   background-color: rgb(236 150 247);
-  /* background-color: #4caf50; */
 }
 .themes li[data-theme="green"] {
   background-color: rgb(150 247 165);
-  /* background-color: #4caf50; */
 }
 .themes li[data-theme="blue"] {
   background-color: hwb(198deg 59% 3%);
-  /* background-color: #03a9f4; */
 }
 .themes li[data-theme="yellow"] {
   background-color: rgb(247 231 150);
-  /* background-color: #ff9800; */
 }
 .themes li[data-theme="white"] {
   background-color: #fff;
   border: 1px solid #ccc;
+}
 
-  /* background-color: #ff9800; */
-}
-/* 
-لاضافة لون جديد انسخ واحدة من  
-themes li[data-theme="اسم المود"] {
-  background-color: اللون;
-}
-*/
+
+/* خلفية العناصر */
 li[data-items_bg="green"] {
   background-image: radial-gradient(#41d441, #25be14);
 }
